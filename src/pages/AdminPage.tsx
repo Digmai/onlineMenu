@@ -5,7 +5,7 @@ import Notification from "../components/Notification/Notification";
 import { Dish, Drink } from "../types";
 import DishList from "../components/Dish/Dish";
 import DrinkList from "../components/Drink/Drink";
-import AddDishOrDrinkForm from "../components/Dish/AddDishForm";
+import AddDishOrDrinkForm from "../components/AddDishForm/AddDishForm";
 import { OrderList } from "../components/Order/OrderList";
 import UserList from "../components/User/UserList";
 import AddUserForm from "../components/User/AddUserForm";

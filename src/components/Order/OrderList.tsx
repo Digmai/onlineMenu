@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, useAppDispatch } from "../../store";
-import { Order } from "../../types";
-import { ApiService } from "../../services/ApiService";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import { formatCurrency } from "../../utils/formatCurrency";
-import { fetchOrders } from "../../slices/orders";
 
 export const OrderList: React.FC = () => {
   const auth = useSelector((state: RootState) => state.user.user);
   const [search, setSearch] = useState("");
   const orders = useSelector((state: RootState) => state.orders);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
 
   const filteredOrders = orders.orders.filter((order) =>
     JSON.stringify(order).toLowerCase().includes(search.toLowerCase())

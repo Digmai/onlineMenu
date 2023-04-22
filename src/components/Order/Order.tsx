@@ -68,7 +68,7 @@ const Order: React.FC = () => {
 
   return (
     <div className="order">
-      <h2>Order</h2>
+      <h2>Order1</h2>
       <form onSubmit={handleSubmit}>
         <div className="order-items">
           <h4>Dishes</h4>

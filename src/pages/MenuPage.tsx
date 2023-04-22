@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Dish, Drink } from "../types";
 import DishList from "../components/Dish/Dish";
@@ -8,10 +8,10 @@ import SearchBar from "../components/SearchBar/SearchBar";
 import { formatCurrency } from "../utils/formatCurrency";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import Notification from "../components/Notification/Notification";
+import { useNavigate } from "react-router-dom";
 
 const MenuPage = () => {
-  const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState<{
     dishes: Dish[];
@@ -25,6 +25,11 @@ const MenuPage = () => {
   const { drinks, isLoading, isError } = useSelector(
     (state: RootState) => state.drinks
   );
+
+  useEffect(() => {
+    // 👇 Redirects to about page, note the `replace: true`
+    navigate("/", { replace: true });
+  }, []);
   useEffect(
     // Используем хук useEffect для выполнения действий при изменении строки сортировки (searchTerm)
     () => {

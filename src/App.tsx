@@ -13,8 +13,15 @@ import "./App.css";
 import { fetchDishes } from "./slices/dishes";
 import { fetchDrinks } from "./slices/drinks";
 import { fetchOrders } from "./slices/orders";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
 import { redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -28,36 +35,39 @@ function App() {
     // dispatch(fetchOrders());
     // dispatch(fetchUsers());
   }, [dispatch]);
+  // if (!error) {
+  //   return <Notification message={"error"} type="error" />;
+  // }
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <div>
+          <MenuPage />
+          <Link to="/order">Go to order</Link>
+        </div>
+      ),
+      errorElement: <Notification message={"error"} type="error" />,
+    },
+    {
+      path: "order",
+      element: (
+        <div>
+          <OrderPage />
+          <Link to="/role">About Us</Link>
+        </div>
+      ),
+    },
+    {
+      path: "role",
+      element: (user?.role === "admin" && <AdminPage />) ||
+        (user?.role === "cook" && <ChefPage />) ||
+        (user?.role === "bartender" && <BartenderPage />) ||
+        (user?.role === "waiter" && <WaiterPage />) || <MenuPage />,
+    },
+  ]);
 
-  return (
-    <div className="app">
-      13
-      {/* <WebSocketProvider> */}
-      {/* {!isLoading ? ( */}
-      <Routes>
-        <Route path="/menu" element={<MenuPage />} />
-        <Route path="/order" element={<OrderPage />} />
-        {user?.role === "admin" && (
-          <Route path="/admin" element={<AdminPage />} />
-        )}
-        {user?.role === "cook" && <Route path="/chef" element={<ChefPage />} />}
-        {user?.role === "bartender" && (
-          <Route path="/bartender" element={<BartenderPage />} />
-        )}
-        {user?.role === "waiter" && (
-          <Route path="/waiter" element={<WaiterPage />} />
-        )}
-        {/* {redirect("/menu")} */}
-      </Routes>
-      {/* ) 
-      : (
-        <div>go to login</div>
-        // <redirect to="/login" />
-      )} */}
-      {error && <Notification message={error} type="error" />}
-      {/* </WebSocketProvider> */}
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

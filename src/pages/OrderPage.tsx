@@ -3,7 +3,12 @@ import { useSelector } from "react-redux";
 import { selectAllDishes } from "../slices/dishes";
 import { selectAllDrinks } from "../slices/drinks";
 import { selectUser } from "../slices/user";
-import { addOrder, selectError, selectLoading } from "../slices/orders";
+import {
+  addOrder,
+  selectError,
+  selectLoading,
+  selectOrders,
+} from "../slices/orders";
 import Notification from "../components/Notification/Notification";
 import { Dish as IDish, Drink as IDrink, OrderItem } from "../types";
 import Dish from "../components/Dish/Dish";
@@ -12,8 +17,7 @@ import { useAppDispatch } from "../store";
 
 const OrderPage = () => {
   const dispatch = useAppDispatch();
-  const dishes = useSelector(selectAllDishes);
-  const drinks = useSelector(selectAllDrinks);
+  const orders = useSelector(selectOrders);
   const user = useSelector(selectUser);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
@@ -91,11 +95,11 @@ const OrderPage = () => {
   };
 
   const renderDishes = () => {
-    return <Dish dishes={dishes} handleChange={handleCheckboxChange} />;
+    return <Dish dishes={orders} />;
   };
 
   const renderDrinks = () => {
-    return <Drink drinks={drinks} handleChange={handleCheckboxChange} />;
+    return <Drink drinks={orders} />;
   };
 
   return (

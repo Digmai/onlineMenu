@@ -186,7 +186,7 @@ export const addOrder = createAsyncThunk(
   }
 );
 
-export const selectOrders = (state: RootState) => state.orders.orders;
+export const selectOrders = (state: RootState) => state.orders.cart;
 export const selectLoading = createSelector(
   (state: RootState) => state.orders.loading,
   (loading) => loading

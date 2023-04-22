@@ -13,7 +13,13 @@ interface UsersState {
 }
 
 const initialState: UsersState = {
-  user: null,
+  user: {
+    _id: "1",
+    email: "1212",
+    name: "wqdasd",
+    password: "wdas",
+    role: "waiter",
+  },
   isLoading: false,
   error: null,
   token: localStorage.getItem("token") || null,
