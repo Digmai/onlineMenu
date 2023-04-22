@@ -1,58 +1,66 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import MenuPage from "./pages/MenuPage";
+import OrderPage from "./pages/OrderPage";
+import AdminPage from "./pages/AdminPage";
+import ChefPage from "./pages/ChefPage";
+import BartenderPage from "./pages/BartenderPage";
+import WaiterPage from "./pages/WaiterPage";
+import { RootState, useAppDispatch } from "./store";
+import Notification from "./components/Notification/Notification";
+// import { WebSocketProvider } from "./hooks/UseWebSocket";
+import "./App.css";
+import { fetchDishes } from "./slices/dishes";
+import { fetchDrinks } from "./slices/drinks";
+import { fetchOrders } from "./slices/orders";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 function App() {
+  const dispatch = useAppDispatch();
+  const { isLoading, user, error } = useSelector(
+    (state: RootState) => state.user
+  );
+
+  useEffect(() => {
+    // dispatch(fetchDrinks());
+    // dispatch(fetchDishes());
+    // dispatch(fetchOrders());
+    // dispatch(fetchUsers());
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="app">
+      13
+      {/* <WebSocketProvider> */}
+      {/* {!isLoading ? ( */}
+      <Routes>
+        <Route path="/menu" element={<MenuPage />} />
+        <Route path="/order" element={<OrderPage />} />
+        {user?.role === "admin" && (
+          <Route path="/admin" element={<AdminPage />} />
+        )}
+        {user?.role === "cook" && <Route path="/chef" element={<ChefPage />} />}
+        {user?.role === "bartender" && (
+          <Route path="/bartender" element={<BartenderPage />} />
+        )}
+        {user?.role === "waiter" && (
+          <Route path="/waiter" element={<WaiterPage />} />
+        )}
+        {/* {redirect("/menu")} */}
+      </Routes>
+      {/* ) 
+      : (
+        <div>go to login</div>
+        // <redirect to="/login" />
+      )} */}
+      {error && <Notification message={error} type="error" />}
+      {/* </WebSocketProvider> */}
     </div>
   );
 }
 
 export default App;
+function fetchUsers(): any {
+  console.log("Function not implemented.");
+}
