@@ -8,6 +8,7 @@ import BartenderPage from "./pages/BartenderPage";
 import WaiterPage from "./pages/WaiterPage";
 import { RootState, useAppDispatch } from "./store";
 import Notification from "./components/Notification/Notification";
+import "bootstrap/dist/css/bootstrap.min.css";
 // import { WebSocketProvider } from "./hooks/UseWebSocket";
 import "./App.css";
 import { fetchDishes } from "./slices/dishes";
@@ -41,22 +42,12 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <div>
-          <MenuPage />
-          <Link to="/order">Go to order</Link>
-        </div>
-      ),
+      element: <MenuPage />,
       errorElement: <Notification message={"error"} type="error" />,
     },
     {
       path: "order",
-      element: (
-        <div>
-          <OrderPage />
-          <Link to="/role">About Us</Link>
-        </div>
-      ),
+      element: <OrderPage />,
     },
     {
       path: "role",

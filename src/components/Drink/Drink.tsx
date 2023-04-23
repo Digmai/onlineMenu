@@ -15,7 +15,7 @@ interface DishListProps {
 
 const DrinkList: React.FC<DishListProps> = ({ drinks }) => {
   return (
-    <div className="dish-list card">
+    <div className="dish-list card row">
       {drinks.map((dish) => (
         <DrinkCard drink={dish} key={dish._id} />
       ))}

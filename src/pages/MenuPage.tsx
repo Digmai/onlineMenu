@@ -55,12 +55,12 @@ const MenuPage = () => {
         <>
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {error && <Notification message={error} type="error" />}
-          <div className="menu-section">
-            <h2 className="menu-section-title">Блюда</h2>
+          <div className="menu-section container ">
+            <h2 className="menu-section-title">Dishes</h2>
             <DishList dishes={filteredItems.dishes} />
           </div>
-          <div className="menu-section">
-            <h2 className="menu-section-title">Напитки</h2>
+          <div className="menu-section container ">
+            <h2 className="menu-section-title">Drinks</h2>
             <DrinkList drinks={filteredItems.drinks} />
           </div>
           <div className="cart-total">
