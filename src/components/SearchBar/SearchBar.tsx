@@ -3,45 +3,27 @@ import { FiSearch } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
 
-const SearchBarContainer = styled.form`
-  display: flex;
+const SearchBarContainer = styled.div`
   align-items: center;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  pointer-events: none;
+  transition: height 250ms;
+  width: 100%;
+  z-index: 3;
 `;
 
 const SearchInput = styled.input`
-  height: 36px;
-  padding: 0 12px;
-  border-radius: 18px 0 0 18px;
+  flex: 1;
   border: none;
-  width: 300px;
-  font-size: 14px;
+  outline: none;
+  font-size: 1em;
+  color: gray;
+  width: 100%;
 
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-`;
-
-const SearchButton = styled.button`
-  height: 36px;
-  border-radius: 0 18px 18px 0;
-  background-color: #f17d0a;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 12px;
-  font-size: 14px;
-
-  svg {
-    margin-right: 6px;
+  &::placeholder {
+    color: rgba(white, 0.25);
   }
 `;
 
@@ -50,45 +32,62 @@ const DropdownContainer = styled.div`
 `;
 
 const DropdownButton = styled.button`
-  height: 36px;
   border: none;
-  background-color: #fff;
+  background-color: transparent;
+  color: gray;
+  font-size: 1em;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 12px;
-  font-size: 14px;
-  border-radius: 0 18px 18px 0;
+  gap: 5px;
 
-  svg {
-    margin-left: 6px;
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-bottom: 10px;
-    border-radius: 18px;
+  &:hover {
+    color: black;
   }
 `;
 
 const DropdownMenu = styled.ul`
+  background-color: white;
   position: absolute;
-  top: 40px;
+  top: 100%;
+  left: 0;
   right: 0;
-  padding: 6px;
-  background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: 2px solid gray;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  z-index: 1;
 
   li {
-    list-style: none;
-    padding: 6px 12px;
+    padding: 5px;
     cursor: pointer;
+    color: black;
 
     &:hover {
-      background-color: #f1f1f1;
+      background-color: gray;
+      color: white;
     }
+  }
+`;
+
+const SearchButton = styled.button`
+  border: none;
+  background-color: gray;
+  color: white;
+  font-size: 1em;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 250ms;
+
+  &:hover {
+    background-color: darkgray;
+  }
+
+  svg {
+    margin-right: 5px;
   }
 `;
 
@@ -115,7 +114,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
   };
 
   return (
-    <SearchBarContainer >
+    <SearchBarContainer>
       <SearchInput
         type="text"
         value={searchTerm}
@@ -141,3 +140,30 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
 };
 
 export default SearchBar;
+
+<>
+  <div id="search-bar-aligner" className="focused querying searching">
+    <div id="search-bar-wrapper">
+      <div id="search-bar">
+        <i id="search-bar-logo" className="fa-regular fa-magnifying-glass"></i>
+        <input
+          id="search-bar-input"
+          placeholder="Search"
+          type="text"
+          value="Hit the reset button ➡️"
+        />
+        <button id="search-bar-reset-button" type="button">
+          <i className="fa-regular fa-arrow-rotate-right"></i>
+        </button>
+      </div>
+      <div id="search-bar-sass">
+        <div id="search-bar-sass-icon" className="emoji">
+          <i className="fa-light fa-face-awesome"></i>
+        </div>
+        <h1 id="search-bar-sass-statement">
+          Hmm, haven't heard of that. Have some coffee instead.
+        </h1>
+      </div>
+    </div>
+  </div>
+</>;
