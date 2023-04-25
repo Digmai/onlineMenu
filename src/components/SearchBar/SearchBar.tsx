@@ -1,169 +1,98 @@
 import React from "react";
-import { FiSearch } from "react-icons/fi";
-import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
-
-const SearchBarContainer = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  pointer-events: none;
-  transition: height 250ms;
-  width: 100%;
-  z-index: 3;
-`;
-
-const SearchInput = styled.input`
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 1em;
-  color: gray;
-  width: 100%;
-
-  &::placeholder {
-    color: rgba(white, 0.25);
-  }
-`;
-
-const DropdownContainer = styled.div`
-  position: relative;
-`;
-
-const DropdownButton = styled.button`
-  border: none;
-  background-color: transparent;
-  color: gray;
-  font-size: 1em;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  &:hover {
-    color: black;
-  }
-`;
-
-const DropdownMenu = styled.ul`
-  background-color: white;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  border: 2px solid gray;
-  border-top: none;
-  border-radius: 0 0 5px 5px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  z-index: 1;
-
-  li {
-    padding: 5px;
-    cursor: pointer;
-    color: black;
-
-    &:hover {
-      background-color: gray;
-      color: white;
-    }
-  }
-`;
-
-const SearchButton = styled.button`
-  border: none;
-  background-color: gray;
-  color: white;
-  font-size: 1em;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: background-color 250ms;
-
-  &:hover {
-    background-color: darkgray;
-  }
-
-  svg {
-    margin-right: 5px;
-  }
-`;
-
+import { FaSearch, FaSyncAlt } from "react-icons/fa";
+import { Button } from "react-bootstrap";
 interface SearchBarProps {
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }
 
+const DedContainer = styled.div`
+  width: 500px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 0 auto;
+  z-index: 3;
+`;
+
+const Container = styled.div`
+  align-items: center;
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  box-shadow: rgb(0 0 0 / 12%) 0px 1px 6px, rgb(0 0 0 / 12%) 0px 1px 4px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px;
+  pointer-events: all;
+  position: relative;
+  width: 100%;
+`;
+
+const Input = styled.input`
+  background-color: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  text-align: left;
+  transition: width 2150ms;
+  width: 100%;
+`;
+
+const SearchIcon = styled(FaSearch)`
+  margin-right: 16px;
+  font-size: 20px;
+  color: #fff;
+  transform: scaleX(-1);
+`;
+
+const ResetIcon = styled(FaSyncAlt)`
+  margin-right: 16px;
+  font-size: 20px;
+  color: #fff;
+  transform: scaleX(-1);
+`;
+
+const ResetButton = styled.div`
+  border: none;
+  background: none;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+`;
+
 const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
-  const [showDropdown, setShowDropdown] = React.useState(false);
-  const [searchType, setSearchType] = React.useState("dishes");
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const searchTermRegex = /^[a-zA-Z]+$/;
+    setSearchTerm(e.target.value);
   };
 
-  const handleDropdownClick = () => {
-    setShowDropdown(!showDropdown);
-  };
-
-  const handleSearchTypeClick = (type: string) => {
-    setSearchType(type);
-    setShowDropdown(false);
+  const handleResetClick = () => {
+    setSearchTerm("");
   };
 
   return (
-    <SearchBarContainer>
-      <SearchInput
-        type="text"
-        value={searchTerm}
-        onChange={handleChange}
-        placeholder={`Search for ${searchType}`}
-      />
-      <DropdownContainer>
-        <DropdownButton onClick={handleDropdownClick}>
-          {searchType} <IoIosArrowDown />
-        </DropdownButton>
-        {showDropdown && (
-          <DropdownMenu>
-            <li onClick={() => handleSearchTypeClick("dishes")}>Dishes</li>
-            <li onClick={() => handleSearchTypeClick("drinks")}>Drinks</li>
-          </DropdownMenu>
+    <DedContainer>
+      <Container>
+        <SearchIcon />
+        <div className="search-bar-logo"></div>
+        <Input
+          type="text"
+          placeholder="Введите текст для поиска"
+          value={searchTerm}
+          onChange={handleInputChange}
+        />
+        {searchTerm.length > 0 && (
+          <ResetButton onClick={handleResetClick}>
+            <ResetIcon />
+          </ResetButton>
         )}
-      </DropdownContainer>
-      <SearchButton type="submit">
-        <FiSearch /> Search
-      </SearchButton>
-    </SearchBarContainer>
+      </Container>
+    </DedContainer>
   );
 };
 
 export default SearchBar;
-
-<>
-  <div id="search-bar-aligner" className="focused querying searching">
-    <div id="search-bar-wrapper">
-      <div id="search-bar">
-        <i id="search-bar-logo" className="fa-regular fa-magnifying-glass"></i>
-        <input
-          id="search-bar-input"
-          placeholder="Search"
-          type="text"
-          value="Hit the reset button ➡️"
-        />
-        <button id="search-bar-reset-button" type="button">
-          <i className="fa-regular fa-arrow-rotate-right"></i>
-        </button>
-      </div>
-      <div id="search-bar-sass">
-        <div id="search-bar-sass-icon" className="emoji">
-          <i className="fa-light fa-face-awesome"></i>
-        </div>
-        <h1 id="search-bar-sass-statement">
-          Hmm, haven't heard of that. Have some coffee instead.
-        </h1>
-      </div>
-    </div>
-  </div>
-</>;

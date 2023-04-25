@@ -11,8 +11,36 @@ interface DrinksState {
 
 const initialState: DrinksState = {
   drinks: [
-    { _id: "1", image: "1", ingredients: [",", "1"], name: "one", price: 1220 },
-    { _id: "21", image: "2", ingredients: [",", "2"], name: "too", price: 1220 },
+    {
+      _id: "1",
+      image: "https://source.unsplash.com/500x550/?tree,cook",
+      ingredients: [
+        "Lobster",
+        "Risotto Rice",
+        "Onion",
+        "Garlic",
+        "Butter",
+        "White Wine",
+      ],
+      name: "risotto string",
+      price: 1220,
+      CookingTime: 15,
+    },
+    {
+      _id: "21",
+      image: "https://source.unsplash.com/500x550/?tree,nature",
+      ingredients: [
+        "Lobster",
+        "Risotto Rice",
+        "Onion",
+        "Garlic",
+        "Butter",
+        "White Wine",
+      ],
+      name: "Risotto",
+      price: 1220,
+      CookingTime: 30,
+    },
   ],
   isLoading: false,
   isError: null,

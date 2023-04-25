@@ -8,9 +8,9 @@ import BartenderPage from "./pages/BartenderPage";
 import WaiterPage from "./pages/WaiterPage";
 import { RootState, useAppDispatch } from "./store";
 import Notification from "./components/Notification/Notification";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 // import { WebSocketProvider } from "./hooks/UseWebSocket";
-import "./App.css";
+
 import { fetchDishes } from "./slices/dishes";
 import { fetchDrinks } from "./slices/drinks";
 import { fetchOrders } from "./slices/orders";
@@ -23,6 +23,7 @@ import {
 } from "react-router-dom";
 import { redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import React from "react";
 
 function App() {
   const dispatch = useAppDispatch();

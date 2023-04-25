@@ -22,6 +22,7 @@ const AddDishOrDrinkForm: React.FC<Props> = ({ isDishForm }) => {
         _id: "",
         ingredients: [],
         image: "",
+        CookingTime: 5,
       };
       dispatch(addDish(newDish));
     } else {
@@ -31,6 +32,7 @@ const AddDishOrDrinkForm: React.FC<Props> = ({ isDishForm }) => {
         _id: "",
         ingredients: [],
         image: "",
+        CookingTime: 10,
       };
       dispatch(addDrink(newDrink));
     }
@@ -95,7 +97,6 @@ const ButtonWrapper = styled(Button)`
 const InputWrapper = styled(Input)`
   width: 100%;
 `;
-
 
 export default AddDishOrDrinkForm;
 function addDish(newDish: Dish): any {

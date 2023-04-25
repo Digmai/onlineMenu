@@ -4,6 +4,7 @@ export interface Dish {
   ingredients: string[];
   price: number;
   image: string;
+  CookingTime: number;
 }
 
 export interface Drink {
@@ -12,6 +13,7 @@ export interface Drink {
   ingredients: string[];
   price: number;
   image: string;
+  CookingTime: number;
 }
 
 export interface IUser {

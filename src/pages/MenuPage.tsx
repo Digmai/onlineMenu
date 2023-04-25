@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Dish, Drink } from "../types";
@@ -25,6 +25,7 @@ const MenuPage = () => {
   const { drinks, isLoading, isError } = useSelector(
     (state: RootState) => state.drinks
   );
+  // <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />;
 
   useEffect(() => {
     // 👇 Redirects to about page, note the `replace: true`
@@ -47,25 +48,16 @@ const MenuPage = () => {
   );
 
   return (
-    <div className="menu-page">
-      <h1 className="page-title">Меню</h1>
+    <div className="menu-page containerr">
+      <h1 className="menu-page__title">Меню</h1>
+
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         <>
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {error && <Notification message={error} type="error" />}
-          <div className="menu-section container ">
-            <h2 className="menu-section-title">Dishes</h2>
+          <div className="menu-page__section row">
             <DishList dishes={filteredItems.dishes} />
-          </div>
-          <div className="menu-section container ">
-            <h2 className="menu-section-title">Drinks</h2>
-            <DrinkList drinks={filteredItems.drinks} />
-          </div>
-          <div className="cart-total">
-            Итого: {formatCurrency(0)}{" "}
-            {/* здесь будет подставляться общая сумма заказа */}
           </div>
         </>
       )}
@@ -74,3 +66,18 @@ const MenuPage = () => {
 };
 
 export default MenuPage;
+
+//  <>
+//    <div className="menu-section container ">
+//      <h2 className="menu-section-title">Dishes</h2>
+//      {/* <DishList dishes={filteredItems.dishes} /> */}
+//    </div>
+//    <div className="menu-section container ">
+//      <h2 className="menu-section-title">Drinks</h2>
+//      {/* <DrinkList drinks={filteredItems.drinks} /> */}
+//    </div>
+//    <div className="cart-total">
+//      Итого: {formatCurrency(0)}{" "}
+//      {/* здесь будет подставляться общая сумма заказа */}
+//    </div>
+//  </>;

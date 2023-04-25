@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@import url("./menu-item.scss");
+@import url("./menu-page.scss");
+
+.containerr {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: rgb(58, 75, 73);
+}
+

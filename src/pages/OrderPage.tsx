@@ -47,29 +47,22 @@ const OrderPage = () => {
     price: number,
     image: string,
     ingredients: string[],
-    type: "dishes" | "drinks" // 'dishes' or 'drinks'
+    type: "dishes" | "drinks", // 'dishes' or 'drinks'
+    CookingTime = 10
   ) => {
     const { id, name } = event.currentTarget;
     const isChecked = event.currentTarget.checked;
 
     let dishOrDrink: IDish | IDrink;
-    if (type === "dishes") {
-      dishOrDrink = {
-        _id: id,
-        name,
-        price,
-        image,
-        ingredients,
-      };
-    } else {
-      dishOrDrink = {
-        _id: id,
-        name,
-        price,
-        image,
-        ingredients,
-      };
-    }
+
+    dishOrDrink = {
+      _id: id,
+      name,
+      price,
+      image,
+      ingredients,
+      CookingTime: CookingTime,
+    };
 
     if (isChecked) {
       setOrder((prevOrder) => ({
