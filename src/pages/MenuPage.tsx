@@ -9,6 +9,8 @@ import { formatCurrency } from "../utils/formatCurrency";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import Notification from "../components/Notification/Notification";
 import { useNavigate } from "react-router-dom";
+import { Header } from "./../components/Header/Header";
+import { Footer } from "./../components/Footer/Footer";
 
 const MenuPage = () => {
   const navigate = useNavigate();
@@ -48,20 +50,30 @@ const MenuPage = () => {
   );
 
   return (
-    <div className="menu-page containerr">
-      <h1 className="menu-page__title">Меню</h1>
+    <>
+      <Header />
+      <div className="menu-page containerr">
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            {error && <Notification message={error} type="error" />}
+            <div className="menu-page__header">Dishes</div>
 
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          {error && <Notification message={error} type="error" />}
-          <div className="menu-page__section row">
-            <DishList dishes={filteredItems.dishes} />
-          </div>
-        </>
-      )}
-    </div>
+            <div className="menu-page__section row">
+              <DishList dishes={filteredItems.dishes} />
+            </div>
+            <div className="menu-page__section row">
+              <DishList dishes={filteredItems.dishes} />
+            </div>
+            <div className="menu-page__section row">
+              <DishList dishes={filteredItems.dishes} />
+            </div>
+          </>
+        )}
+      </div>
+      <Footer />
+    </>
   );
 };
 

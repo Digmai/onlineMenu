@@ -1,0 +1,20 @@
+.header {
+  height: 17.25vh;
+  width: 100vw;
+  border-bottom: rgb(127 119 119 / 4%) 1px solid;
+  background-color: #fefefe;
+  position: relative;
+  box-shadow: 0px 1px 30px 0px rgb(58 55 55 / 5.6%);
+  z-index: 2;
+  display: flex;
+  img {
+    width: auto;
+    height: 100%;
+    // background-image: url("https://source.unsplash.com/300x300/?tree,nature");
+    background-repeat: no-repeat;
+    background-size: contain;
+    top: 0;
+    position: relative;
+    margin: 0 auto;
+  }
+}

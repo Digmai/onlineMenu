@@ -1,0 +1,19 @@
+.footer {
+  bottom: 0;
+  z-index: 10;
+  position: fixed;
+  background-color: #fdfdfd;
+  &__content {
+    width: 100vw;
+    height: 12.1212vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  &__buttons {
+    width: 9.2105vw;
+    height: 9.2105vw;
+    border-radius: 50%;
+    background-color: #8d8585;
+  }
+}

@@ -2,15 +2,20 @@
 }
 .menu-page {
   width: 100vw;
-  background-color: rgb(22, 250, 223);
   &__section {
     // width: 100vw;
     display: grid;
-    grid-template-columns: 38% 38%;
+    grid-template-columns: 37.7272vw 37.7272vw;
     justify-content: space-evenly;
     grid-auto-rows: minmax(auto, auto);
   }
-  &__title {
+  &__header {
+    font-size: 2.631578vw;
+    margin-left: 8.3vw;
+
+    margin-top: 3.0363vh;
+    margin-bottom: 2.1818vh;
+    z-index: 1;
   }
 }
 .menu-section {
