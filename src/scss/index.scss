@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+@import url("./modal.scss");
 @import url("./header.scss");
 @import url("./footer.scss");
 @import url("./menu-item.scss");
@@ -11,8 +12,4 @@
   width: 100vw;
   min-height: 100vh;
   background-color: #fefefe;
-}
-
-.model {
-  height: 100vh;
 }

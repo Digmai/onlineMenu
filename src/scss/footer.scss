@@ -1,11 +1,14 @@
 .footer {
   bottom: 0;
+  // top: 87.8788vh;
   z-index: 10;
   position: fixed;
   background-color: #fdfdfd;
+  box-shadow: 0px -1px 30px 0px rgb(58 55 55 / 8.6%);
   &__content {
     width: 100vw;
     height: 12.1212vh;
+    max-height: 100px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;

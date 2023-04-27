@@ -5,7 +5,7 @@ import { Dish } from "../../types";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
-import { Model } from "../Model/Model";
+import { Model } from "../Modal/Model";
 
 interface DishCardProps {
   dish: Dish;
@@ -35,7 +35,7 @@ const DishCard: React.FC<DishCardProps> = ({ dish }) => {
       <div className="menu-item" onClick={() => setVisible(true)}>
         <img src="f.jfif" alt="" />
         <div className="menu-item__info">
-          <p className="menu-item__name"> Пица "Домашняя"</p>
+          <p className="menu-item__name"> Пица c "Домашняя"</p>
         </div>
       </div>
     </>

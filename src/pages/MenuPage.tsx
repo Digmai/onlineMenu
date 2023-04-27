@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Dish, Drink } from "../types";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import DishList from "../components/Dish/Dish";
 import DrinkList from "../components/Drink/Drink";
-import SearchBar from "../components/SearchBar/SearchBar";
-import { formatCurrency } from "../utils/formatCurrency";
-import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-import Notification from "../components/Notification/Notification";
-import { useNavigate } from "react-router-dom";
 import { Header } from "./../components/Header/Header";
 import { Footer } from "./../components/Footer/Footer";
-import AddDishOrDrinkForm from "./../components/AddDishForm/AddDishForm";
+import Notification from "../components/Notification/Notification";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+
 const MenuPage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,7 +56,6 @@ const MenuPage = () => {
         ) : (
           <>
             {error && <Notification message={error} type="error" />}
-            <AddDishOrDrinkForm isDishForm />
             <div className="menu-page__header">Dishes</div>
 
             <div className="menu-page__section row">

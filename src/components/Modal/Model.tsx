@@ -14,7 +14,13 @@ export const Model: React.FC<IModel> = ({ handleCancel, visible }) => {
       footer={null}
       visible={visible}
     >
-      <div className="model"></div>
+      <div className="modal">
+        <div className="modal__buttom">
+          <Button className="modal__buttom-page">
+            <div className="modal__button-text">Довоавить</div>
+          </Button>
+        </div>
+      </div>
     </Modal>
   );
 };
