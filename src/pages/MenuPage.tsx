@@ -11,7 +11,7 @@ import Notification from "../components/Notification/Notification";
 import { useNavigate } from "react-router-dom";
 import { Header } from "./../components/Header/Header";
 import { Footer } from "./../components/Footer/Footer";
-
+import AddDishOrDrinkForm from "./../components/AddDishForm/AddDishForm";
 const MenuPage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,6 +58,7 @@ const MenuPage = () => {
         ) : (
           <>
             {error && <Notification message={error} type="error" />}
+            <AddDishOrDrinkForm isDishForm />
             <div className="menu-page__header">Dishes</div>
 
             <div className="menu-page__section row">
