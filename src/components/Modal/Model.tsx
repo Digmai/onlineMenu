@@ -15,10 +15,18 @@ export const Model: React.FC<IModel> = ({ handleCancel, visible }) => {
       visible={visible}
     >
       <div className="modal">
+        <img src="f.jfif" alt="" className="modal__imege"></img>
+        <div className="modal__img-circle " />
+
+        <div className="modal__detail">
+          <div className="modal__detail-name">Пица c "Домашняя"</div>
+          <div>Пица c "Домашняя"</div>
+        </div>
+
         <div className="modal__buttom">
-          <Button className="modal__buttom-page">
+          <button className="modal__buttom-page">
             <div className="modal__button-text">Довоавить</div>
-          </Button>
+          </button>
         </div>
       </div>
     </Modal>
