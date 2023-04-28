@@ -31,11 +31,11 @@ const DishCard: React.FC<DishCardProps> = ({ dish }) => {
   // http://source.unsplash.com/300x300/?tree,fast-food
   return (
     <>
-      <Model handleCancel={handleCancel} visible={visible} />
+      <Model handleCancel={handleCancel} visible={visible} product={dish} />
       <div className="menu-item" onClick={() => setVisible(true)}>
         <img src="f.jfif" alt="" />
         <div className="menu-item__info">
-          <p className="menu-item__name"> Пица c "Домашняя"</p>
+          <p className="menu-item__name">{dish.name}</p>
         </div>
       </div>
     </>

@@ -9,10 +9,10 @@
   }
 
   &__img-circle {
-    left: -3%;
+    left: -10px;
     top: -50px;
     z-index: 2;
-    width: 106%;
+    width: calc(100% + 20px);
     height: 90px;
     position: relative;
     border-radius: 100%;
@@ -30,14 +30,32 @@
     border-radius: 95px 95px 0 0;
     background-color: #a8a3a300;
     &-name {
+      width: 100%;
       padding: 10px;
       margin: 0 auto;
       line-height: 1.2;
       font-size: 5.5vw;
       color: #606060;
       text-align: center;
-      width: 100%;
+      margin-bottom: 6.060606vh;
       box-sizing: border-box;
+    }
+    &-ingredients {
+      width: 100%;
+      height: 6.5vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: #60606071 0.2px solid;
+      &-name {
+        left: o;
+      }
+    }
+    &-time {
+      font-size: 5vw;
+      margin-top: 20px;
+      text-align: left;
+      position: relative;
     }
   }
 }
@@ -55,6 +73,7 @@
     margin: 0 auto;
     max-width: 440px;
     min-height: 50px;
+    font-size: 120%;
     color: aliceblue;
     align-items: center;
     border-radius: 30px;

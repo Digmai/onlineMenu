@@ -17,7 +17,7 @@ import { useAppDispatch } from "../store";
 
 const OrderPage = () => {
   const dispatch = useAppDispatch();
-  const orders = useSelector(selectOrders);
+  // const orders = useSelector(selectOrders);
   const user = useSelector(selectUser);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
@@ -42,57 +42,57 @@ const OrderPage = () => {
     }
   }, [user]);
 
-  const handleCheckboxChange = (
-    event: React.SyntheticEvent<HTMLInputElement>,
-    price: number,
-    image: string,
-    ingredients: string[],
-    type: "dishes" | "drinks", // 'dishes' or 'drinks'
-    CookingTime = 10
-  ) => {
-    const { id, name } = event.currentTarget;
-    const isChecked = event.currentTarget.checked;
+  // const handleCheckboxChange = (
+  //   event: React.SyntheticEvent<HTMLInputElement>,
+  //   price: number,
+  //   image: string,
+  //   ingredients: string[],
+  //   type: "dishes" | "drinks", // 'dishes' or 'drinks'
+  //   CookingTime = 10
+  // ) => {
+  //   const { id, name } = event.currentTarget;
+  //   const isChecked = event.currentTarget.checked;
 
-    let dishOrDrink: IDish | IDrink;
+  //   let dishOrDrink: IDish | IDrink;
 
-    dishOrDrink = {
-      _id: id,
-      name,
-      price,
-      image,
-      ingredients,
-      CookingTime: CookingTime,
-    };
+  //   dishOrDrink = {
+  //     _id: id,
+  //     name,
+  //     price,
+  //     image,
+  //     ingredients,
+  //     CookingTime: CookingTime,
+  //   };
 
-    if (isChecked) {
-      setOrder((prevOrder) => ({
-        ...prevOrder,
-        [type]: [...prevOrder[type], dishOrDrink],
-        total: prevOrder.total + price,
-      }));
-    } else {
-      setOrder((prevOrder) => {
-        const updatedItems = prevOrder[type].filter(
-          (currentItem) => currentItem._id !== id
-        );
-        return {
-          ...prevOrder,
-          [type]: updatedItems,
-          total: prevOrder.total - price,
-        };
-      });
-    }
-  };
+  //   if (isChecked) {
+  //     setOrder((prevOrder) => ({
+  //       ...prevOrder,
+  //       [type]: [...prevOrder[type], dishOrDrink],
+  //       total: prevOrder.total + price,
+  //     }));
+  //   } else {
+  //     setOrder((prevOrder) => {
+  //       const updatedItems = prevOrder[type].filter(
+  //         (currentItem) => currentItem._id !== id
+  //       );
+  //       return {
+  //         ...prevOrder,
+  //         [type]: updatedItems,
+  //         total: prevOrder.total - price,
+  //       };
+  //     });
+  //   }
+  // };
   const handlePlaceOrder = () => {
     dispatch(addOrder());
   };
 
   const renderDishes = () => {
-    return <Dish dishes={orders} />;
+    return <p>123</p>; // <Dish dishes={orders} />;
   };
 
   const renderDrinks = () => {
-    return <Drink drinks={orders} />;
+    return <p>123</p>;
   };
 
   return (
