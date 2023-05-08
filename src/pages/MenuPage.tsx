@@ -29,10 +29,7 @@ const MenuPage = () => {
   let isLoading = drinksSelect.loading && dishesSelect.loading
   // <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />;
 
-  useEffect(() => {
-    // 👇 Redirects to about page, note the `replace: true`
-    navigate("/", { replace: true });
-  }, []);
+
   useEffect(
     // Используем хук useEffect для выполнения действий при изменении строки сортировки (searchTerm)
     () => {
@@ -49,7 +46,10 @@ const MenuPage = () => {
     [searchTerm, dishesSelect, drinksSelect]
   );
 
-
+  useEffect(() => {
+    // 👇 Redirects to about page, note the `replace: true`
+    navigate("/", { replace: true });
+  }, []);
 
   return (
     <>

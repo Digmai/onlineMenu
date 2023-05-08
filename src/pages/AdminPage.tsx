@@ -19,26 +19,35 @@ const AdminPage: React.FC = () => {
     drinks: Drink[];
   }>({ dishes: [], drinks: [] });
 
-  const { dishes, loading, error } = useSelector(
+
+  const dishesSelect = useSelector(
     (state: RootState) => state.dishes
   );
 
-  const { drinks, isLoading, isError } = useSelector(
+  const drinksSelect = useSelector(
     (state: RootState) => state.drinks
   );
 
-  useEffect(() => {
-    setFilteredItems({
-      // Фильтруем блюда на основе введенного searchTerm с помощью метода filter().
-      dishes: dishes.filter((dish: Dish) =>
-        dish.name.toLowerCase().includes(searchTerm.toLowerCase())
-      ),
-      // Фильтруем напитки на основе введенного searchTerm с помощью метода filter().
-      drinks: drinks.filter((drink: Drink) =>
-        drink.name.toLowerCase().includes(searchTerm.toLowerCase())
-      ),
-    });
-  }, [searchTerm, dishes, drinks]);
+  let isLoading = drinksSelect.loading && dishesSelect.loading
+  // <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />;
+
+
+  useEffect(
+    // Используем хук useEffect для выполнения действий при изменении строки сортировки (searchTerm)
+    () => {
+      // Изменяем состояние setFilteredItems, фильтруя напитки на основе введённого searchTerm с помощью метода filter()
+      setFilteredItems({
+        dishes: dishesSelect.dishes.filter((dish: { name: string }) =>
+          dish.name.toLowerCase().includes(searchTerm.toLowerCase())
+        ),
+        drinks: drinksSelect.drinks.filter((drink: { name: string }) =>
+          drink.name.toLowerCase().includes(searchTerm.toLowerCase())
+        ),
+      });
+    },
+    [searchTerm, dishesSelect, drinksSelect]
+  );
+
 
   return (
     <div className="admin-page">

@@ -8,12 +8,12 @@ interface DrinksState {
   loading: boolean;
   error: string | null;
 }
-
+//https://source.unsplash.com/500x550/?tree,nature
 const initialState: DrinksState = {
   drinks: [
     {
       _id: "1",
-      image: "https://source.unsplash.com/500x550/?tree,nature",
+      image: "f.jfif",
       ingredients: [
         { name: "Lobster", weight: 120 },
         { name: "White Wine", weight: 130 },
@@ -28,7 +28,7 @@ const initialState: DrinksState = {
     },
     {
       _id: "1",
-      image: "https://source.unsplash.com/500x550/?tree,nature",
+      image: "f.jfif",
       ingredients: [
         { name: "Lobster", weight: 120 },
         { name: "White Wine", weight: 130 },

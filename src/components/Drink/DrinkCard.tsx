@@ -33,7 +33,7 @@ const DrinkCard: React.FC<DishCardProps> = ({ drink }) => {
   <>
   <Model handleCancel={handleCancel} visible={visible} product={drink} />
   <div className="menu-item" onClick={() => setVisible(true)}>
-    <img src="f.jfif" alt="" />
+    <img src={drink.image} alt="" />
     <div className="menu-item__info">
       <p className="menu-item__name">{drink.name}</p>
     </div>

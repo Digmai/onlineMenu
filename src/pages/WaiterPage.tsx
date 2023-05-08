@@ -17,7 +17,7 @@ const WaiterPage = () => {
     (state: RootState) => state.dishes
   );
 
-  const { drinks, isLoading, isError } = useSelector(
+  const drinksSelect = useSelector(
     (state: RootState) => state.drinks
   );
   useEffect(() => {
@@ -72,7 +72,7 @@ const WaiterPage = () => {
           </div>
           <div className="waiter-page__drinks-list">
             <h2>Напитки</h2>
-            <DrinkList drinks={drinks} />
+            <DrinkList drinks={drinksSelect.drinks} />
           </div>
         </div>
         <div className="waiter-page__new-order-form">
