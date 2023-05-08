@@ -10,7 +10,7 @@ export interface Dish {
 export interface Drink {
   _id: string;
   name: string;
-  ingredients: string[];
+  ingredients: { name: string; weight: number }[];
   price: number;
   image: string;
   CookingTime: number;

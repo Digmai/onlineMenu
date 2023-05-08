@@ -5,45 +5,45 @@ import { Drink } from "../types";
 
 interface DrinksState {
   drinks: Drink[];
-  isLoading: boolean;
-  isError: string | null;
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: DrinksState = {
   drinks: [
     {
       _id: "1",
-      image: "https://source.unsplash.com/500x550/?tree,cook",
-      ingredients: [
-        "Lobster",
-        "Risotto Rice",
-        "Onion",
-        "Garlic",
-        "Butter",
-        "White Wine",
-      ],
-      name: "risotto string",
-      price: 1220,
-      CookingTime: 15,
-    },
-    {
-      _id: "21",
       image: "https://source.unsplash.com/500x550/?tree,nature",
       ingredients: [
-        "Lobster",
-        "Risotto Rice",
-        "Onion",
-        "Garlic",
-        "Butter",
-        "White Wine",
+        { name: "Lobster", weight: 120 },
+        { name: "White Wine", weight: 130 },
+        { name: "Risotto Rice", weight: 180 },
+        { name: "Onion", weight: 110 },
+        { name: "Butter", weight: 160 },
+        { name: "White Wine", weight: 220 },
       ],
-      name: "Risotto",
+      name: 'Пица "Домашняя"',
       price: 1220,
       CookingTime: 30,
     },
+    {
+      _id: "1",
+      image: "https://source.unsplash.com/500x550/?tree,nature",
+      ingredients: [
+        { name: "Lobster", weight: 120 },
+        { name: "White Wine", weight: 130 },
+        { name: "Risotto Rice", weight: 180 },
+        { name: "Onion", weight: 110 },
+        { name: "Butter", weight: 160 },
+        { name: "White Wine", weight: 220 },
+      ],
+      name: 'Пица "Домашняя"',
+      price: 1220,
+      CookingTime: 15,
+    },
   ],
-  isLoading: false,
-  isError: null,
+  loading: false,
+  error: null,
 };
 
 const drinksSlice = createSlice({
@@ -51,56 +51,56 @@ const drinksSlice = createSlice({
   initialState,
   reducers: {
     getDrinksStart(state) {
-      state.isLoading = true;
+      state.loading = true;
     },
     getDrinksSuccess(state, action: PayloadAction<Drink[]>) {
-      state.isLoading = false;
-      state.isError = null;
+      state.loading = false;
+      state.error = null;
       state.drinks = action.payload;
     },
     getDrinksFailure(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.isError = action.payload;
+      state.loading = false;
+      state.error = action.payload;
     },
     updateDrinkStart(state) {
-      state.isLoading = true;
+      state.loading = true;
     },
     updateDrinkSuccess(state, action: PayloadAction<Drink>) {
-      state.isLoading = false;
-      state.isError = null;
+      state.loading = false;
+      state.error = null;
       state.drinks = state.drinks.map((drink) =>
         drink._id === action.payload._id ? action.payload : drink
       );
     },
     updateDrinkFailure(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.isError = action.payload;
+      state.loading = false;
+      state.error = action.payload;
     },
     addDrinkStart(state) {
-      state.isLoading = true;
+      state.loading = true;
     },
     addDrinkSuccess(state, action: PayloadAction<Drink>) {
-      state.isLoading = false;
-      state.isError = null;
+      state.loading = false;
+      state.error = null;
       state.drinks.push(action.payload);
     },
     addDrinkFailure(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.isError = action.payload;
+      state.loading = false;
+      state.error = action.payload;
     },
     deleteDrinkStart(state) {
-      state.isLoading = true;
+      state.loading = true;
     },
     deleteDrinkSuccess(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.isError = null;
+      state.loading = false;
+      state.error = null;
       state.drinks = state.drinks.filter(
         (drink) => drink._id !== action.payload
       );
     },
     deleteDrinkFailure(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.isError = action.payload;
+      state.loading = false;
+      state.error = action.payload;
     },
   },
 });
@@ -132,8 +132,8 @@ export const fetchDrinks = () => {
   };
 };
 
-export const selectDrinksLoading = (state: RootState) => state.drinks.isLoading;
-export const selectDrinksError = (state: RootState) => state.drinks.isError;
+export const selectDrinksLoading = (state: RootState) => state.drinks.loading;
+export const selectDrinksError = (state: RootState) => state.drinks.error;
 export const selectAllDrinks = (state: RootState) => state.drinks.drinks;
 
 export default drinksSlice.reducer;

@@ -14,16 +14,16 @@ interface DishCardProps {
 const DishCard: React.FC<DishCardProps> = ({ dish }) => {
   const dispatch = useDispatch();
 
-  const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
 
-  const showModal = () => {
-    setVisible(true);
-  };
+    const showModal = () => {
+      setVisible(true);
+    };
 
-  const handleCancel = () => {
-    setVisible(false);
-    // form.resetFields();
-  };
+    const handleCancel = () => {
+      setVisible(false);
+      // form.resetFields();
+    };
 
   const handleAddToCart = () => {
     dispatch(addItemToCart({ ...dish }));

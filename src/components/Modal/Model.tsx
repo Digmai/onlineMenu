@@ -7,7 +7,7 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 interface IModel {
   handleCancel: () => void;
   visible: boolean;
-  product: Dish;
+  product: Dish | Drink;
 }
 
 export const Model: React.FC<IModel> = ({ handleCancel, visible, product }) => {

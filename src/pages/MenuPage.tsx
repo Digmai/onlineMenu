@@ -18,13 +18,15 @@ const MenuPage = () => {
     drinks: Drink[];
   }>({ dishes: [], drinks: [] });
 
-  const { dishes, loading, error } = useSelector(
+  const dishesSelect = useSelector(
     (state: RootState) => state.dishes
   );
 
-  const { drinks, isLoading, isError } = useSelector(
+  const drinksSelect = useSelector(
     (state: RootState) => state.drinks
   );
+
+  let isLoading = drinksSelect.loading && dishesSelect.loading
   // <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />;
 
   useEffect(() => {
@@ -36,16 +38,18 @@ const MenuPage = () => {
     () => {
       // Изменяем состояние setFilteredItems, фильтруя напитки на основе введённого searchTerm с помощью метода filter()
       setFilteredItems({
-        dishes: dishes.filter((dish: { name: string }) =>
+        dishes: dishesSelect.dishes.filter((dish: { name: string }) =>
           dish.name.toLowerCase().includes(searchTerm.toLowerCase())
         ),
-        drinks: drinks.filter((drink: { name: string }) =>
+        drinks: drinksSelect.drinks.filter((drink: { name: string }) =>
           drink.name.toLowerCase().includes(searchTerm.toLowerCase())
         ),
       });
     },
-    [searchTerm, dishes, drinks]
+    [searchTerm, dishesSelect, drinksSelect]
   );
+
+
 
   return (
     <>
@@ -55,18 +59,19 @@ const MenuPage = () => {
           <LoadingSpinner />
         ) : (
           <>
-            {error && <Notification message={error} type="error" />}
+            {dishesSelect.error && <Notification message={dishesSelect.error} type="error" />}
+            {drinksSelect.error && <Notification message={drinksSelect.error} type="error" />}
             <div className="menu-page__header">Dishes</div>
 
             <div className="menu-page__section row">
               <DishList dishes={filteredItems.dishes} />
             </div>
-            <div className="menu-page__section row">
-              <DishList dishes={filteredItems.dishes} />
-            </div>
-            <div className="menu-page__section row">
-              <DishList dishes={filteredItems.dishes} />
-            </div>
+            <div className="menu-page__header">Dishes</div>
+
+<div className="menu-page__section row">
+  <DishList dishes={filteredItems.dishes} />
+</div>
+
           </>
         )}
       </div>
