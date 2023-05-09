@@ -4,7 +4,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { Dish, Drink, Order, OrderStatus } from "../types";
+import { IProduct, Order, OrderStatus } from "../types";
 import { AppThunk, AppDispatch, RootState } from "../store";
 import { ApiService } from "../services/ApiService";
 import { WebSocketNotification } from "../types";
@@ -12,7 +12,7 @@ import { OrderService } from "../services/OrderService";
 import axios from "axios";
 
 interface OrdersState {
-  cart: (Dish | Drink)[];
+  cart: IProduct[];
   loading: boolean;
   error: string | null;
   orders: Order[];
@@ -32,7 +32,7 @@ const ordersSlice = createSlice({
   initialState,
   reducers: {
     // Добавление товара в корзину заказа
-    addItemToCart(state, action: PayloadAction<Dish | Drink>) {
+    addItemToCart(state, action: PayloadAction<IProduct>) {
       state.cart = [...state.cart, action.payload];
     },
     // Удаление товара из корзины заказа по индексу

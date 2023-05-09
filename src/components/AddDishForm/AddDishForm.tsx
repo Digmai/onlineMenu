@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Form, Input, Button, Modal } from "antd";
 import { FaPlusCircle } from "react-icons/fa";
-import { Dish, Drink } from "../../types";
+import { IProduct } from "../../types";
 import { useAppDispatch } from "../../store";
 
 interface Props {
@@ -16,23 +16,23 @@ const AddDishOrDrinkForm: React.FC<Props> = ({ isDishForm }) => {
 
   const onFinish = (values: { name: any; price: any }) => {
     if (isDishForm) {
-      const newDish: Dish = {
+      const newDish: IProduct = {
         name: values.name,
         price: values.price,
         _id: "",
         ingredients: [],
         image: "",
-        CookingTime: 5,
+        CookingTime: 5,category: "Re[zy",DishOrDrink:"Dish",subcategory:'}{ILE6'
       };
       dispatch(addDish(newDish));
     } else {
-      const newDrink: Drink = {
+      const newDrink: IProduct = {
         name: values.name,
         price: values.price,
         _id: "",
         ingredients: [],
         image: "",
-        CookingTime: 10,
+        CookingTime: 5,category: "Re[zy",DishOrDrink:"Drink",subcategory:'}{ILE6'
       };
       dispatch(addDrink(newDrink));
     }
@@ -99,10 +99,10 @@ const InputWrapper = styled(Input)`
 `;
 
 export default AddDishOrDrinkForm;
-function addDish(newDish: Dish): any {
+function addDish(newDish: IProduct): any {
   throw new Error("Function not implemented.");
 }
 
-function addDrink(newDrink: Drink): any {
+function addDrink(newDrink: IProduct): any {
   throw new Error("Function not implemented.");
 }

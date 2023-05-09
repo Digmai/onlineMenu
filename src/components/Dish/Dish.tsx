@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { Dish } from "../../types";
+import { IProduct } from "../../types";
 import DishCard from "./DishCard";
 
 interface DishListProps {
-  dishes: Dish[];
+  dishes: IProduct[];
   handleChange?: (
     event: React.SyntheticEvent<HTMLInputElement>,
     price: number,

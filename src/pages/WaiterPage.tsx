@@ -7,7 +7,7 @@ import WebSocketService from "../services/WebSocketService";
 import { Order } from "../types";
 import { OrderList } from "../components/Order/OrderList";
 import DishList from "../components/Dish/Dish";
-import DrinkList from "../components/Drink/Drink";
+
 
 const WaiterPage = () => {
   const dispatch = useAppDispatch();

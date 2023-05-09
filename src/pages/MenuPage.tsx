@@ -4,7 +4,6 @@ import { IProduct } from "../types";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import DishList from "../components/Dish/Dish";
-import DrinkList from "../components/Drink/Drink";
 import { Header } from "./../components/Header/Header";
 import { Footer } from "./../components/Footer/Footer";
 import Notification from "../components/Notification/Notification";

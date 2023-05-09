@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Modal } from "antd";
-import { Dish, Drink } from "../../types";
+import { IProduct} from "../../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 interface IModel {
   handleCancel: () => void;
   visible: boolean;
-  product: Dish | Drink;
+  product: IProduct;
 }
 
 export const Model: React.FC<IModel> = ({ handleCancel, visible, product }) => {

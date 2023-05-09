@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAllDishes } from "../slices/product";
-import { selectAllDrinks } from "../slices/drinks";
 import { selectUser } from "../slices/user";
 import {
   addOrder,
@@ -10,9 +9,8 @@ import {
   selectOrders,
 } from "../slices/orders";
 import Notification from "../components/Notification/Notification";
-import { Dish as IDish, Drink as IDrink, OrderItem } from "../types";
+import { IProduct, Drink as IDrink, OrderItem } from "../types";
 import Dish from "../components/Dish/Dish";
-import Drink from "../components/Drink/Drink";
 import { useAppDispatch } from "../store";
 
 const OrderPage = () => {
@@ -25,8 +23,7 @@ const OrderPage = () => {
   const [order, setOrder] = useState({
     _id: "",
     name: "",
-    dishes: [] as IDish[],
-    drinks: [] as IDrink[],
+    product: [] as IProduct[],
     total: 0,
     type: "",
   });

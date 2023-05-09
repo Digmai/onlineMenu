@@ -9,8 +9,7 @@ const Order: React.FC = () => {
     { _id: string; name: string; price: number; quantity: number }[]
   >([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const dishes = useSelector((state: RootState) => state.dishes.dishes);
-  const drinks = useSelector((state: RootState) => state.drinks.drinks);
+  const product = useSelector((state: RootState) => state.product.product);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
 
@@ -73,34 +72,20 @@ const Order: React.FC = () => {
         <div className="order-items">
           <h4>Dishes</h4>
           <ul>
-            {dishes.map((dish) => (
-              <li key={dish._id}>
-                <span>{dish.name}</span>
-                <span>{formatCurrency(dish.price)}</span>
+            {product.map((item) => (
+              <li key={item._id}>
+                <span>{item.name}</span>
+                <span>{formatCurrency(item.price)}</span>
                 <button
                   type="button"
-                  onClick={() => addItem({ ...dish, quantity: 1 })}
+                  onClick={() => addItem({ ...item, quantity: 1 })}
                 >
                   +
                 </button>
               </li>
             ))}
           </ul>
-          <h4>Drinks</h4>
-          <ul>
-            {drinks.map((drink) => (
-              <li key={drink._id}>
-                <span>{drink.name}</span>
-                <span>{formatCurrency(drink.price)}</span>
-                <button
-                  type="button"
-                  onClick={() => addItem({ ...drink, quantity: 1 })}
-                >
-                  +
-                </button>
-              </li>
-            ))}
-          </ul>
+
         </div>
         <div className="order-summary">
           <h4>Summary</h4>

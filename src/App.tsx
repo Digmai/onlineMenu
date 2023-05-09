@@ -12,7 +12,6 @@ import Notification from "./components/Notification/Notification";
 // import { WebSocketProvider } from "./hooks/UseWebSocket";
 
 import { fetchDishes } from "./slices/product";
-import { fetchDrinks } from "./slices/drinks";
 import { fetchOrders } from "./slices/orders";
 import {
   BrowserRouter,
