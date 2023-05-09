@@ -68,24 +68,24 @@ const Order: React.FC = () => {
   return (
     <div className="order">
       <h2>Order1</h2>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <div className="order-items">
           <h4>Dishes</h4>
           <ul>
-            {product.map((item) => (
-              <li key={item._id}>
-                <span>{item.name}</span>
-                <span>{formatCurrency(item.price)}</span>
-                <button
-                  type="button"
-                  onClick={() => addItem({ ...item, quantity: 1 })}
-                >
-                  +
-                </button>
-              </li>
-            ))}
+            {product &&
+              product.map((item) => (
+                <li key={item._id}>
+                  <span>{item.name}</span>
+                  <span>{formatCurrency(item.price)}</span>
+                  <button
+                    type="button"
+                    onClick={() => addItem({ ...item, quantity: 1 })}
+                  >
+                    +
+                  </button>
+                </li>
+              ))}
           </ul>
-
         </div>
         <div className="order-summary">
           <h4>Summary</h4>
@@ -104,7 +104,7 @@ const Order: React.FC = () => {
           <h4>Total: {formatCurrency(totalPrice)}</h4>
           <button type="submit">Submit Order</button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };

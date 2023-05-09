@@ -8,15 +8,11 @@ import { Order } from "../types";
 import { OrderList } from "../components/Order/OrderList";
 import DishList from "../components/Dish/Dish";
 
-
 const WaiterPage = () => {
   const dispatch = useAppDispatch();
   const UserError = useSelector(selectError);
   const orders = useSelector((state: RootState) => state.orders.orders);
-  const productSelect = useSelector(
-    (state: RootState) => state.product
-  );
-
+  const productSelect = useSelector((state: RootState) => state.product);
 
   useEffect(() => {
     // Get initial list of orders on mount
@@ -53,11 +49,15 @@ const WaiterPage = () => {
     // Dispatch action to submit new order
     // TODO: implement
   };
-
+  if (!productSelect.product) {
+    return <div>null productSelect.product</div>;
+  }
   return (
     <div className="page-container">
       <div className="content-container">
-        {productSelect.error && <p className="error-message">{productSelect.error}</p>}
+        {productSelect.error && (
+          <p className="error-message">{productSelect.error}</p>
+        )}
         <h1>Панель официанта</h1>
         <div className="waiter-page__orders-list">
           <h2>Текущие заказы</h2>

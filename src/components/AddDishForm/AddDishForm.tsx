@@ -22,7 +22,10 @@ const AddDishOrDrinkForm: React.FC<Props> = ({ isDishForm }) => {
         _id: "",
         ingredients: [],
         image: "",
-        CookingTime: 5,category: "Re[zy",DishOrDrink:"Dish",subcategory:'}{ILE6'
+        CookingTime: 5,
+        category: "Re[zy",
+        DishOrDrink: "Dish",
+        subcategory: "}{ILE6",
       };
       dispatch(addDish(newDish));
     } else {
@@ -32,7 +35,10 @@ const AddDishOrDrinkForm: React.FC<Props> = ({ isDishForm }) => {
         _id: "",
         ingredients: [],
         image: "",
-        CookingTime: 5,category: "Re[zy",DishOrDrink:"Drink",subcategory:'}{ILE6'
+        CookingTime: 5,
+        category: "Re[zy",
+        DishOrDrink: "Drink",
+        subcategory: "}{ILE6",
       };
       dispatch(addDrink(newDrink));
     }

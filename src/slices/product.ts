@@ -2,53 +2,63 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProduct } from "../types";
 import { AppDispatch, RootState } from "../store";
 import { ApiService } from "../services/ApiService";
+import { sortDataSlaceProduct } from "../utils/sortDataSlaceProduct";
 
+interface IProducts {
+  [category: string]: {
+    [subcategory: string]: IProduct[];
+  };
+}
 interface IProductState {
   loading: boolean;
-  product: IProduct[];
+  product: IProducts | null;
   error: string | null;
 }
+
+const Product: IProduct[] = [
+  {
+    _id: "1",
+    price: 1220,
+    CookingTime: 30,
+    category: "Бар",
+    image: "f.jfif",
+    name: "White Wine",
+    DishOrDrink: "Dish",
+    subcategory: "Вино",
+    ingredients: [
+      { name: "Lobster", weight: 120 },
+      { name: "White Wine", weight: 130 },
+      { name: "Risotto Rice", weight: 180 },
+      { name: "Onion", weight: 110 },
+      { name: "Butter", weight: 160 },
+    ],
+  },
+  {
+    _id: "2",
+    price: 1220,
+    CookingTime: 15,
+    image: "f.jfif",
+    category: "Кухня",
+    DishOrDrink: "Dish",
+    subcategory: "Пица",
+    name: 'Пица "Домашняя"',
+    ingredients: [
+      { name: "Lobster", weight: 120 },
+      { name: "White Wine", weight: 130 },
+      { name: "Risotto Rice", weight: 180 },
+      { name: "Onion", weight: 110 },
+      { name: "Butter", weight: 160 },
+      { name: "White Wine", weight: 220 },
+    ],
+  },
+];
+
+console.log(sortDataSlaceProduct(Product));
 
 const initialState: IProductState = {
   loading: false,
   error: null,
-  product: [
-    {
-      _id: "1",
-      price: 1220,
-      CookingTime: 30,
-      category: "Бар",
-      image: "f.jfif",
-      name: "White Wine",
-      DishOrDrink: "Dish",
-      subcategory: "Вино",
-      ingredients: [
-        { name: "Lobster", weight: 120 },
-        { name: "White Wine", weight: 130 },
-        { name: "Risotto Rice", weight: 180 },
-        { name: "Onion", weight: 110 },
-        { name: "Butter", weight: 160 },
-      ],
-    },
-    {
-      _id: "2",
-      price: 1220,
-      CookingTime: 15,
-      image: "f.jfif",
-      category: "Кухня",
-      DishOrDrink: "Dish",
-      subcategory: "Пица",
-      name: 'Пица "Домашняя"',
-      ingredients: [
-        { name: "Lobster", weight: 120 },
-        { name: "White Wine", weight: 130 },
-        { name: "Risotto Rice", weight: 180 },
-        { name: "Onion", weight: 110 },
-        { name: "Butter", weight: 160 },
-        { name: "White Wine", weight: 220 },
-      ],
-    },
-  ],
+  product: null,
 };
 
 const productSlice = createSlice({
@@ -59,7 +69,7 @@ const productSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    getDishesSuccess(state, action: PayloadAction<IProduct[]>) {
+    getDishesSuccess(state, action: PayloadAction<IProducts>) {
       state.loading = false;
       state.error = null;
       state.product = action.payload;
@@ -72,14 +82,21 @@ const productSlice = createSlice({
 });
 
 export const { getDishesStart, getDishesSuccess, getDishesFailure } =
-productSlice.actions;
+  productSlice.actions;
 
 export const fetchDishes = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(getDishesStart());
     try {
       const dishes = await ApiService.get<IProduct[]>("dishes");
-      dispatch(getDishesSuccess(dishes.data));
+      const data = sortDataSlaceProduct([
+        ...Product,
+        ...Product,
+        ...Product,
+        ...Product,
+        ...Product,
+      ]);
+      dispatch(getDishesSuccess(data));
     } catch (error: any) {
       dispatch(getDishesFailure(error.message));
     }
@@ -88,6 +105,6 @@ export const fetchDishes = () => {
 
 export const selectDishesLoading = (state: RootState) => state.product.loading;
 export const selectDishesError = (state: RootState) => state.product.error;
-export const selectAllDishes = (state: RootState) => state.product.product;
+export const selectAllProduct = (state: RootState) => state.product.product;
 
 export default productSlice.reducer;
