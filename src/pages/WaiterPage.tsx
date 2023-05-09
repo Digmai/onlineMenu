@@ -13,13 +13,11 @@ const WaiterPage = () => {
   const dispatch = useAppDispatch();
   const UserError = useSelector(selectError);
   const orders = useSelector((state: RootState) => state.orders.orders);
-  const { dishes, loading, error } = useSelector(
-    (state: RootState) => state.dishes
+  const productSelect = useSelector(
+    (state: RootState) => state.product
   );
 
-  const drinksSelect = useSelector(
-    (state: RootState) => state.drinks
-  );
+
   useEffect(() => {
     // Get initial list of orders on mount
     dispatch(fetchOrders());
@@ -59,7 +57,7 @@ const WaiterPage = () => {
   return (
     <div className="page-container">
       <div className="content-container">
-        {error && <p className="error-message">{error}</p>}
+        {productSelect.error && <p className="error-message">{productSelect.error}</p>}
         <h1>Панель официанта</h1>
         <div className="waiter-page__orders-list">
           <h2>Текущие заказы</h2>
@@ -68,12 +66,12 @@ const WaiterPage = () => {
         <div className="waiter-page__menu-lists">
           <div className="waiter-page__dishes-list">
             <h2>Блюда</h2>
-            <DishList dishes={dishes} />
+            <DishList dishes={productSelect.product} />
           </div>
-          <div className="waiter-page__drinks-list">
-            <h2>Напитки</h2>
+          {/* <div className="waiter-page__drinks-list">  
+            <h2>Напитки</h2>       НУЖНО НАПИСАТЬ ЛОКИКУ ВЫБОРА ТО ТИТУ НАПИТОК ЭТО ИЛИ БЛЮДО 
             <DrinkList drinks={drinksSelect.drinks} />
-          </div>
+          </div> */}
         </div>
         <div className="waiter-page__new-order-form">
           <h2>Добавить заказ</h2>

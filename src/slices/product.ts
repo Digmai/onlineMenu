@@ -1,36 +1,44 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IProduct } from "../types";
 import { AppDispatch, RootState } from "../store";
-import { Dish } from "../types";
 import { ApiService } from "../services/ApiService";
 
-interface DishesState {
+interface IProductState {
   loading: boolean;
+  product: IProduct[];
   error: string | null;
-  dishes: Dish[];
 }
 
-const initialState: DishesState = {
+const initialState: IProductState = {
   loading: false,
   error: null,
-  dishes: [
+  product: [
     {
       _id: "1",
-      image: "f.jfif",
-      ingredients: [
-        { name: "Lobster", weight: 120 },
-        { name: "White Wine", weight: 130 },
-        { name: "Risotto Rice", weight: 180 },
-        { name: "Onion", weight: 110 },
-        { name: "Butter", weight: 160 },
-        { name: "White Wine", weight: 220 },
-      ],
-      name: 'Пица "Домашняя"',
       price: 1220,
       CookingTime: 30,
+      category: "Бар",
+      image: "f.jfif",
+      name: "White Wine",
+      DishOrDrink: "Dish",
+      subcategory: "Вино",
+      ingredients: [
+        { name: "Lobster", weight: 120 },
+        { name: "White Wine", weight: 130 },
+        { name: "Risotto Rice", weight: 180 },
+        { name: "Onion", weight: 110 },
+        { name: "Butter", weight: 160 },
+      ],
     },
     {
-      _id: "1",
+      _id: "2",
+      price: 1220,
+      CookingTime: 15,
       image: "f.jfif",
+      category: "Кухня",
+      DishOrDrink: "Dish",
+      subcategory: "Пица",
+      name: 'Пица "Домашняя"',
       ingredients: [
         { name: "Lobster", weight: 120 },
         { name: "White Wine", weight: 130 },
@@ -39,14 +47,11 @@ const initialState: DishesState = {
         { name: "Butter", weight: 160 },
         { name: "White Wine", weight: 220 },
       ],
-      name: 'Пица "Домашняя"',
-      price: 1220,
-      CookingTime: 15,
     },
   ],
 };
 
-const dishesSlice = createSlice({
+const productSlice = createSlice({
   name: "dishes",
   initialState,
   reducers: {
@@ -54,10 +59,10 @@ const dishesSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    getDishesSuccess(state, action: PayloadAction<Dish[]>) {
+    getDishesSuccess(state, action: PayloadAction<IProduct[]>) {
       state.loading = false;
       state.error = null;
-      state.dishes = action.payload;
+      state.product = action.payload;
     },
     getDishesFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -67,13 +72,13 @@ const dishesSlice = createSlice({
 });
 
 export const { getDishesStart, getDishesSuccess, getDishesFailure } =
-  dishesSlice.actions;
+productSlice.actions;
 
 export const fetchDishes = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(getDishesStart());
     try {
-      const dishes = await ApiService.get<Dish[]>("dishes");
+      const dishes = await ApiService.get<IProduct[]>("dishes");
       dispatch(getDishesSuccess(dishes.data));
     } catch (error: any) {
       dispatch(getDishesFailure(error.message));
@@ -81,8 +86,8 @@ export const fetchDishes = () => {
   };
 };
 
-export const selectDishesLoading = (state: RootState) => state.dishes.loading;
-export const selectDishesError = (state: RootState) => state.dishes.error;
-export const selectAllDishes = (state: RootState) => state.dishes.dishes;
+export const selectDishesLoading = (state: RootState) => state.product.loading;
+export const selectDishesError = (state: RootState) => state.product.error;
+export const selectAllDishes = (state: RootState) => state.product.product;
 
-export default dishesSlice.reducer;
+export default productSlice.reducer;

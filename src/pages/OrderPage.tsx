@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectAllDishes } from "../slices/dishes";
+import { selectAllDishes } from "../slices/product";
 import { selectAllDrinks } from "../slices/drinks";
 import { selectUser } from "../slices/user";
 import {

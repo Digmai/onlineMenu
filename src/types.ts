@@ -1,10 +1,14 @@
-export interface Dish {
+export interface IProduct {
   _id: string;
   name: string;
-  ingredients: { name: string; weight: number }[];
   price: number;
   image: string;
+  category: string
+  subcategory:string
   CookingTime: number;
+  DishOrDrink:'Dish' | 'Drink'
+  ingredients: { name: string; weight: number }[];
+
 }
 
 export interface Drink {
@@ -35,7 +39,7 @@ export interface ILogin {
 }
 
 export interface OrderItem {
-  item: Dish | Drink;
+  item: IProduct;
   quantity: number;
 }
 

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../slices/orders";
-import { Dish } from "../../types";
+import { IProduct } from "../../types";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { Model } from "../Modal/Model";
 
 interface DishCardProps {
-  dish: Dish;
+  dish: IProduct;
 }
 
 const DishCard: React.FC<DishCardProps> = ({ dish }) => {

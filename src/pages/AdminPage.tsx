@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Notification from "../components/Notification/Notification";
-import { Dish, Drink } from "../types";
+import { IProduct } from "../types";
 import DishList from "../components/Dish/Dish";
-import DrinkList from "../components/Drink/Drink";
 import AddDishOrDrinkForm from "../components/AddDishForm/AddDishForm";
 import { OrderList } from "../components/Order/OrderList";
 import UserList from "../components/User/UserList";
@@ -15,20 +14,17 @@ const AdminPage: React.FC = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState<{
-    dishes: Dish[];
-    drinks: Drink[];
-  }>({ dishes: [], drinks: [] });
+    dishes: IProduct[];
+  }>({ dishes: [] });
 
 
   const dishesSelect = useSelector(
-    (state: RootState) => state.dishes
+    (state: RootState) => state.product
   );
 
-  const drinksSelect = useSelector(
-    (state: RootState) => state.drinks
-  );
 
-  let isLoading = drinksSelect.loading && dishesSelect.loading
+
+  let isLoading = dishesSelect.loading
   // <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />;
 
 
@@ -37,15 +33,13 @@ const AdminPage: React.FC = () => {
     () => {
       // Изменяем состояние setFilteredItems, фильтруя напитки на основе введённого searchTerm с помощью метода filter()
       setFilteredItems({
-        dishes: dishesSelect.dishes.filter((dish: { name: string }) =>
+        dishes: dishesSelect.product.filter((dish: { name: string }) =>
           dish.name.toLowerCase().includes(searchTerm.toLowerCase())
         ),
-        drinks: drinksSelect.drinks.filter((drink: { name: string }) =>
-          drink.name.toLowerCase().includes(searchTerm.toLowerCase())
-        ),
+
       });
     },
-    [searchTerm, dishesSelect, drinksSelect]
+    [searchTerm, dishesSelect]
   );
 
 
@@ -63,7 +57,7 @@ const AdminPage: React.FC = () => {
           <h2>Меню</h2>
           <DishList dishes={filteredItems.dishes} />
           <AddDishOrDrinkForm isDishForm={true} />
-          <DrinkList drinks={filteredItems.drinks} />
+          {/* <DrinkList drinks={filteredItems.drinks} /> */}
           <AddDishOrDrinkForm isDishForm={false} />
           <h2>Заказы</h2>
           <OrderList />

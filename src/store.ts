@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { ThunkAction, Action } from "@reduxjs/toolkit";
 import userReducer from "./slices/user";
 import ordersReducer from "./slices/orders";
-import dishesReducer from "./slices/dishes";
-import drinksReducer from "./slices/drinks";
+import productSlice from "./slices/product";
+
 import usersReducer from "./slices/users";
 
 const store = configureStore({
@@ -12,8 +12,7 @@ const store = configureStore({
 
     user: userReducer,
     users: usersReducer,
-    dishes: dishesReducer,
-    drinks: drinksReducer,
+    product: productSlice,
     orders: ordersReducer,
   },
 });

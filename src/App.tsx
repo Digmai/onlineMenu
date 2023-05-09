@@ -11,7 +11,7 @@ import Notification from "./components/Notification/Notification";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import { WebSocketProvider } from "./hooks/UseWebSocket";
 
-import { fetchDishes } from "./slices/dishes";
+import { fetchDishes } from "./slices/product";
 import { fetchDrinks } from "./slices/drinks";
 import { fetchOrders } from "./slices/orders";
 import {

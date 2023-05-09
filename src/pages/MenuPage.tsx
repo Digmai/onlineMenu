@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RootState } from "../store";
-import { Dish, Drink } from "../types";
+import { IProduct } from "../types";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import DishList from "../components/Dish/Dish";
@@ -14,19 +14,15 @@ const MenuPage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState<{
-    dishes: Dish[];
-    drinks: Drink[];
-  }>({ dishes: [], drinks: [] });
+    product: IProduct[];
+  }>({ product: []});
 
   const dishesSelect = useSelector(
-    (state: RootState) => state.dishes
+    (state: RootState) => state.product
   );
 
-  const drinksSelect = useSelector(
-    (state: RootState) => state.drinks
-  );
 
-  let isLoading = drinksSelect.loading && dishesSelect.loading
+  let isLoading = dishesSelect.loading
   // <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />;
 
 
@@ -35,15 +31,13 @@ const MenuPage = () => {
     () => {
       // Изменяем состояние setFilteredItems, фильтруя напитки на основе введённого searchTerm с помощью метода filter()
       setFilteredItems({
-        dishes: dishesSelect.dishes.filter((dish: { name: string }) =>
+        product: dishesSelect.product.filter((dish: { name: string }) =>
           dish.name.toLowerCase().includes(searchTerm.toLowerCase())
         ),
-        drinks: drinksSelect.drinks.filter((drink: { name: string }) =>
-          drink.name.toLowerCase().includes(searchTerm.toLowerCase())
-        ),
+
       });
     },
-    [searchTerm, dishesSelect, drinksSelect]
+    [searchTerm, dishesSelect]
   );
 
   useEffect(() => {
@@ -60,18 +54,11 @@ const MenuPage = () => {
         ) : (
           <>
             {dishesSelect.error && <Notification message={dishesSelect.error} type="error" />}
-            {drinksSelect.error && <Notification message={drinksSelect.error} type="error" />}
             <div className="menu-page__header">Dishes</div>
 
             <div className="menu-page__section row">
-              <DishList dishes={filteredItems.dishes} />
+              <DishList dishes={filteredItems.product} />
             </div>
-            <div className="menu-page__header">Dishes</div>
-
-<div className="menu-page__section row">
-  <DishList dishes={filteredItems.dishes} />
-</div>
-
           </>
         )}
       </div>
