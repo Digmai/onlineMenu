@@ -2,10 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { IProduct } from "../../types";
-import DishCard from "./DishCard";
+import DishCard from "./ProductCard";
 
-interface DishListProps {
-  dishes: IProduct[];
+interface ProductListProps {
+  products: IProduct[];
   handleChange?: (
     event: React.SyntheticEvent<HTMLInputElement>,
     price: number,
@@ -15,14 +15,14 @@ interface DishListProps {
   ) => void;
 }
 
-const DishList: React.FC<DishListProps> = ({ dishes }) => {
+const ProductList: React.FC<ProductListProps> = ({ products }) => {
   return (
     <>
-      {dishes.map((dish) => (
+      {products.map((dish) => (
         <DishCard dish={dish} key={dish._id} />
       ))}
     </>
   );
 };
 
-export default DishList;
+export default ProductList;

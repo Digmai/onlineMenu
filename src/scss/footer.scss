@@ -48,6 +48,9 @@ ul {
   z-index: 1;
   -webkit-user-select: none;
   user-select: none;
+  & ul {
+    overflow: scroll;
+  }
 } 
 
 #menuToggle input

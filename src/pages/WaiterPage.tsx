@@ -6,13 +6,12 @@ import { RootState, useAppDispatch } from "../store";
 import WebSocketService from "../services/WebSocketService";
 import { Order } from "../types";
 import { OrderList } from "../components/Order/OrderList";
-import DishList from "../components/Dish/Dish";
+import ProductList from "../components/Product/ProductList";
 
 const WaiterPage = () => {
   const dispatch = useAppDispatch();
   const UserError = useSelector(selectError);
   const orders = useSelector((state: RootState) => state.orders.orders);
-  const productSelect = useSelector((state: RootState) => state.product);
 
   useEffect(() => {
     // Get initial list of orders on mount
@@ -49,15 +48,13 @@ const WaiterPage = () => {
     // Dispatch action to submit new order
     // TODO: implement
   };
-  if (!productSelect.product) {
-    return <div>null productSelect.product</div>;
-  }
+
   return (
     <div className="page-container">
       <div className="content-container">
-        {productSelect.error && (
+        {/* {productSelect.error && (
           <p className="error-message">{productSelect.error}</p>
-        )}
+        )} */}
         <h1>Панель официанта</h1>
         <div className="waiter-page__orders-list">
           <h2>Текущие заказы</h2>
@@ -66,7 +63,7 @@ const WaiterPage = () => {
         <div className="waiter-page__menu-lists">
           <div className="waiter-page__dishes-list">
             <h2>Блюда</h2>
-            <DishList dishes={productSelect.product} />
+            {/* <ProductList products={productSelect.product} /> */}
           </div>
           {/* <div className="waiter-page__drinks-list">  
             <h2>Напитки</h2>       НУЖНО НАПИСАТЬ ЛОКИКУ ВЫБОРА ТО ТИТУ НАПИТОК ЭТО ИЛИ БЛЮДО 

@@ -3,40 +3,36 @@ import { RootState } from "../store";
 import { IProduct } from "../types";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import DishList from "../components/Dish/Dish";
 import { Header } from "./../components/Header/Header";
 import { Footer } from "./../components/Footer/Footer";
 import Notification from "../components/Notification/Notification";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import ProductList from "../components/Product/ProductList";
+import { filterProductsOnCategory } from "../utils/filterProducts";
 
 const MenuPage = () => {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("Пица");
   const [filteredItems, setFilteredItems] = useState<{
     product: IProduct[];
-  }>({ product: []});
+  }>({ product: [] });
 
-  const dishesSelect = useSelector(
-    (state: RootState) => state.product
-  );
+  const productSelect = useSelector((state: RootState) => state.product);
 
-
-  let isLoading = dishesSelect.loading
-  // <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />;
-
-
+  let isLoading = productSelect.loading;
   useEffect(
     // Используем хук useEffect для выполнения действий при изменении строки сортировки (searchTerm)
     () => {
-      // Изменяем состояние setFilteredItems, фильтруя напитки на основе введённого searchTerm с помощью метода filter()
-      setFilteredItems({
-        product: dishesSelect.product.filter((dish: { name: string }) =>
-          dish.name.toLowerCase().includes(searchTerm.toLowerCase())
-        ),
+      if (!productSelect.product) return;
 
+      setFilteredItems({
+        product: filterProductsOnCategory(productSelect.product, {
+          subcategory: searchTerm,
+          category: "Кухня",
+        }),
       });
     },
-    [searchTerm, dishesSelect]
+    [searchTerm, productSelect]
   );
 
   useEffect(() => {
@@ -44,6 +40,8 @@ const MenuPage = () => {
     navigate("/", { replace: true });
   }, []);
 
+  if (!productSelect.product) return <div>null dishesSelect.product</div>;
+  console.log(productSelect.product);
   return (
     <>
       <Header />
@@ -52,11 +50,13 @@ const MenuPage = () => {
           <LoadingSpinner />
         ) : (
           <>
-            {dishesSelect.error && <Notification message={dishesSelect.error} type="error" />}
-            <div className="menu-page__header">Dishes</div>
+            {productSelect.error && (
+              <Notification message={productSelect.error} type="error" />
+            )}
+            <div className="menu-page__header">{} 👇</div>
 
             <div className="menu-page__section row">
-              <DishList dishes={filteredItems.product} />
+              <ProductList products={filteredItems.product} />
             </div>
           </>
         )}
@@ -67,18 +67,3 @@ const MenuPage = () => {
 };
 
 export default MenuPage;
-
-//  <>
-//    <div className="menu-section container ">
-//      <h2 className="menu-section-title">Dishes</h2>
-//      {/* <DishList dishes={filteredItems.dishes} /> */}
-//    </div>
-//    <div className="menu-section container ">
-//      <h2 className="menu-section-title">Drinks</h2>
-//      {/* <DrinkList drinks={filteredItems.drinks} /> */}
-//    </div>
-//    <div className="cart-total">
-//      Итого: {formatCurrency(0)}{" "}
-//      {/* здесь будет подставляться общая сумма заказа */}
-//    </div>
-//  </>;

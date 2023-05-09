@@ -10,7 +10,7 @@ import {
 } from "../slices/orders";
 import Notification from "../components/Notification/Notification";
 import { IProduct, Drink as IDrink, OrderItem } from "../types";
-import Dish from "../components/Dish/Dish";
+import Dish from "../components/Product/ProductList";
 import { useAppDispatch } from "../store";
 
 const OrderPage = () => {

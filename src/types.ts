@@ -3,14 +3,17 @@ export interface IProduct {
   name: string;
   price: number;
   image: string;
-  category: string
-  subcategory:string
+  category: string;
+  subcategory: string;
   CookingTime: number;
-  DishOrDrink:'Dish' | 'Drink'
+  DishOrDrink: "Dish" | "Drink";
   ingredients: { name: string; weight: number }[];
-
 }
-
+export interface IProducts {
+  [category: string]: {
+    [subcategory: string]: IProduct[];
+  };
+}
 export interface Drink {
   _id: string;
   name: string;

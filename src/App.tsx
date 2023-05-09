@@ -11,7 +11,7 @@ import Notification from "./components/Notification/Notification";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import { WebSocketProvider } from "./hooks/UseWebSocket";
 
-import { fetchDishes } from "./slices/product";
+import { fetchProduct } from "./slices/product";
 import { fetchOrders } from "./slices/orders";
 import {
   BrowserRouter,
@@ -31,7 +31,7 @@ function App() {
   );
 
   useEffect(() => {
-    // dispatch(fetchDrinks());
+    dispatch(fetchProduct());
     // dispatch(fetchDishes());
     // dispatch(fetchOrders());
     // dispatch(fetchUsers());

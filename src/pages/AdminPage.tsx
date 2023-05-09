@@ -3,46 +3,39 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Notification from "../components/Notification/Notification";
 import { IProduct } from "../types";
-import DishList from "../components/Dish/Dish";
+import DishList from "../components/Product/ProductList";
 import AddDishOrDrinkForm from "../components/AddDishForm/AddDishForm";
 import { OrderList } from "../components/Order/OrderList";
 import UserList from "../components/User/UserList";
 import AddUserForm from "../components/User/AddUserForm";
+import { filterProductsOnCategory } from "../utils/filterProducts";
+import ProductList from "../components/Product/ProductList";
 
 const AdminPage: React.FC = () => {
   const auth = useSelector((state: RootState) => state.user.user?.role);
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("w");
   const [filteredItems, setFilteredItems] = useState<{
-    dishes: IProduct[];
-  }>({ dishes: [] });
+    product: IProduct[];
+  }>({ product: [] });
 
+  const productSelect = useSelector((state: RootState) => state.product);
 
-  const dishesSelect = useSelector(
-    (state: RootState) => state.product
-  );
-
-
-
-  let isLoading = dishesSelect.loading
+  let isLoading = productSelect.loading;
   // <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />;
-
-
   useEffect(
     // Используем хук useEffect для выполнения действий при изменении строки сортировки (searchTerm)
     () => {
-      // Изменяем состояние setFilteredItems, фильтруя напитки на основе введённого searchTerm с помощью метода filter()
-      setFilteredItems({
-        dishes: dishesSelect.product.filter((dish: { name: string }) =>
-          dish.name.toLowerCase().includes(searchTerm.toLowerCase())
-        ),
+      if (!productSelect.product) return;
 
+      setFilteredItems({
+        product: filterProductsOnCategory(productSelect.product, {
+          category: searchTerm,
+        }),
       });
     },
-    [searchTerm, dishesSelect]
+    [searchTerm, productSelect]
   );
-
-
   return (
     <div className="admin-page">
       <h1>Панель администратора</h1>
@@ -55,7 +48,7 @@ const AdminPage: React.FC = () => {
       {auth === "admin" && (
         <>
           <h2>Меню</h2>
-          <DishList dishes={filteredItems.dishes} />
+          <ProductList products={filteredItems.product} />
           <AddDishOrDrinkForm isDishForm={true} />
           {/* <DrinkList drinks={filteredItems.drinks} /> */}
           <AddDishOrDrinkForm isDishForm={false} />

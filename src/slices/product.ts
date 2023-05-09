@@ -1,14 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct } from "../types";
+import { IProduct, IProducts } from "../types";
 import { AppDispatch, RootState } from "../store";
 import { ApiService } from "../services/ApiService";
 import { sortDataSlaceProduct } from "../utils/sortDataSlaceProduct";
 
-interface IProducts {
-  [category: string]: {
-    [subcategory: string]: IProduct[];
-  };
-}
 interface IProductState {
   loading: boolean;
   product: IProducts | null;
@@ -53,8 +48,6 @@ const Product: IProduct[] = [
   },
 ];
 
-console.log(sortDataSlaceProduct(Product));
-
 const initialState: IProductState = {
   loading: false,
   error: null,
@@ -84,18 +77,12 @@ const productSlice = createSlice({
 export const { getDishesStart, getDishesSuccess, getDishesFailure } =
   productSlice.actions;
 
-export const fetchDishes = () => {
+export const fetchProduct = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(getDishesStart());
     try {
-      const dishes = await ApiService.get<IProduct[]>("dishes");
-      const data = sortDataSlaceProduct([
-        ...Product,
-        ...Product,
-        ...Product,
-        ...Product,
-        ...Product,
-      ]);
+      // const dishes = await ApiService.get<IProduct[]>("dishes");
+      const data = sortDataSlaceProduct([...Product, ...Product]);
       dispatch(getDishesSuccess(data));
     } catch (error: any) {
       dispatch(getDishesFailure(error.message));
