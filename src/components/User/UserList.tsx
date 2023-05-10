@@ -8,7 +8,7 @@ const { Column } = Table;
 
 const UserList = () => {
   const dispatch = useAppDispatch();
-  const users = useSelector((state: RootState) => state.users.currentUser);
+  const users = useSelector((state: RootState) => state.usersList.currentUser);
 
   useEffect(() => {
     dispatch(getCurrentUser());

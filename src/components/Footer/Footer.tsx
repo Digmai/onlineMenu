@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store";
-import { setCategoryState } from "../../slices/sortData";
+import { setCategoryState, setSubcategoryState } from "../../slices/sortData";
 
 export const Footer = () => {
   const dispatch = useAppDispatch();
@@ -10,10 +10,12 @@ export const Footer = () => {
 
   useEffect(() => {
     category && dispatch(setCategoryState(category));
-  }, [category]);
-  useEffect(() => {
-    subcategory && dispatch(setCategoryState(subcategory));
-  }, [subcategory]);
+    subcategory && dispatch(setSubcategoryState(subcategory));
+    return () => {
+      setCategory("");
+      setSubcategory("");
+    };
+  }, [category, subcategory]);
 
   const sortedData = useSelector((state: RootState) => state.product.product);
   if (!sortedData) return <div>null</div>;
@@ -28,8 +30,8 @@ export const Footer = () => {
             <span></span>
             <ul id="menu">
               {Object.keys(sortedData).map((category) => (
-                <li key={category} onClick={() => setCategory(category)}>
-                  {category}
+                <li key={category}>
+                  <div onClick={() => setCategory(category)}>{category}</div>
                   <ul>
                     {Object.keys(sortedData[category]).map((subcategory) => (
                       <li

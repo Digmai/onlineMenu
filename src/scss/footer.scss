@@ -30,17 +30,6 @@
   background-color: #fefefe;
 }
 
-ul {
-  padding: 0;
-  list-style-type: none;
-}
-
-* {
-  outline: none;
-  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
-}
-
-
 #menuToggle {
   display: flex;
   flex-direction: column;
@@ -110,7 +99,7 @@ ul {
 #menu
 {
   top:0;
-  width: 180px;
+  width: 50vw;
   height: 100vh;
   padding: 50px;
   position: fixed;

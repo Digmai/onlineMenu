@@ -26,12 +26,16 @@ const sortDataSlice = createSlice({
     setSortDataCategorySuccess(state, action: PayloadAction<string>) {
       state.error = null;
       state.loading = false;
+      state.subcategory = null;
       state.category = action.payload;
+      console.log(state.category, state.subcategory);
     },
     setSortDataSubcategorySuccess(state, action: PayloadAction<string>) {
       state.error = null;
       state.loading = false;
+      state.category = null;
       state.subcategory = action.payload;
+      console.log(state.category, state.subcategory);
     },
     sortDataFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -51,8 +55,6 @@ export const setCategoryState = (data: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(sortDataStart());
     try {
-      console.log(data);
-
       dispatch(setSortDataCategorySuccess(data));
     } catch (error: any) {
       dispatch(sortDataFailure(error.message));
@@ -64,8 +66,6 @@ export const setSubcategoryState = (data: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(sortDataStart());
     try {
-      console.log(data);
-
       dispatch(setSortDataSubcategorySuccess(data));
     } catch (error: any) {
       dispatch(sortDataFailure(error.message));
