@@ -47,10 +47,12 @@ export const {
   setSortDataSubcategorySuccess,
 } = sortDataSlice.actions;
 
-export const setCategory = (data: string) => {
+export const setCategoryState = (data: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(sortDataStart());
     try {
+      console.log(data);
+
       dispatch(setSortDataCategorySuccess(data));
     } catch (error: any) {
       dispatch(sortDataFailure(error.message));
@@ -58,10 +60,12 @@ export const setCategory = (data: string) => {
   };
 };
 
-export const setSubcategory = (data: string) => {
+export const setSubcategoryState = (data: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(sortDataStart());
     try {
+      console.log(data);
+
       dispatch(setSortDataSubcategorySuccess(data));
     } catch (error: any) {
       dispatch(sortDataFailure(error.message));

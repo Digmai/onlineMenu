@@ -13,13 +13,13 @@ import { useParams } from "react-router-dom";
 
 const MenuPage = () => {
   const navigate = useNavigate();
-  const puth = useParams();
+  // const puth = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState<{
     product: IProduct[];
   }>({ product: [] });
 
-  console.log(puth.category);
+  // console.log(puth.category);
 
   const productSelect = useSelector((state: RootState) => state.product);
 

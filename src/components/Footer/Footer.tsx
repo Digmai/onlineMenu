@@ -1,11 +1,20 @@
-import React from "react";
-import { selectAllProduct } from "../../slices/product";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { RootState, useAppDispatch } from "../../store";
+import { setCategoryState } from "../../slices/sortData";
 
 export const Footer = () => {
+  const dispatch = useAppDispatch();
+  const [category, setCategory] = useState<string>();
+  const [subcategory, setSubcategory] = useState<string>();
+
+  useEffect(() => {
+    category && dispatch(setCategoryState(category));
+  }, [category]);
+  useEffect(() => {
+    subcategory && dispatch(setCategoryState(subcategory));
+  }, [subcategory]);
+
   const sortedData = useSelector((state: RootState) => state.product.product);
   if (!sortedData) return <div>null</div>;
   return (
@@ -19,21 +28,19 @@ export const Footer = () => {
             <span></span>
             <ul id="menu">
               {Object.keys(sortedData).map((category) => (
-                <NavLink key={category} to={"menu/" + category}>
+                <li key={category} onClick={() => setCategory(category)}>
                   {category}
                   <ul>
                     {Object.keys(sortedData[category]).map((subcategory) => (
-                      <li key={subcategory}>
+                      <li
+                        key={subcategory}
+                        onClick={() => setSubcategory(subcategory)}
+                      >
                         {subcategory}
-                        {/* <ul>
-                          {sortedData[category][subcategory].map((item) => (
-                            <li key={item._id}>{item.name}</li>
-                          ))}
-                        </ul> */}
                       </li>
                     ))}
                   </ul>
-                </NavLink>
+                </li>
               ))}
             </ul>
           </div>
