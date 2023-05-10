@@ -2,6 +2,8 @@ import React from "react";
 import { selectAllProduct } from "../../slices/product";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const Footer = () => {
   const sortedData = useSelector((state: RootState) => state.product.product);
@@ -17,21 +19,21 @@ export const Footer = () => {
             <span></span>
             <ul id="menu">
               {Object.keys(sortedData).map((category) => (
-                <li key={category}>
+                <NavLink key={category} to={"menu/" + category}>
                   {category}
                   <ul>
                     {Object.keys(sortedData[category]).map((subcategory) => (
                       <li key={subcategory}>
                         {subcategory}
-                        <ul>
+                        {/* <ul>
                           {sortedData[category][subcategory].map((item) => (
                             <li key={item._id}>{item.name}</li>
                           ))}
-                        </ul>
+                        </ul> */}
                       </li>
                     ))}
                   </ul>
-                </li>
+                </NavLink>
               ))}
             </ul>
           </div>

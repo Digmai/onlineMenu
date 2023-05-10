@@ -46,6 +46,10 @@ function App() {
       errorElement: <Notification message={"error"} type="error" />,
     },
     {
+      path: ":our/:category",
+      element: <MenuPage />,
+    },
+    {
       path: "order",
       element: <OrderPage />,
     },

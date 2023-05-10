@@ -5,59 +5,81 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Header } from "./../components/Header/Header";
 import { Footer } from "./../components/Footer/Footer";
+import ProductList from "../components/Product/ProductList";
 import Notification from "../components/Notification/Notification";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-import ProductList from "../components/Product/ProductList";
 import { filterProductsOnCategory } from "../utils/filterProducts";
+import { useParams } from "react-router-dom";
 
 const MenuPage = () => {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("Пица");
+  const puth = useParams();
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState<{
     product: IProduct[];
   }>({ product: [] });
 
+  console.log(puth.category);
+
   const productSelect = useSelector((state: RootState) => state.product);
 
-  let isLoading = productSelect.loading;
-  useEffect(
-    // Используем хук useEffect для выполнения действий при изменении строки сортировки (searchTerm)
-    () => {
-      if (!productSelect.product) return;
+  useEffect(() => {
+    if (!productSelect.product) return;
 
-      setFilteredItems({
-        product: filterProductsOnCategory(productSelect.product, {
-          subcategory: searchTerm,
-          category: "Кухня",
-        }),
-      });
-    },
-    [searchTerm, productSelect]
-  );
+    setFilteredItems({
+      product: filterProductsOnCategory(productSelect.product, {}),
+    });
+  }, [searchTerm, productSelect]);
 
   useEffect(() => {
     // 👇 Redirects to about page, note the `replace: true`
     navigate("/", { replace: true });
   }, []);
 
-  if (!productSelect.product) return <div>null dishesSelect.product</div>;
-  console.log(productSelect.product);
   return (
     <>
       <Header />
       <div className="menu-page containerr">
-        {isLoading ? (
+        {productSelect.loading ? (
           <LoadingSpinner />
         ) : (
           <>
             {productSelect.error && (
               <Notification message={productSelect.error} type="error" />
             )}
-            <div className="menu-page__header">{} 👇</div>
 
-            <div className="menu-page__section row">
-              <ProductList products={filteredItems.product} />
-            </div>
+            {productSelect.product &&
+              Object.keys(productSelect.product).map((category) => {
+                // Добавляем проверку на наличие подкатегорий в категории
+                if (productSelect.product && !productSelect.product[category]) {
+                  return null;
+                }
+
+                return (
+                  <>
+                    <div className="menu-page__header">{category}</div>
+
+                    <div className="menu-page__section row">
+                      {productSelect.product &&
+                        Object.entries(productSelect.product[category]).map(
+                          ([subcategory, arr]) => {
+                            // Трансформируем массивы продуктов в объекты, чтобы передать их в компонент
+                            const products = arr.map((product) => ({
+                              ...product,
+                            }));
+
+                            return (
+                              <ProductList
+                                key={subcategory}
+                                products={products}
+                              />
+                            );
+                          }
+                        )}
+                    </div>
+                  </>
+                );
+              })}
           </>
         )}
       </div>

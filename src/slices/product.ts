@@ -46,6 +46,75 @@ const Product: IProduct[] = [
       { name: "White Wine", weight: 220 },
     ],
   },
+  {
+    _id: "3",
+    price: 1220,
+    CookingTime: 30,
+    category: "Мангал",
+    image: "f.jfif",
+    name: "Антрикот",
+    DishOrDrink: "Dish",
+    subcategory: "Свинина",
+    ingredients: [
+      { name: "Lobster", weight: 120 },
+      { name: "White Wine", weight: 130 },
+      { name: "Risotto Rice", weight: 180 },
+      { name: "Onion", weight: 110 },
+      { name: "Butter", weight: 160 },
+    ],
+  },
+  {
+    _id: "1",
+    price: 1220,
+    CookingTime: 30,
+    category: "Бар",
+    image: "f.jfif",
+    name: "White Wine",
+    DishOrDrink: "Dish",
+    subcategory: "Вино",
+    ingredients: [
+      { name: "Lobster", weight: 120 },
+      { name: "White Wine", weight: 130 },
+      { name: "Risotto Rice", weight: 180 },
+      { name: "Onion", weight: 110 },
+      { name: "Butter", weight: 160 },
+    ],
+  },
+  {
+    _id: "2",
+    price: 1220,
+    CookingTime: 15,
+    image: "f.jfif",
+    category: "Кухня",
+    DishOrDrink: "Dish",
+    subcategory: "Пица",
+    name: 'Пица "Домашняя"',
+    ingredients: [
+      { name: "Lobster", weight: 120 },
+      { name: "White Wine", weight: 130 },
+      { name: "Risotto Rice", weight: 180 },
+      { name: "Onion", weight: 110 },
+      { name: "Butter", weight: 160 },
+      { name: "White Wine", weight: 220 },
+    ],
+  },
+  {
+    _id: "3",
+    price: 1220,
+    CookingTime: 30,
+    category: "Мангал",
+    image: "f.jfif",
+    name: "Ребрышки",
+    DishOrDrink: "Dish",
+    subcategory: "Свинина",
+    ingredients: [
+      { name: "Lobster", weight: 120 },
+      { name: "White Wine", weight: 130 },
+      { name: "Risotto Rice", weight: 180 },
+      { name: "Onion", weight: 110 },
+      { name: "Butter", weight: 160 },
+    ],
+  },
 ];
 
 const initialState: IProductState = {
@@ -82,7 +151,7 @@ export const fetchProduct = () => {
     dispatch(getDishesStart());
     try {
       // const dishes = await ApiService.get<IProduct[]>("dishes");
-      const data = sortDataSlaceProduct([...Product, ...Product]);
+      const data = sortDataSlaceProduct([...Product]);
       dispatch(getDishesSuccess(data));
     } catch (error: any) {
       dispatch(getDishesFailure(error.message));
