@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Table, Space, Button } from "antd";
 import { useSelector } from "react-redux";
-import { getCurrentUser } from "../../slices/users";
+import { getCurrentUser } from "../../slices/usersList";
 import { RootState, useAppDispatch } from "../../store";
 
 const { Column } = Table;

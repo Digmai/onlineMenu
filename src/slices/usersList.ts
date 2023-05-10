@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import UserService from "../services/UserService";
 import { AppDispatch, RootState } from "../store";
-import { IUser } from "./../types";
+import { IUser } from "../types";
 
 /**
  * Interface for slice state
@@ -22,8 +22,8 @@ const initialState: UsersState = {
 /**
  * User slice of the store
  */
-export const usersSlice = createSlice({
-  name: "users",
+export const usersListSlice = createSlice({
+  name: "usersList",
   initialState,
   reducers: {
     /**
@@ -52,15 +52,15 @@ export const usersSlice = createSlice({
 /**
  * Export actions from slice
  */
-export const { setCurrentUser, setError } = usersSlice.actions;
+export const { setCurrentUser, setError } = usersListSlice.actions;
 
 /**
  * Selectors for user slice of the store
  */
 export const selectCurrentUser = (state: RootState): IUser[] | null =>
-  state.users.currentUser;
+  state.usersList.currentUser;
 export const selectError = (state: RootState): string | null =>
-  state.users.error;
+  state.usersList.error;
 
 /**
  * Async thunk to get the currently logged in user
@@ -79,4 +79,4 @@ export const getCurrentUser = () => async (dispatch: AppDispatch) => {
   }
 };
 
-export default usersSlice.reducer;
+export default usersListSlice.reducer;

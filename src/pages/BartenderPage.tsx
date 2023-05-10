@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "../slices/orders";
-import { selectError } from "../slices/users";
+import { selectError } from "../slices/usersList";
 import { RootState, useAppDispatch } from "../store";
 import WebSocketService from "../services/WebSocketService";
 import { Order } from "../types";
