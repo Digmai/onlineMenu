@@ -55,7 +55,7 @@ const initialState: IProductState = {
 };
 
 const productSlice = createSlice({
-  name: "dishes",
+  name: "products",
   initialState,
   reducers: {
     getDishesStart(state) {

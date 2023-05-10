@@ -2,18 +2,18 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { ThunkAction, Action } from "@reduxjs/toolkit";
 import userReducer from "./slices/user";
-import ordersReducer from "./slices/orders";
-import productSlice from "./slices/product";
-
 import usersReducer from "./slices/users";
+import productSlice from "./slices/product";
+import ordersReducer from "./slices/orders";
+import sortDataSlice from "./slices/sortData";
 
 const store = configureStore({
   reducer: {
-
     user: userReducer,
     users: usersReducer,
-    product: productSlice,
     orders: ordersReducer,
+    product: productSlice,
+    sortData: sortDataSlice,
   },
 });
 
