@@ -47,7 +47,7 @@ export const {
   setSortDataSubcategorySuccess,
 } = sortDataSlice.actions;
 
-export const fetchCategory = (data: string) => {
+export const setCategory = (data: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(sortDataStart());
     try {
@@ -58,7 +58,7 @@ export const fetchCategory = (data: string) => {
   };
 };
 
-export const fetchSubcategory = (data: string) => {
+export const setSubcategory = (data: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(sortDataStart());
     try {
