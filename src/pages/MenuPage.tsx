@@ -29,7 +29,7 @@ const MenuPage = () => {
     // 👇 Redirects to about page, note the `replace: true`
     navigate("/", { replace: true });
   }, []);
-  if (!productSelect.product) return <>null Menu</>;
+  if (!productSelect.product) return <LoadingSpinner />;
   if (!category && subcategory) {
     const prod = getProductsByCategory<{ [subcategory: string]: IProduct[] }>(
       productSelect.product,
