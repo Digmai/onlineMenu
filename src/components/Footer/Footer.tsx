@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store";
 import { setCategoryState, setSubcategoryState } from "../../slices/sortData";
@@ -7,13 +7,14 @@ export const Footer = () => {
   const dispatch = useAppDispatch();
   const [category, setCategory] = useState<string>();
   const [subcategory, setSubcategory] = useState<string>();
-
+  const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     category && dispatch(setCategoryState(category));
     subcategory && dispatch(setSubcategoryState(subcategory));
     return () => {
       setCategory("");
       setSubcategory("");
+      inputRef.current && (inputRef.current.checked = false);
     };
   }, [category, subcategory]);
 
@@ -23,28 +24,38 @@ export const Footer = () => {
     <div className="footer">
       <div className="footer__content">
         <div role="" className="footer__buttons navigation">
-          <div id="menuToggle">
-            <input type="checkbox" />
+          <div id="menuToggle" className="navigation__menu-toggle">
+            <input type="checkbox" ref={inputRef} />
             <span></span>
             <span></span>
             <span></span>
-            <ul id="menu">
+
+            <div id="menu" className="navigation__menu">
               {Object.keys(sortedData).map((category) => (
-                <li key={category}>
-                  <div onClick={() => setCategory(category)}>{category}</div>
-                  <ul>
-                    {Object.keys(sortedData[category]).map((subcategory) => (
-                      <li
+                <div
+                  key={category}
+                  className="navigation__menu-checkbox  navigation__menu-checkbox-category li"
+                >
+                  <div
+                    onClick={() => setCategory(category)}
+                    className="navigation__menu-category"
+                  >
+                    {category}
+                  </div>
+                  {Object.keys(sortedData[category]).map((subcategory) => (
+                    <div className="navigation__menu-checkbox navigation__menu-checkbox-subcategory ul">
+                      <div
+                        className=" navigation__menu-subcategory li"
                         key={subcategory}
                         onClick={() => setSubcategory(subcategory)}
                       >
-                        {subcategory}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
+                        <>{subcategory}</>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
 

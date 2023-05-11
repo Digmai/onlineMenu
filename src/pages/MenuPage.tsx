@@ -8,7 +8,6 @@ import { Footer } from "./../components/Footer/Footer";
 import ProductList from "../components/Product/ProductList";
 import Notification from "../components/Notification/Notification";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-import { filterProductsOnCategory } from "../utils/filterProducts";
 import { useParams } from "react-router-dom";
 import { getProductsByCategory } from "../utils/getProductsByCategory";
 

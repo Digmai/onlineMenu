@@ -64,7 +64,7 @@ const Product: IProduct[] = [
     ],
   },
   {
-    _id: "1",
+    _id: "4",
     price: 1220,
     CookingTime: 30,
     category: "Бар",
@@ -81,7 +81,7 @@ const Product: IProduct[] = [
     ],
   },
   {
-    _id: "2",
+    _id: "5",
     price: 1220,
     CookingTime: 15,
     image: "f.jfif",
@@ -107,6 +107,23 @@ const Product: IProduct[] = [
     name: "Ребрышки",
     DishOrDrink: "Dish",
     subcategory: "Свинина",
+    ingredients: [
+      { name: "Lobster", weight: 120 },
+      { name: "White Wine", weight: 130 },
+      { name: "Risotto Rice", weight: 180 },
+      { name: "Onion", weight: 110 },
+      { name: "Butter", weight: 160 },
+    ],
+  },
+  {
+    _id: "6",
+    price: 1220,
+    CookingTime: 30,
+    category: "Мангал",
+    image: "f.jfif",
+    name: "Ребрышки x 2",
+    DishOrDrink: "Dish",
+    subcategory: "Говядина",
     ingredients: [
       { name: "Lobster", weight: 120 },
       { name: "White Wine", weight: 130 },
