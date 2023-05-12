@@ -20,7 +20,7 @@
     border-radius: 50%;
     align-items: center;
     justify-content: center;
-    background-color: #8d8585;
+    // background-color: #8d8585;
   }
 }
 
@@ -153,7 +153,14 @@
   margin-left: 10vw;
   border-bottom: #cbcbcb79 solid 1px;
   &:active{
-    background-color: #cacaca53;;
+    background-color: #cacaca53;
   }
 }
 
+.icon-svg-basket path{
+  line-height: 1; 
+   fill: #8d8585;
+}
+.icon-svg-bell, .svg-clock-rotate-left {
+  color:#8d8585;
+}

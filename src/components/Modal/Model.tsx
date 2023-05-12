@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Modal } from "antd";
-import { IProduct} from "../../types";
+import { IProduct } from "../../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
