@@ -5,13 +5,22 @@
 .order-page {
   top: 0;
   padding: 0 10px 32vh 10px;
-  min-height: 100vh;
+  min-height: auto;
   position: relative;
   &__heder-text {
     margin: 0 auto;
     font-size: 8vw;
     padding: 10px 0;
     width: min-content;
+  }
+  &__total-price {
+    height: 15vh;
+    display: flex;
+    padding: 5vh 0;
+    font-size: 7vw;
+    align-items: center;
+    color: rgb(144, 9, 7);
+    justify-content: center;
   }
   &__cart {
     width: 100%;
@@ -25,6 +34,7 @@
       padding-left: 10px;
       position: relative;
       align-items: center;
+      padding: 4vh 0 4vh 0;
       &-src {
         left: 0;
         width: 15vw;
@@ -46,8 +56,10 @@
       padding: 5px 0;
     }
     &-price {
-      min-width: 11%;
-      padding-right: 5vw;
+      width: 100%;
+      font-size: 6.5vw;
+      padding-left: 5vw;
+      color: rgb(144, 9, 7);
     }
   }
   &__footer-button {

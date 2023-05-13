@@ -10,11 +10,11 @@ interface IProductState {
   error: string | null;
 }
 
-const Product: IProduct[] = Array.from({ length: 4 }, (_, i) => ({
+const Product: IProduct[] = Array.from({ length: 40 }, (_, i) => ({
   _id: i.toString(),
-  name: `Product ${i}`,
+  name: `Пица Домашняя${i}`,
   totalWeight: 430,
-  price: Math.floor(Math.random() * 100),
+  price: Math.floor(Math.random() * 100) * 101,
   image: `f.jfif`,
   category: ["Category 1", "Category 2", "Category 3"][
     Math.floor(Math.random() * 3)

@@ -1,8 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { IProduct } from "../../types";
-import DishCard from "./ProductCard";
+import ProductCard from "./ProductCard";
 
 interface ProductListProps {
   products: IProduct[];
@@ -19,7 +17,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
   return (
     <>
       {products.map((dish) => (
-        <DishCard dish={dish} key={dish._id} />
+        <ProductCard dish={dish} key={dish._id} />
       ))}
     </>
   );

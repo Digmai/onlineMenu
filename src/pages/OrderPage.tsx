@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../store";
 import { selectUser } from "../slices/user";
 import { Header } from "../components/Header/Header";
-import { IProduct, Drink as IDrink } from "../types";
-import {
-  addOrder,
-  selectCarts,
-  selectError,
-  selectLoading,
-  selectTotalPrice,
-} from "../slices/orders";
+import { IProduct } from "../types";
 import { OrderCart } from "../components/Order/OrderCart";
+import { addOrder, selectTotalPrice } from "../slices/orders";
+import { OrderFooter } from "../components/Order/OrderFooter";
 
 const OrderPage = () => {
   const dispatch = useAppDispatch();
@@ -112,38 +106,20 @@ const OrderPage = () => {
     return <p>123</p>;
   };
 
-  const Footer = () => {
-    return (
-      <div className="footer">
-        <div className="footer__content">
-          <Link to={"/"} className="order-page__footer-button icon-svg-color">
-            <svg
-              className="icon-svg-color icon-svg-chevron-left"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 320 512"
-            >
-              <path d="M20.7 267.3c-6.2-6.2-6.2-16.4 0-22.6l192-192c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6L54.6 256 235.3 436.7c6.2 6.2 6.2 16.4 0 22.6s-16.4 6.2-22.6 0l-192-192z" />
-            </svg>
-            Вернуться в меню
-          </Link>
-        </div>
-      </div>
-    );
-  };
   if (totalPrice === 0)
     return (
       <>
         {" "}
         <Header />
         <div className="order-page">Корзина пуста</div>
-        <Footer />
+        <OrderFooter />
       </>
     );
   return (
     <>
       <Header />
       <OrderCart />
-      <Footer />
+      <OrderFooter />
     </>
   );
 };

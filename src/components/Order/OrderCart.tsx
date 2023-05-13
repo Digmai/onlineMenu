@@ -43,7 +43,7 @@ export const OrderCart = () => {
 
       <div className="order-page__button modal__buttom">
         <button className="modal__buttom-page order-page__button-page">
-          <div className="modal__button-text">Заказать</div>
+          <div className="modal__button-text">Оформить заказ</div>
         </button>
       </div>
     </div>
