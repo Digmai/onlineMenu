@@ -7,6 +7,7 @@
 @import url("./footer.scss");
 @import url("./menu-item.scss");
 @import url("./menu-page.scss");
+@import url("./order-page.scss");
 
 .containerr {
   width: 100vw;
@@ -23,4 +24,8 @@ ul {
 * {
   outline: none;
   -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+}
+
+.mr-2{
+  margin-right: 2px;
 }

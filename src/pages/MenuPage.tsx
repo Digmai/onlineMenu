@@ -36,7 +36,6 @@ const MenuPage = () => {
     );
     return (
       <>
-        <Header />
         <div className="menu-page containerr">
           {productSelect.loading ? (
             <LoadingSpinner />
@@ -87,7 +86,6 @@ const MenuPage = () => {
     const prod = getProductsByCategory(productSelect.product, category);
     return (
       <>
-        <Header />
         <div className="menu-page containerr">
           {productSelect.loading ? (
             <LoadingSpinner />
@@ -139,7 +137,6 @@ const MenuPage = () => {
   if (!category && !subcategory) {
     return (
       <>
-        <Header />
         <div className="menu-page containerr">
           {productSelect.loading ? (
             <LoadingSpinner />

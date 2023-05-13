@@ -23,6 +23,7 @@ import {
 import { redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import React from "react";
+import { Header } from "./components/Header/Header";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -42,11 +43,16 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MenuPage />,
+      element: (
+        <>
+          <Header />
+          <MenuPage />
+        </>
+      ),
       errorElement: <Notification message={"error"} type="error" />,
     },
     {
-      path: ":our/:category",
+      path: ":our",
       element: <MenuPage />,
     },
     {

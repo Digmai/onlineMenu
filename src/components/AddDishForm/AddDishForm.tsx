@@ -26,6 +26,7 @@ const AddDishOrDrinkForm: React.FC<Props> = ({ isDishForm }) => {
         category: "Re[zy",
         DishOrDrink: "Dish",
         subcategory: "}{ILE6",
+        totalWeight: 220,
       };
       dispatch(addDish(newDish));
     } else {
@@ -39,6 +40,7 @@ const AddDishOrDrinkForm: React.FC<Props> = ({ isDishForm }) => {
         category: "Re[zy",
         DishOrDrink: "Drink",
         subcategory: "}{ILE6",
+        totalWeight: 220,
       };
       dispatch(addDrink(newDrink));
     }

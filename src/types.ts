@@ -4,6 +4,7 @@ export interface IProduct {
   price: number;
   image: string;
   category: string;
+  totalWeight: number;
   subcategory: string;
   CookingTime: number;
   DishOrDrink: "Dish" | "Drink";

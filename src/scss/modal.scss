@@ -75,15 +75,15 @@
     align-items: center;
     border-radius: 30px;
     justify-content: center;
-    background-color: #e23c2c; 
-     &:active{
+    background-color: #e23c2c;
+    &:active {
       color: rgba(240, 248, 255, 0.687);
+      font-size: 119.45%;
+      width: calc(75vw - 2px);
+      height: calc(7vh - 5px);
       background-color: #c9392b;
-      width: calc(75vw - 2px  );
-      height: calc(7vh - 3px  );
     }
   }
   &-text {
   }
-
 }

@@ -5,11 +5,15 @@ import store from "./store";
 import App from "./App";
 import "./scss/index.scss";
 
-ReactDOM.render(
+import { createRoot } from "react-dom/client";
+
+const element = document.getElementById("root");
+const root = createRoot(element!);
+
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );

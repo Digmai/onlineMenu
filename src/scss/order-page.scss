@@ -1,0 +1,91 @@
+.icon-svg-chevron-left {
+  width: 20px;
+}
+
+.order-page {
+  top: 0;
+  padding: 0 10px 32vh 10px;
+  min-height: 100vh;
+  position: relative;
+  &__heder-text {
+    margin: 0 auto;
+    font-size: 8vw;
+    padding: 10px 0;
+    width: min-content;
+  }
+  &__cart {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: rgba(96, 96, 96, 0.756) 0.2px solid;
+    &-img {
+      display: flex;
+      padding-left: 10px;
+      position: relative;
+      align-items: center;
+      &-src {
+        left: 0;
+        width: 15vw;
+        border-radius: 50%;
+        position: relative;
+      }
+    }
+    &-nema-and-total-weight {
+      width: 100%;
+      padding-left: 10px;
+      position: relative;
+      padding-right: 15vw;
+    }
+    &-nema {
+      padding: 5px 0;
+      border-bottom: rgba(96, 96, 96, 0.756) 0.2px solid;
+    }
+    &-total-weight {
+      padding: 5px 0;
+    }
+    &-price {
+      min-width: 11%;
+      padding-right: 5vw;
+    }
+  }
+  &__footer-button {
+    width: 45vw;
+    display: flex;
+    font-size: 4vw;
+    padding-left: 3vw;
+    margin-right: auto;
+    align-items: center;
+    text-decoration: none;
+    justify-content: space-around;
+  }
+  &__button {
+    bottom: 20vh;
+    &:active {
+      bottom: 20.4vh;
+    }
+    &-page {
+      height: 10vh;
+      border-radius: 7px;
+      background: rgb(192, 14, 12);
+      background: linear-gradient(
+        0deg,
+        rgba(192, 14, 12, 1) 30%,
+        rgba(203, 18, 16, 1) 50%,
+        rgba(192, 14, 12, 1) 70%
+      );
+      &:active {
+        height: 9.5vh;
+        border-radius: 7px;
+        background: rgb(192, 14, 12);
+        background: linear-gradient(
+          0deg,
+          rgb(167, 13, 11) 30%,
+          rgb(168, 16, 14) 50%,
+          rgb(156, 13, 11) 70%
+        );
+      }
+    }
+  }
+}

@@ -13,7 +13,8 @@ interface IProductState {
 const Product: IProduct[] = Array.from({ length: 4 }, (_, i) => ({
   _id: i.toString(),
   name: `Product ${i}`,
-  price: Math.random() * 100,
+  totalWeight: 430,
+  price: Math.floor(Math.random() * 100),
   image: `f.jfif`,
   category: ["Category 1", "Category 2", "Category 3"][
     Math.floor(Math.random() * 3)
@@ -24,9 +25,9 @@ const Product: IProduct[] = Array.from({ length: 4 }, (_, i) => ({
   CookingTime: Math.floor(Math.random() * 60),
   DishOrDrink: Math.random() < 0.5 ? "Dish" : "Drink",
   ingredients: [
-    { name: "Ingredient A", weight: Math.random() * 100 },
-    { name: "Ingredient B", weight: Math.random() * 100 },
-    { name: "Ingredient C", weight: Math.random() * 100 },
+    { name: "Ingredient A", weight: Math.floor(Math.random() * 100) },
+    { name: "Ingredient B", weight: Math.floor(Math.random() * 100) },
+    { name: "Ingredient C", weight: Math.floor(Math.random() * 100) },
   ],
 }));
 

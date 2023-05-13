@@ -12,18 +12,20 @@ import { OrderService } from "../services/OrderService";
 import axios from "axios";
 
 interface OrdersState {
+  orders: Order[];
   cart: IProduct[];
   loading: boolean;
+  totalPrice: number;
   error: string | null;
-  orders: Order[];
   notifications: WebSocketNotification[];
 }
 
 const initialState: OrdersState = {
-  cart: [],
-  loading: false,
+  cart: [], //ожидает подтверждения
+  orders: [], // в готовиться или выполнен
   error: null,
-  orders: [],
+  totalPrice: 0,
+  loading: false,
   notifications: [],
 };
 
@@ -34,10 +36,13 @@ const ordersSlice = createSlice({
     // Добавление товара в корзину заказа
     addItemToCart(state, action: PayloadAction<IProduct>) {
       state.cart = [...state.cart, action.payload];
+      state.totalPrice += action.payload.price;
     },
     // Удаление товара из корзины заказа по индексу
     removeItemFromCart(state, action: PayloadAction<number>) {
+      const removedItem = state.cart[action.payload];
       state.cart = state.cart.filter((_, index) => index !== action.payload);
+      state.totalPrice -= removedItem.price;
     },
     // Очистка корзины заказа
     clearCart(state) {
@@ -186,7 +191,9 @@ export const addOrder = createAsyncThunk(
   }
 );
 
-export const selectOrders = (state: RootState) => state.orders.cart;
+export const selectCarts = (state: RootState) => state.orders.cart;
+export const selectOrders = (state: RootState) => state.orders.orders;
+export const selectTotalPrice = (state: RootState) => state.orders.totalPrice;
 export const selectLoading = createSelector(
   (state: RootState) => state.orders.loading,
   (loading) => loading
