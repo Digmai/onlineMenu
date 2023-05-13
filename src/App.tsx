@@ -43,12 +43,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <>
-          <Header />
-          <MenuPage />
-        </>
-      ),
+      element: <MenuPage />,
       errorElement: <Notification message={"error"} type="error" />,
     },
     {

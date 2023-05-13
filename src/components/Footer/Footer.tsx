@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store";
 import { setCategoryState, setSubcategoryState } from "../../slices/sortData";
-import { faIdBadge } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faConciergeBell, faHistory } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 
 export const Footer = () => {
   const dispatch = useAppDispatch();
@@ -48,10 +45,12 @@ export const Footer = () => {
                     {category}
                   </div>
                   {Object.keys(sortedData[category]).map((subcategory) => (
-                    <div className="navigation__menu-checkbox navigation__menu-checkbox-subcategory ul">
+                    <div
+                      className="navigation__menu-checkbox navigation__menu-checkbox-subcategory ul"
+                      key={subcategory}
+                    >
                       <div
                         className=" navigation__menu-subcategory li"
-                        key={subcategory}
                         onClick={() => setSubcategory(subcategory)}
                       >
                         <>{subcategory}</>

@@ -4,23 +4,19 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../store";
 import { selectUser } from "../slices/user";
 import { Header } from "../components/Header/Header";
-import { IProduct, Drink as IDrink, OrderItem } from "../types";
-import Notification from "../components/Notification/Notification";
+import { IProduct, Drink as IDrink } from "../types";
 import {
   addOrder,
   selectCarts,
   selectError,
   selectLoading,
   selectTotalPrice,
-  removeItemFromCart,
 } from "../slices/orders";
+import { OrderCart } from "../components/Order/OrderCart";
 
 const OrderPage = () => {
   const dispatch = useAppDispatch();
   const user = useSelector(selectUser);
-  const error = useSelector(selectError);
-  const carts = useSelector(selectCarts);
-  const loading = useSelector(selectLoading);
   const totalPrice = useSelector(selectTotalPrice);
   const [order, setOrder] = useState({
     _id: "",
@@ -116,59 +112,38 @@ const OrderPage = () => {
     return <p>123</p>;
   };
 
+  const Footer = () => {
+    return (
+      <div className="footer">
+        <div className="footer__content">
+          <Link to={"/"} className="order-page__footer-button icon-svg-color">
+            <svg
+              className="icon-svg-color icon-svg-chevron-left"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 320 512"
+            >
+              <path d="M20.7 267.3c-6.2-6.2-6.2-16.4 0-22.6l192-192c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6L54.6 256 235.3 436.7c6.2 6.2 6.2 16.4 0 22.6s-16.4 6.2-22.6 0l-192-192z" />
+            </svg>
+            Вернуться в меню
+          </Link>
+        </div>
+      </div>
+    );
+  };
+  if (totalPrice === 0)
+    return (
+      <>
+        {" "}
+        <Header />
+        <div className="order-page">Корзина пуста</div>
+        <Footer />
+      </>
+    );
   return (
     <>
       <Header />
-      <div className="order-page">
-        <div className="order-page__heder-text">Заказ</div>
-        <div className="">
-          {carts.map((product, index) => (
-            <div
-              className=" order-page__cart"
-              onClick={() => dispatch(removeItemFromCart(index))}
-            >
-              <div className="order-page__cart-img">
-                <img
-                  src={product.image}
-                  alt=""
-                  className="order-page__cart-img-src"
-                ></img>
-              </div>
-              <div className="order-page__cart-nema-and-total-weight">
-                <div className="order-page__cart-nema">{product.name}</div>
-                <div className="order-page__cart-total-weight">
-                  {product.totalWeight}{" "}
-                  {product.DishOrDrink === "Dish" ? "г." : "мл."}
-                </div>
-              </div>
-              <div className="order-page__cart-price">{product.price} p</div>
-            </div>
-          ))}
-        </div>
-        <div className="order-page__total-price">Всего: {totalPrice}</div>
-
-        <div className="order-page__button modal__buttom">
-          <button className="modal__buttom-page order-page__button-page">
-            <div className="modal__button-text">Заказать</div>
-          </button>
-        </div>
-
-        {error && <Notification message={error} type={"error"} />}
-        <div className="footer">
-          <div className="footer__content">
-            <Link to={"/"} className="order-page__footer-button icon-svg-color">
-              <svg
-                className="icon-svg-color icon-svg-chevron-left"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 320 512"
-              >
-                <path d="M20.7 267.3c-6.2-6.2-6.2-16.4 0-22.6l192-192c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6L54.6 256 235.3 436.7c6.2 6.2 6.2 16.4 0 22.6s-16.4 6.2-22.6 0l-192-192z" />
-              </svg>
-              Вернуться в меню
-            </Link>
-          </div>
-        </div>
-      </div>
+      <OrderCart />
+      <Footer />
     </>
   );
 };
