@@ -3,13 +3,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Notification from "../components/Notification/Notification";
 import { IProduct } from "../types";
-import DishList from "../components/Product/ProductList";
 import AddDishOrDrinkForm from "../components/AddDishForm/AddDishForm";
 import { OrderList } from "../components/Order/OrderList";
 import UserList from "../components/User/UserList";
 import AddUserForm from "../components/User/AddUserForm";
 import { filterProductsOnCategory } from "../utils/filterProducts";
 import ProductList from "../components/Product/ProductList";
+import { AdminPanel } from "../components/AdminPanel/AdminPanel";
+import AddTables from "../components/Tables/AddTables";
 
 const AdminPage: React.FC = () => {
   const auth = useSelector((state: RootState) => state.user.user?.role);
@@ -37,29 +38,9 @@ const AdminPage: React.FC = () => {
     [searchTerm, productSelect]
   );
   return (
-    <div className="admin-page">
-      <h1>Панель администратора</h1>
-      {auth !== "admin" && (
-        <Notification
-          message="Вы не авторизованы для доступа к панели администратора"
-          type="error"
-        />
-      )}
-      {auth === "admin" && (
-        <>
-          <h2>Меню</h2>
-          <ProductList products={filteredItems.product} />
-          <AddDishOrDrinkForm isDishForm={true} />
-          {/* <DrinkList drinks={filteredItems.drinks} /> */}
-          <AddDishOrDrinkForm isDishForm={false} />
-          <h2>Заказы</h2>
-          <OrderList />
-          <h2>Пользователи</h2>
-          <UserList />
-          <AddUserForm />
-        </>
-      )}
-    </div>
+    <>
+      <AdminPanel />
+    </>
   );
 };
 

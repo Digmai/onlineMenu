@@ -47,7 +47,7 @@ const AddUserForm: React.FC<Props> = ({
         Добавить пользователя
       </Button>
       <Modal
-        visible={visible}
+        open={visible}
         title="Добавить нового пользователя"
         onCancel={handleCancel}
         footer={null}

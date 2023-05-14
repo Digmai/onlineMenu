@@ -29,7 +29,7 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
-  role: "customer" | "cook" | "bartender" | "waiter" | "admin";
+  role: "customer" | "cook" | "bartender" | "waiter" | "admin"; //customer - дял скидки 10% | 25% | 50%
 }
 export interface VerifyTokenResponse {
   data: {

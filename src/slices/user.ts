@@ -18,7 +18,7 @@ const initialState: UsersState = {
     email: "1212",
     name: "wqdasd",
     password: "wdas",
-    role: "waiter",
+    role: "admin",
   },
   isLoading: false,
   error: null,

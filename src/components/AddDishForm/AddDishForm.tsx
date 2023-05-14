@@ -64,7 +64,7 @@ const AddDishOrDrinkForm: React.FC<Props> = ({ isDishForm }) => {
         {isDishForm ? "Новое блюдо" : "Новый напиток"}
       </ButtonWrapper>
       <Modal
-        visible={visible}
+        open={visible}
         title={isDishForm ? "Добавить новое блюдо" : "Добавить новый напиток"}
         onCancel={handleCancel}
         footer={null}

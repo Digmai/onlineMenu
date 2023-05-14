@@ -1,29 +1,20 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import MenuPage from "./pages/MenuPage";
-import OrderPage from "./pages/OrderPage";
-import AdminPage from "./pages/AdminPage";
-import ChefPage from "./pages/ChefPage";
-import BartenderPage from "./pages/BartenderPage";
-import WaiterPage from "./pages/WaiterPage";
+import { Suspense, lazy, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./store";
-import Notification from "./components/Notification/Notification";
+import { fetchProduct } from "./slices/product";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
+const MenuPage = lazy(() => import("./pages/MenuPage"));
+const ChefPage = lazy(() => import("./pages/ChefPage"));
+const OrderPage = lazy(() => import("./pages/OrderPage"));
+const AdminPage = lazy(() => import("./pages/AdminPage"));
+const WaiterPage = lazy(() => import("./pages/WaiterPage"));
+const BartenderPage = lazy(() => import("./pages/BartenderPage"));
+const Notification = lazy(
+  () => import("./components/Notification/Notification")
+);
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import { WebSocketProvider } from "./hooks/UseWebSocket";
-
-import { fetchProduct } from "./slices/product";
-import { fetchOrders } from "./slices/orders";
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-} from "react-router-dom";
-import { redirect } from "react-router-dom";
-import { Link } from "react-router-dom";
-import React from "react";
-import { Header } from "./components/Header/Header";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -43,23 +34,34 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MenuPage />,
+      element: (
+        <Suspense fallback={<LoadingSpinner />}>
+          {(user?.role === "admin" && <AdminPage />) ||
+            (user?.role === "cook" && <ChefPage />) ||
+            (user?.role === "bartender" && <BartenderPage />) ||
+            (user?.role === "waiter" && <WaiterPage />) || <MenuPage />}
+        </Suspense>
+      ),
       errorElement: <Notification message={"error"} type="error" />,
     },
     {
       path: ":our",
-      element: <MenuPage />,
+      element: (
+        <Suspense fallback={<LoadingSpinner />}>
+          {(user?.role === "admin" && <AdminPage />) ||
+            (user?.role === "cook" && <ChefPage />) ||
+            (user?.role === "bartender" && <BartenderPage />) ||
+            (user?.role === "waiter" && <WaiterPage />) || <MenuPage />}
+        </Suspense>
+      ),
     },
     {
       path: "order",
-      element: <OrderPage />,
-    },
-    {
-      path: "role",
-      element: (user?.role === "admin" && <AdminPage />) ||
-        (user?.role === "cook" && <ChefPage />) ||
-        (user?.role === "bartender" && <BartenderPage />) ||
-        (user?.role === "waiter" && <WaiterPage />) || <MenuPage />,
+      element: (
+        <Suspense fallback={<LoadingSpinner />}>
+          <OrderPage />
+        </Suspense>
+      ),
     },
   ]);
 
