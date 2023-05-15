@@ -6,12 +6,16 @@ interface User {
   table: number;
 }
 
-interface AddTablesProps {
+export interface TableType {
   users: User[];
   onAdd: (newTables: number[]) => void;
+  tables: {
+    id: string;
+    name: string;
+  }[];
 }
 
-const AddTables: React.FC<AddTablesProps> = ({ users, onAdd }) => {
+const AddTables: React.FC<TableType> = ({ users, onAdd, tables }) => {
   const [number, setNumber] = useState<number | undefined>();
 
   const handleNumberChange = (value: number | null) => {
@@ -47,6 +51,10 @@ const AddTables: React.FC<AddTablesProps> = ({ users, onAdd }) => {
       <Button type="primary" onClick={handleAddTable}>
         Add Table
       </Button>
+
+      {tables.map((e) => (
+        <div>{e.id + " " + e.name}</div>
+      ))}
     </>
   );
 };
