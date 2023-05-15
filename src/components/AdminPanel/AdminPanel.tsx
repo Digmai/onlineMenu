@@ -9,7 +9,7 @@ import { ConfigProvider } from "antd";
 import { Layout, Menu } from "antd";
 import UserForm from "../User/UserForm";
 import AddTables from "../Tables/AddTables";
-import AddProduct from "../Product/AddProduct";
+import { AddProductForm } from "../Product/AddProduct";
 import { IProduct } from "../../types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -91,7 +91,7 @@ export const AdminPanel: React.FC = () => {
             background: "rgba(255, 255, 255, 0.2)",
           }}
         ></div>
-        <AddProduct onAdd={() => []} />
+        <AddProductForm onAdd={() => []} />
         <ProductsListAdminPage />
       </div>
     );

@@ -8,13 +8,13 @@
 @import url("./menu-item.scss");
 @import url("./menu-page.scss");
 @import url("./order-page.scss");
+@import url("./add-product.scss");
 
 .containerr {
   width: 100vw;
   min-height: 100vh;
   background-color: #fefefe;
 }
-
 
 ul {
   padding: 0;
@@ -23,9 +23,9 @@ ul {
 
 * {
   outline: none;
-  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-.mr-2{
+.mr-2 {
   margin-right: 2px;
 }

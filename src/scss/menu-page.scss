@@ -3,20 +3,19 @@
 .menu-page {
   width: 100vw;
   padding-bottom: 12.1212vh;
+  &__header {
+    z-index: 1;
+    margin-left: 8.3vw;
+    margin-top: 3.0363vh;
+    font-size: 2.631578vw;
+    margin-bottom: 2.1818vh;
+  }
   &__section {
     // width: 100vw;
     display: grid;
-    grid-template-columns: 37.7272vw 37.7272vw;
     justify-content: space-evenly;
     grid-auto-rows: minmax(auto, auto);
-  }
-  &__header {
-    font-size: 2.631578vw;
-    margin-left: 8.3vw;
-
-    margin-top: 3.0363vh;
-    margin-bottom: 2.1818vh;
-    z-index: 1;
+    grid-template-columns: 37.7272vw 37.7272vw;
   }
 }
 .menu-section {

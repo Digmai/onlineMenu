@@ -26,7 +26,7 @@ interface TableType {
   };
 }
 
-const AddProduct: React.FC<TableType> = ({ product }) => {
+export const AddProductForm: React.FC<TableType> = ({ product }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
@@ -95,61 +95,72 @@ const AddProduct: React.FC<TableType> = ({ product }) => {
   };
 
   return (
-    <>
+    <div className="add-product">
       <Form
-        onFinish={onFinish}
         form={form}
         layout="vertical"
-        style={{ width: "40%", margin: "0 auto" }}
+        onFinish={onFinish}
+        className="add-product__form"
       >
         <Modal open={previewVisible} footer={null} onCancel={handleCancel}>
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+          <img
+            alt="example"
+            src={previewImage}
+            style={{ width: "100%" }}
+            className="add-product__form-modal-img"
+          />
         </Modal>
         <Form.Item
-          label="Название"
           name="name"
+          label="Название"
           initialValue={product?.name}
           rules={[{ required: true }]}
+          className="add-product__form-item-name"
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="Стоимость"
           name="price"
-          initialValue={product?.price}
+          label="Стоимость"
           rules={[{ required: true }]}
+          initialValue={product?.price}
+          className="add-product__form-item-price"
         >
           <InputNumber min={0} step={1} />
         </Form.Item>
         <Form.Item
-          label="Категория"
           name="category"
-          initialValue={product?.category}
+          label="Категория"
           rules={[{ required: true }]}
+          initialValue={product?.category}
+          className="add-product__form-item-category"
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="Подкатегория"
           name="subcategory"
-          initialValue={product?.subcategory}
+          label="Подкатегория"
           rules={[{ required: true }]}
+          initialValue={product?.subcategory}
+          className="add-product__form-item-subcategory"
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Общий вес"
           name="totalWeight"
-          initialValue={product?.totalWeight}
           rules={[{ required: true }]}
+          initialValue={product?.totalWeight}
+          className="add-product__form-item-total-weight"
         >
           <InputNumber min={0} step={1} />
         </Form.Item>
         <Form.Item
-          label="Время приготовления"
           name="CookingTime"
-          initialValue={product?.CookingTime}
+          label="Время приготовления"
           rules={[{ required: true }]}
+          initialValue={product?.CookingTime}
+          className="add-product__form-item-cooking-time"
         >
           <InputNumber min={0} step={1} />
         </Form.Item>
@@ -157,15 +168,16 @@ const AddProduct: React.FC<TableType> = ({ product }) => {
           label="Upload"
           valuePropName="fileList"
           getValueFromEvent={normFile}
+          className="add-product__form-item-upload"
         >
           <Upload
-            accept=".jpg,.jpeg,.png,.gif"
-            beforeUpload={beforeUpload}
-            onPreview={handlePreview}
             action="/upload.do"
+            fileList={fileList}
             listType="picture-card"
             onChange={handleChange}
-            fileList={fileList}
+            onPreview={handlePreview}
+            beforeUpload={beforeUpload}
+            accept=".jpg,.jpeg,.png,.gif"
           >
             {fileList.length === 0 && (
               <div>
@@ -176,10 +188,11 @@ const AddProduct: React.FC<TableType> = ({ product }) => {
           </Upload>
         </Form.Item>
         <Form.Item
-          label="Тип продукта"
           name="DishOrDrink"
-          initialValue={product?.DishOrDrink}
+          label="Тип продукта"
           rules={[{ required: true }]}
+          initialValue={product?.DishOrDrink}
+          className="add-product__form-item-dish-or-drink"
         >
           <Select>
             <Option value="Dish">Блюдо</Option>
@@ -199,30 +212,44 @@ const AddProduct: React.FC<TableType> = ({ product }) => {
             return (
               <>
                 {fields.map((field, index) => (
-                  <div key={field.key}>
+                  <div
+                    key={field.key}
+                    className="add-product__form-item-add-ingredients"
+                  >
                     <Form.Item
-                      name={[field.name, "name"]}
                       key={field.key}
-                      initialValue={initialValues[index]?.name}
+                      name={[field.name, "name"]}
                       rules={[{ required: true }]}
+                      initialValue={initialValues[index]?.name}
+                      className="add-product__form-item-add-ingredients-name"
                     >
-                      <Input placeholder="Название ингредиента" />
+                      <Input
+                        placeholder="Название ингредиента"
+                        className="add-product__form-item-add-ingredients-name-placeholder"
+                      />
                     </Form.Item>
 
                     <Form.Item
-                      name={[field.name, "weight"]}
                       key={field.key}
-                      initialValue={initialValues[index]?.weight}
                       rules={[{ required: true }]}
+                      name={[field.name, "weight"]}
+                      initialValue={initialValues[index]?.weight}
+                      className="add-product__form-item-add-ingredients-weight"
                     >
-                      <InputNumber placeholder="Вес г/мл" min={0} step={1} />
+                      <InputNumber
+                        min={0}
+                        step={1}
+                        placeholder="Вес г/мл"
+                        className="add-product__form-item-add-ingredients-weight-placeholder"
+                      />
                     </Form.Item>
 
                     {fields.length > 1 && (
                       <Button
                         type="link"
-                        onClick={() => remove(field.name)}
                         style={{ marginLeft: "10px" }}
+                        onClick={() => remove(field.name)}
+                        className="add-product__form-item-add-ingredients-btn-delete"
                       >
                         Удалить ингредиент
                       </Button>
@@ -230,12 +257,13 @@ const AddProduct: React.FC<TableType> = ({ product }) => {
                   </div>
                 ))}
 
-                <Form.Item>
+                <Form.Item className="add-product__form-item-add-ingredients">
                   <Button
+                    block
                     type="dashed"
                     onClick={() => add()}
-                    block
                     icon={<PlusOutlined />}
+                    className="add-product__form-item-btn-add-ingredients"
                   >
                     Добавить ингредиент
                   </Button>
@@ -244,15 +272,38 @@ const AddProduct: React.FC<TableType> = ({ product }) => {
             );
           }}
         </Form.List>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading}>
-            {(product && "Удалить из списка") || "Добавить продукт"}
-          </Button>
+        <Form.Item className="add-product__form-item-submit">
+          {(product && (
+            <>
+              <Button
+                type="default"
+                htmlType="button"
+                loading={loading}
+                className="add-product__form-item-submit-btn-save-updeate-in-list-product"
+              >
+                save-updeate
+              </Button>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={loading}
+                className="add-product__form-item-submit-btn-delete-in-list-product"
+              >
+                Удалить из списка
+              </Button>
+            </>
+          )) || (
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              className="add-product__form-item-submit-btn-add-in-list-product"
+            >
+              Добавить продукт
+            </Button>
+          )}
         </Form.Item>
       </Form>
-      <div style={{ width: "50%" }} className="menu-page "></div>
-    </>
+    </div>
   );
 };
-
-export default AddProduct;

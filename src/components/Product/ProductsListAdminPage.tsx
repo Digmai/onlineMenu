@@ -3,7 +3,7 @@ import { Card, Input, Button } from "antd";
 import { IProduct, IProducts } from "../../types";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
-import AddProduct from "./AddProduct";
+import { AddProductForm } from "./AddProduct";
 
 const ProductsListAdminPage: React.FC = () => {
   const productSelect = useSelector(
@@ -83,7 +83,7 @@ const ProductsListAdminPage: React.FC = () => {
     };
 
     return (
-      <AddProduct
+      <AddProductForm
         product={{ ...product, handleProductDelete: handleProductDelete }}
       />
     );

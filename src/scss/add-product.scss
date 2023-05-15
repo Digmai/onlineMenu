@@ -1,0 +1,59 @@
+.add-product {
+  width: 100%;
+  margin-bottom: 5vh;
+  border-radius: 5px;
+  border: 1px solid #90909023;
+  background-color: rgba(255, 255, 255, 0.324);
+  &__form {
+    display: grid;
+    justify-content: space-evenly;
+    grid-auto-rows: minmax(auto, auto);
+    grid-template-columns: 30% 30%;
+  }
+
+  &__form-modal-img {
+  }
+
+  &__form-item-name {
+  }
+  &__form-item-price {
+  }
+  &__form-item-category {
+  }
+  &__form-item-subcategory {
+  }
+  &__form-item-cooking-time {
+  }
+  &__form-item-total-weight {
+  }
+  &__form-item-dish-or-drink {
+  }
+
+  &__form-item-btn-add-ingredients {
+  }
+
+  &__form-item-add-ingredients {
+  }
+  &__form-item-add-ingredients-name {
+  }
+  &__form-item-add-ingredients-weight {
+  }
+  &__form-item-add-ingredients-btn-delete {
+  }
+  &__form-item-add-ingredients-name-placeholder {
+  }
+  &__form-item-add-ingredients-weight-placeholder {
+  }
+
+  &__form-item-submit {
+  }
+  &__form-item-submit-btn-add-in-list-product {
+  }
+  &__form-item-submit-btn-delete-in-list-product {
+  }
+  &__form-item-submit-btn-save-updeate-in-list-product {
+  }
+
+  &__form-item-upload {
+  }
+}
