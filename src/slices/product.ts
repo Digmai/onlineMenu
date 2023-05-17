@@ -10,7 +10,7 @@ interface IProductState {
   error: string | null;
 }
 
-const Product: IProduct[] = Array.from({ length: 5 }, (_, i) => ({
+const Product: IProduct[] = Array.from({ length: 30 }, (_, i) => ({
   _id: i.toString(),
   name: `Пица Домашняя${i}`,
   totalWeight: 430,

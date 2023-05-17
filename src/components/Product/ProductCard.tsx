@@ -16,13 +16,13 @@ const ProductCard: React.FC<DishCardProps> = ({ dish }) => {
 
   const [visible, setVisible] = useState(false);
 
-  const showModal = () => {
-    setVisible(true);
-  };
-
   const handleCancel = () => {
     setVisible(false);
     // form.resetFields();
+  };
+
+  const showModal = () => {
+    setVisible(true);
   };
 
   const handleAddToCart = () => {

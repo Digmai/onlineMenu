@@ -9,11 +9,8 @@ import { ConfigProvider } from "antd";
 import { Layout, Menu } from "antd";
 import UserForm from "../User/UserForm";
 import AddTables from "../Tables/AddTables";
-import { AddProductForm } from "../Product/AddProduct";
-import { IProduct } from "../../types";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import ProductsListAdminPage from "../Product/ProductsListAdminPage";
+import { AddProductForm } from "../Product/AddProductForm";
+import { ProductsTree } from "../Product/ProductsTree";
 
 type UserType = {
   id: string;
@@ -44,11 +41,6 @@ export const AdminPanel: React.FC = () => {
   const { Header, Content, Footer, Sider } = Layout;
   const [currentMenuItem, setCurrentMenuItem] = useState("1");
   const [tableList, setTableList] = useState<UserType[]>([]);
-  const [productList, setProductList] = useState<IProduct[]>([]);
-
-  const productSelect = useSelector(
-    (state: RootState) => state.product.product
-  );
 
   const handleMenuItemClick = (key: string) => {
     setCurrentMenuItem(key);
@@ -92,7 +84,7 @@ export const AdminPanel: React.FC = () => {
           }}
         ></div>
         <AddProductForm onAdd={() => []} />
-        <ProductsListAdminPage />
+        <ProductsTree />
       </div>
     );
   }

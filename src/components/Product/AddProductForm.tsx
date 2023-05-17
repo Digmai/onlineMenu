@@ -12,16 +12,15 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import { UploadChangeParam } from "antd/es/upload";
 import { IProduct } from "../../types";
-import { pfoto } from "./pfoto";
 
 const { Option } = Select;
 interface TableType {
   onAdd?: () => void;
   product?: IProduct & {
     handleProductDelete?: (
-      deletedProduct: IProduct,
       category: string,
-      subcategory: string
+      subcategory: string,
+      deletedProduct: IProduct
     ) => void;
   };
 }
@@ -224,6 +223,7 @@ export const AddProductForm: React.FC<TableType> = ({ product }) => {
                       className="add-product__form-item-add-ingredients-name"
                     >
                       <Input
+                        key={index}
                         placeholder="Название ингредиента"
                         className="add-product__form-item-add-ingredients-name-placeholder"
                       />
@@ -237,6 +237,7 @@ export const AddProductForm: React.FC<TableType> = ({ product }) => {
                       className="add-product__form-item-add-ingredients-weight"
                     >
                       <InputNumber
+                        key={index}
                         min={0}
                         step={1}
                         placeholder="Вес г/мл"
@@ -246,6 +247,7 @@ export const AddProductForm: React.FC<TableType> = ({ product }) => {
 
                     {fields.length > 1 && (
                       <Button
+                        key={index}
                         type="link"
                         style={{ marginLeft: "10px" }}
                         onClick={() => remove(field.name)}
@@ -285,8 +287,17 @@ export const AddProductForm: React.FC<TableType> = ({ product }) => {
               </Button>
               <Button
                 type="primary"
-                htmlType="submit"
+                htmlType="button"
                 loading={loading}
+                onClick={() =>
+                  // add modal for confirmation
+                  product.handleProductDelete &&
+                  product.handleProductDelete(
+                    product.category,
+                    product.subcategory,
+                    product
+                  )
+                }
                 className="add-product__form-item-submit-btn-delete-in-list-product"
               >
                 Удалить из списка

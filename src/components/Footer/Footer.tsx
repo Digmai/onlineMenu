@@ -6,9 +6,12 @@ import { setCategoryState, setSubcategoryState } from "../../slices/sortData";
 
 export const Footer = () => {
   const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState<string>();
   const [subcategory, setSubcategory] = useState<string>();
-  const inputRef = useRef<HTMLInputElement>(null);
+
+  const sortedData = useSelector((state: RootState) => state.product.product);
+
   useEffect(() => {
     category && dispatch(setCategoryState(category));
     subcategory && dispatch(setSubcategoryState(subcategory));
@@ -19,7 +22,6 @@ export const Footer = () => {
     };
   }, [category, subcategory]);
 
-  const sortedData = useSelector((state: RootState) => state.product.product);
   if (!sortedData) return <div>null</div>;
 
   return (
