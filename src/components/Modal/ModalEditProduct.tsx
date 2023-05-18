@@ -7,14 +7,10 @@ interface IModel {
   visible: boolean;
   handleCancel: () => void;
   product?: IProduct | null;
-  handleProductDelete: (
-    category: string,
-    subcategory: string,
-    deletedProduct: IProduct
-  ) => void;
+  handleProductDelete: () => void;
 }
 
-export const ModalAddProductForm: React.FC<IModel> = ({
+export const ModalEditProduct: React.FC<IModel> = ({
   visible,
   product,
   handleCancel,

@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addItemToCart } from "../../slices/orders";
 import { IProduct } from "../../types";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { ModelProduct } from "../Modal/ModelProduct";
 
 interface DishCardProps {
@@ -12,8 +7,6 @@ interface DishCardProps {
 }
 
 const ProductCard: React.FC<DishCardProps> = ({ dish }) => {
-  const dispatch = useDispatch();
-
   const [visible, setVisible] = useState(false);
 
   const handleCancel = () => {
@@ -25,9 +18,6 @@ const ProductCard: React.FC<DishCardProps> = ({ dish }) => {
     setVisible(true);
   };
 
-  const handleAddToCart = () => {
-    dispatch(addItemToCart({ ...dish }));
-  };
   // http://source.unsplash.com/300x300/?tree,fast-food
   return (
     <>
@@ -36,7 +26,7 @@ const ProductCard: React.FC<DishCardProps> = ({ dish }) => {
         visible={visible}
         product={dish}
       />
-      <div className="menu-item" onClick={() => setVisible(true)}>
+      <div className="menu-item" onClick={showModal}>
         <img src={dish.image} alt="" />
         <div className="menu-item__info">
           <p className="menu-item__name">{dish.name}</p>

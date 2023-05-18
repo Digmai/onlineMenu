@@ -17,11 +17,7 @@ const { Option } = Select;
 interface TableType {
   onAdd?: () => void;
   product?: IProduct & {
-    handleProductDelete?: (
-      category: string,
-      subcategory: string,
-      deletedProduct: IProduct
-    ) => void;
+    handleProductDelete?: () => void;
   };
 }
 
@@ -291,12 +287,7 @@ export const AddProductForm: React.FC<TableType> = ({ product }) => {
                 loading={loading}
                 onClick={() =>
                   // add modal for confirmation
-                  product.handleProductDelete &&
-                  product.handleProductDelete(
-                    product.category,
-                    product.subcategory,
-                    product
-                  )
+                  product.handleProductDelete && product.handleProductDelete()
                 }
                 className="add-product__form-item-submit-btn-delete-in-list-product"
               >
