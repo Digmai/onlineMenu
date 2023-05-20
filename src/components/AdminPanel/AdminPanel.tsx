@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { lazy, useState, Suspense } from "react";
 import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
+import { Layout, Menu } from "antd";
 import type { MenuProps } from "antd";
 import { ConfigProvider } from "antd";
-import { Layout, Menu } from "antd";
 import UserForm from "../User/UserForm";
-import AddTables from "../Tables/AddTables";
-import { AddProductForm } from "../Product/AddProductForm";
-import { ProductsTree } from "../Product/ProductsTree";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 type UserType = {
   id: string;
@@ -37,6 +35,10 @@ const items: MenuProps["items"] = [
   },
 ];
 
+const AddTables = lazy(() => import("../Tables/AddTables"));
+const ProductsTree = lazy(() => import("../Product/ProductsTree"));
+const AddProductForm = lazy(() => import("../Product/AddProductForm"));
+
 export const AdminPanel: React.FC = () => {
   const { Header, Content, Footer, Sider } = Layout;
   const [currentMenuItem, setCurrentMenuItem] = useState("1");
@@ -49,7 +51,13 @@ export const AdminPanel: React.FC = () => {
   let selectedComponent: React.ReactNode = null;
 
   if (currentMenuItem === "1") {
-    selectedComponent = <UserForm />;
+    selectedComponent = (
+      <>
+        <Suspense fallback={<LoadingSpinner />}>
+          <UserForm />
+        </Suspense>
+      </>
+    );
   } else if (currentMenuItem === "2") {
     selectedComponent = (
       <div>
@@ -60,17 +68,9 @@ export const AdminPanel: React.FC = () => {
             background: "rgba(255, 255, 255, 0.2)",
           }}
         ></div>
-        <AddTables
-          onAdd={() => []}
-          tables={[
-            { id: "1", name: "Table 1" },
-            {
-              id: "2",
-              name: "Table 2",
-            },
-          ]}
-          users={tableList}
-        />
+        <Suspense fallback={<LoadingSpinner />}>
+          <AddTables onAdd={() => []} users={tableList} />
+        </Suspense>
       </div>
     );
   } else if (currentMenuItem === "3") {
@@ -83,8 +83,10 @@ export const AdminPanel: React.FC = () => {
             background: "rgba(255, 255, 255, 0.2)",
           }}
         ></div>
-        <AddProductForm onAdd={() => []} />
-        <ProductsTree />
+        <Suspense fallback={<LoadingSpinner />}>
+          <AddProductForm onAdd={() => []} />
+          <ProductsTree />
+        </Suspense>
       </div>
     );
   }
@@ -125,7 +127,7 @@ export const AdminPanel: React.FC = () => {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2023 Created by Ant UED
+            Design ©2023 Created by Project
           </Footer>
         </Layout>
       </Layout>

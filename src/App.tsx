@@ -4,8 +4,10 @@ import { RootState, useAppDispatch } from "./store";
 import { fetchProduct } from "./slices/product";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
+import React from "react";
 const MenuPage = lazy(() => import("./pages/MenuPage"));
 const ChefPage = lazy(() => import("./pages/ChefPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
 const OrderPage = lazy(() => import("./pages/OrderPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
 const WaiterPage = lazy(() => import("./pages/WaiterPage"));
@@ -36,10 +38,10 @@ function App() {
       path: "/",
       element: (
         <Suspense fallback={<LoadingSpinner />}>
-          {(user?.role === "admin" && <AdminPage />) ||
-            (user?.role === "cook" && <ChefPage />) ||
-            (user?.role === "bartender" && <BartenderPage />) ||
-            (user?.role === "waiter" && <WaiterPage />) || <MenuPage />}
+          {(user?.role === "cook" && <ChefPage />) ||
+            (user?.role === "admin" && <AdminPage />) ||
+            (user?.role === "waiter" && <WaiterPage />) ||
+            (user?.role === "bartender" && <BartenderPage />) || <MenuPage />}
         </Suspense>
       ),
       errorElement: <Notification message={"error"} type="error" />,
@@ -48,18 +50,19 @@ function App() {
       path: ":our",
       element: (
         <Suspense fallback={<LoadingSpinner />}>
-          {(user?.role === "admin" && <AdminPage />) ||
-            (user?.role === "cook" && <ChefPage />) ||
-            (user?.role === "bartender" && <BartenderPage />) ||
-            (user?.role === "waiter" && <WaiterPage />) || <MenuPage />}
+          {(user?.role === "cook" && <ChefPage />) ||
+            (user?.role === "admin" && <AdminPage />) ||
+            (user?.role === "waiter" && <WaiterPage />) ||
+            (user?.role === "bartender" && <BartenderPage />) || <MenuPage />}
         </Suspense>
       ),
     },
+
     {
-      path: "order",
+      path: "login",
       element: (
         <Suspense fallback={<LoadingSpinner />}>
-          <OrderPage />
+          <LoginPage />
         </Suspense>
       ),
     },
@@ -69,6 +72,3 @@ function App() {
 }
 
 export default App;
-function fetchUsers(): any {
-  console.log("Function not implemented.");
-}

@@ -60,6 +60,11 @@ export interface Order {
 
 export type OrderStatus = "New" | "Preparing" | "Completed" | "Cancelled";
 
+export interface ITable {
+  id: string;
+  num: number;
+}
+
 export interface WebSocketMessage {
   type: string;
   payload: any;

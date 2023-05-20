@@ -21,7 +21,11 @@ export default class UserService {
    */
   static async getCurrentUser(): Promise<UserData> {
     try {
-      const response = await axios.get("/api/users/current");
+      const token = localStorage.getItem("authToken"); // получение токена из локального хранилища
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      const response = await axios.get("/api/users/current", config); // передача заголовка с токеном
       return response.data;
     } catch (error: any) {
       throw error.response.data;
@@ -30,7 +34,7 @@ export default class UserService {
 
   /**
    * Method for registering a new user
-   * @param {User} userData User data to register
+   * @param {IUser} userData User data to register
    * @returns {Promise<UserData>} Response data
    */
   static async registerUser(userData: IUser): Promise<UserData> {
@@ -44,7 +48,7 @@ export default class UserService {
 
   /**
    * Method for logging in a user
-   * @param {User} userData User data to log in
+   * @param {IUser} userData User data to log in
    * @returns {Promise<UserData>} Response data
    */
   static async loginUser(userData: IUser): Promise<UserData> {

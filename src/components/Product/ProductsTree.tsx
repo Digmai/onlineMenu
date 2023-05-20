@@ -7,8 +7,8 @@ import { IProduct, IProducts } from "../../types";
 import type { DataNode, TreeProps } from "antd/es/tree";
 import { extractLastNumber } from "../../utils/extractLastNumber";
 import { ModalEditProduct } from "../Modal/ModalEditProduct";
-
-export const ProductsTree: React.FC = () => {
+import React from "react";
+const ProductsTree: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [treeData, setTreeData] = useState<DataNode[]>();
@@ -214,3 +214,4 @@ export const ProductsTree: React.FC = () => {
     </>
   );
 };
+export default ProductsTree;

@@ -1,5 +1,9 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, InputNumber, notification } from "antd";
+import { useSelector } from "react-redux";
+import { getTable } from "../../slices/table";
+import { RootState, useAppDispatch } from "../../store";
+import { ITable } from "../../types";
 
 interface User {
   role: string;
@@ -9,20 +13,33 @@ interface User {
 export interface TableType {
   users: User[];
   onAdd: (newTables: number[]) => void;
-  tables: {
-    id: string;
-    name: string;
-  }[];
 }
 
-const AddTables: React.FC<TableType> = ({ users, onAdd, tables }) => {
+const AddTables: React.FC<TableType> = ({ users, onAdd }) => {
   const [number, setNumber] = useState<number | undefined>();
+  const [tables, setTables] = useState<ITable[] | null>(null);
 
+  const tablesSelect = useSelector((state: RootState) => state.tables.table);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      dispatch(getTable(token));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (tablesSelect) {
+      setTables(tablesSelect);
+    }
+  }, [tablesSelect]);
   const handleNumberChange = (value: number | null) => {
     if (value !== null) {
       setNumber(value);
     }
   };
+
   const handleAddTable = () => {
     if (!number || users.some((user) => user.table === number)) {
       notification.error({
@@ -40,21 +57,19 @@ const AddTables: React.FC<TableType> = ({ users, onAdd, tables }) => {
     });
   };
 
+  if (!tables) return <p>Loading...</p>;
   return (
     <>
       <InputNumber
         min={1}
         placeholder="Enter table number"
         onChange={handleNumberChange}
-        style={{ marginRight: 16 }}
+        style={{ marginRight: 16, minWidth: "100px" }}
       />
       <Button type="primary" onClick={handleAddTable}>
         Add Table
       </Button>
-
-      {tables.map((e) => (
-        <div>{e.id + " " + e.name}</div>
-      ))}
+      {tables && tables.map((e) => <div key={e.id}>{e.id + " " + e.num}</div>)}
     </>
   );
 };

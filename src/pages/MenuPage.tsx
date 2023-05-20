@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Footer } from "./../components/Footer/Footer";
 import { Header } from "../components/Header/Header";
 import { ProductsListMenu } from "../components/Product/ProductsListMenuPage";
+import React from "react";
 
 const MenuPage = () => {
   const navigate = useNavigate();

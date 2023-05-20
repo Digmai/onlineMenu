@@ -6,10 +6,12 @@ import usersReducer from "./slices/usersList";
 import productSlice from "./slices/product";
 import ordersReducer from "./slices/orders";
 import sortDataSlice from "./slices/sortData";
+import tablesSlice from "./slices/table";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
+    tables: tablesSlice,
     orders: ordersReducer,
     product: productSlice,
     sortData: sortDataSlice,

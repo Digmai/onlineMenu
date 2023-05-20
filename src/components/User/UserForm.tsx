@@ -1,4 +1,5 @@
 import { Form, Input, Select, Checkbox, Radio, RadioChangeEvent } from "antd";
+import React from "react";
 import { useState } from "react";
 
 const { Option } = Select;
@@ -68,7 +69,7 @@ const UserForm = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item name="username" label="Username" rules={[{ required: true }]}>
+      <Form.Item name="username" label="Login" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
 
@@ -92,7 +93,12 @@ const UserForm = () => {
       </Form.Item>
 
       {selectedRole === "customer" && (
-        <Form.Item name="discount" label="Discount">
+        <Form.Item
+          name="discount"
+          label="Discount"
+          rules={[{ required: true }]}
+          style={{ minWidth: "200px" }}
+        >
           <Select>
             <Option value="10%">10%</Option>
             <Option value="25%">25%</Option>
@@ -104,11 +110,20 @@ const UserForm = () => {
       {selectedRole && selRole(selectedRole) && (
         <>
           {selectedRole === "waiter" && (
-            <Form.Item name="tables" label="Tables">
+            <Form.Item
+              name="tables"
+              label="Tables"
+              rules={[{ required: true }]}
+              style={{ minWidth: "200px" }}
+            >
               <Select mode="multiple" options={filteredOptions} />
             </Form.Item>
           )}
-          <Form.Item name="workingDays" label="Working Days">
+          <Form.Item
+            rules={[{ required: true }]}
+            name="workingDays"
+            label="Working Days"
+          >
             <Checkbox.Group>
               <Checkbox value={"monday"}>Monday</Checkbox>
               <Checkbox value={"tuesday"}>Tuesday</Checkbox>
@@ -120,7 +135,12 @@ const UserForm = () => {
             </Checkbox.Group>
           </Form.Item>
 
-          <Form.Item name="workingHours" label="Working Hours">
+          <Form.Item
+            rules={[{ required: true }]}
+            style={{ minWidth: "200px" }}
+            name="workingHours"
+            label="Working Hours"
+          >
             <Select>
               <Option value="morning">Morning (9am - 12pm)</Option>
               <Option value="afternoon">Afternoon (12pm - 3pm)</Option>

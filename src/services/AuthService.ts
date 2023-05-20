@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IUser, VerifyTokenResponse } from "../types";
+import { ITable, IUser, VerifyTokenResponse } from "../types";
 
 export const AuthService = {
   // Метод для авторизации пользователей

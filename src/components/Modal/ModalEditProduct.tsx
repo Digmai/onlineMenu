@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
 import { IProduct } from "../../types";
-import { AddProductForm } from "../Product/AddProductForm";
+import AddProductForm from "../Product/AddProductForm";
 
 interface IModel {
   visible: boolean;

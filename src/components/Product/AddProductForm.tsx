@@ -21,7 +21,7 @@ interface TableType {
   };
 }
 
-export const AddProductForm: React.FC<TableType> = ({ product }) => {
+const AddProductForm: React.FC<TableType> = ({ product }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
@@ -309,3 +309,4 @@ export const AddProductForm: React.FC<TableType> = ({ product }) => {
     </div>
   );
 };
+export default AddProductForm;
