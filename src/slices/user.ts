@@ -13,20 +13,14 @@ interface UsersState {
 }
 
 const initialState: UsersState = {
-  user: {
-    _id: "1",
-    email: "1212",
-    name: "wqdasd",
-    password: "wdas",
-    role: "admin",
-  },
+  user: null,
   isLoading: false,
   error: null,
   token: localStorage.getItem("token") || null,
 };
 
 const usersSlice = createSlice({
-  name: "users",
+  name: "user",
   initialState,
   reducers: {
     getUsersStart(state) {
@@ -43,6 +37,7 @@ const usersSlice = createSlice({
     },
 
     setUser: (state, action) => {
+      console.log(action.payload);
       state.user = action.payload;
     },
     setToken: (state, action) => {
@@ -52,6 +47,7 @@ const usersSlice = createSlice({
       state.user = null;
       state.token = null;
       localStorage.removeItem("token");
+      console.log("logout");
     },
   },
 });
@@ -69,12 +65,11 @@ export const login =
   (email: string, password: string) => async (dispatch: AppDispatch) => {
     try {
       const response = await AuthService.login(email, password);
-      const token = response;
 
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", response.token);
 
-      dispatch(setToken(token));
-      dispatch(setUser(jwtDecode<IUser>(token)));
+      dispatch(setToken(response.token));
+      dispatch(setUser(response.user));
     } catch (error) {
       console.log(error);
 
@@ -96,6 +91,8 @@ export const addUser = (user: IUser) => async (dispatch: AppDispatch) => {
 export const verifyToken = (token: string) => async (dispatch: AppDispatch) => {
   try {
     const response = await AuthService.verifyToken(token);
+    console.log("response", response);
+
     const { user } = response.data;
 
     dispatch(setUser(user));

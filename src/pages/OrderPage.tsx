@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { IProduct } from "../types";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../store";
 import { selectUser } from "../slices/user";
+import { useEffect, useState } from "react";
 import { Header } from "../components/Header/Header";
-import { IProduct } from "../types";
 import { OrderCart } from "../components/Order/OrderCart";
 import { addOrder, selectTotalPrice } from "../slices/orders";
 import { OrderFooter } from "../components/Order/OrderFooter";

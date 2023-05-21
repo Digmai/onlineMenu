@@ -23,13 +23,13 @@ export interface Drink {
   image: string;
   CookingTime: number;
 }
-
+export type TRole = "customer" | "cook" | "bartender" | "waiter" | "admin";
 export interface IUser {
   _id: string;
   name: string;
   email: string;
   password: string;
-  role: "customer" | "cook" | "bartender" | "waiter" | "admin"; //customer - дял скидки 10% | 25% | 50%
+  role: TRole; //customer - дял скидки 10% | 25% | 50%
 }
 export interface VerifyTokenResponse {
   data: {

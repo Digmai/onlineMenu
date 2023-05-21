@@ -4,11 +4,13 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { Button, Layout, Menu } from "antd";
 import type { MenuProps } from "antd";
 import { ConfigProvider } from "antd";
 import UserForm from "../User/UserForm";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { logout } from "../../slices/user";
+import { useAppDispatch } from "../../store";
 
 type UserType = {
   id: string;
@@ -40,12 +42,16 @@ const ProductsTree = lazy(() => import("../Product/ProductsTree"));
 const AddProductForm = lazy(() => import("../Product/AddProductForm"));
 
 export const AdminPanel: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { Header, Content, Footer, Sider } = Layout;
   const [currentMenuItem, setCurrentMenuItem] = useState("1");
   const [tableList, setTableList] = useState<UserType[]>([]);
 
   const handleMenuItemClick = (key: string) => {
     setCurrentMenuItem(key);
+  };
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   let selectedComponent: React.ReactNode = null;
@@ -111,6 +117,7 @@ export const AdminPanel: React.FC = () => {
               background: "rgba(255, 255, 255, 0.2)",
             }}
           ></div>
+
           <Menu
             theme="dark"
             mode="inline"
@@ -120,7 +127,27 @@ export const AdminPanel: React.FC = () => {
           />
         </Sider>
         <Layout className="site-layout" style={{ marginLeft: 200 }}>
-          <Header style={{ padding: 0 }} />
+          <Header style={{ padding: 0 }}>
+            <div
+              style={{
+                height: "100%",
+                display: "flex",
+                flexWrap: "wrap",
+                alignContent: "center",
+                flexDirection: "row-reverse",
+              }}
+            >
+              <Button
+                style={{
+                  color: "white",
+                }}
+                type="text"
+                onClick={handleLogout}
+              >
+                Выйти
+              </Button>
+            </div>
+          </Header>
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             <div style={{ padding: 24, textAlign: "center" }}>
               {selectedComponent}

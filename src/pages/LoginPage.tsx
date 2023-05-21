@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { login } from "../slices/user";
-import store, { RootState } from "../store";
+import { RootState, useAppDispatch } from "../store";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import "./../scss/login-page.scss";
+
 interface LoginForm {
   email: string;
   password: string;
@@ -15,18 +16,27 @@ const LoginPage: React.FC = () => {
     password: "",
   });
   const history = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const error = useSelector((state: RootState) => !state.user.user);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-  };
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    store.dispatch(login(formValues.email, formValues.password));
-    history("/"); // перенаправляем на главную страницу после успешной авторизации
-  };
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      dispatch(login(formValues.email, formValues.password));
+    },
+    [dispatch, formValues.email, formValues.password]
+  );
+
+  useEffect(() => {
+    if (error) history("/");
+  }, [error, history]);
 
   return (
     <div className="login">

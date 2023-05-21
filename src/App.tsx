@@ -1,10 +1,11 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./store";
 import { fetchProduct } from "./slices/product";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 import React from "react";
+import { verifyToken } from "./slices/user";
 const MenuPage = lazy(() => import("./pages/MenuPage"));
 const ChefPage = lazy(() => import("./pages/ChefPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -20,12 +21,33 @@ const Notification = lazy(
 
 function App() {
   const dispatch = useAppDispatch();
+  const [isMobile, setIsMobile] = useState(false);
   const { isLoading, user, error } = useSelector(
     (state: RootState) => state.user
   );
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMobile(false);
+      } else {
+        setIsMobile(true);
+      }
+    };
+
+    // window.addEventListener("resize", handleResize);
+    console.log("render");
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     dispatch(fetchProduct());
+    token && dispatch(verifyToken(token));
     // dispatch(fetchDishes());
     // dispatch(fetchOrders());
     // dispatch(fetchUsers());
@@ -38,10 +60,14 @@ function App() {
       path: "/",
       element: (
         <Suspense fallback={<LoadingSpinner />}>
-          {(user?.role === "cook" && <ChefPage />) ||
+          {isMobile ? (
+            <MenuPage />
+          ) : (
+            (user?.role === "cook" && <ChefPage />) ||
             (user?.role === "admin" && <AdminPage />) ||
             (user?.role === "waiter" && <WaiterPage />) ||
-            (user?.role === "bartender" && <BartenderPage />) || <MenuPage />}
+            (user?.role === "bartender" && <BartenderPage />) || <LoginPage />
+          )}
         </Suspense>
       ),
       errorElement: <Notification message={"error"} type="error" />,
@@ -50,19 +76,7 @@ function App() {
       path: ":our",
       element: (
         <Suspense fallback={<LoadingSpinner />}>
-          {(user?.role === "cook" && <ChefPage />) ||
-            (user?.role === "admin" && <AdminPage />) ||
-            (user?.role === "waiter" && <WaiterPage />) ||
-            (user?.role === "bartender" && <BartenderPage />) || <MenuPage />}
-        </Suspense>
-      ),
-    },
-
-    {
-      path: "login",
-      element: (
-        <Suspense fallback={<LoadingSpinner />}>
-          <LoginPage />
+          <MenuPage />
         </Suspense>
       ),
     },
