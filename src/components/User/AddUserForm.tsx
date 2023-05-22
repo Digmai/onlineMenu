@@ -43,9 +43,9 @@ const AddUserForm: React.FC<Props> = ({
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      {/* <Button type="primary" onClick={showModal}>
         Добавить пользователя
-      </Button>
+      </Button> */}
       <Modal
         open={visible}
         title="Добавить нового пользователя"

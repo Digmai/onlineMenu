@@ -102,7 +102,10 @@ export const verifyToken = (token: string) => async (dispatch: AppDispatch) => {
     dispatch(logout());
   }
 };
-export const selectUser = (state: RootState): UsersState | null => {
+export const selectUser = (state: RootState) => {
   return state.user;
+};
+export const selectToken = (state: RootState) => {
+  return state.user.token;
 };
 export default usersSlice.reducer;

@@ -1,76 +1,69 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { Form, Input, Button, Typography, Space } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../slices/user";
 import { RootState, useAppDispatch } from "../store";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import "./../scss/login-page.scss";
 
-interface LoginForm {
-  email: string;
-  password: string;
-}
+const { Title } = Typography;
 
 const LoginPage: React.FC = () => {
-  const [formValues, setFormValues] = useState<LoginForm>({
-    email: "",
-    password: "",
-  });
+  const [loading, setLoading] = useState(false);
   const history = useNavigate();
   const dispatch = useAppDispatch();
-  const error = useSelector((state: RootState) => !state.user.user);
-
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  }, []);
+  const error = useSelector((state: RootState) => state.user.error);
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      dispatch(login(formValues.email, formValues.password));
+    async (values: any) => {
+      setLoading(true);
+      await dispatch(login(values.email, values.password));
+      setLoading(false);
     },
-    [dispatch, formValues.email, formValues.password]
+    [dispatch]
   );
 
   useEffect(() => {
-    if (error) history("/");
+    if (!error) {
+      history("/");
+    }
   }, [error, history]);
 
   return (
-    <div className="login">
-      <h1>Авторизация</h1>
-      {error && <div className="error__masseges">{error}</div>}
+    <div className="login-page">
+      <Title className="login-page__header" level={2}>
+        Авторизация
+      </Title>
+      {error && <div className="login-page__error">{error}</div>}
+      <Form layout="vertical" onFinish={handleSubmit}>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              required: true,
+              type: "email",
+              message: "Введите корректный email",
+            },
+          ]}
+        >
+          <Input autoFocus disabled={loading} />
+        </Form.Item>
 
-      <form className="login__form" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+        <Form.Item
+          label="Пароль"
+          name="password"
+          rules={[{ required: true, message: "Введите пароль" }]}
+        >
+          <Input.Password disabled={loading} />
+        </Form.Item>
 
-          <input
-            className="login__form-input"
-            id="email"
-            type="email"
-            name="email"
-            onChange={handleChange}
-            value={formValues.email}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Пароль:</label>
-          <input
-            className="login__form-input"
-            id="password"
-            type="password"
-            name="password"
-            onChange={handleChange}
-            value={formValues.password}
-          />
-        </div>
-        <button className="login__form-button" type="submit">
-          Войти
-        </button>
-      </form>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={loading}>
+            Войти
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

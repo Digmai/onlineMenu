@@ -1,4 +1,12 @@
-import { Form, Input, Select, Checkbox, Radio, RadioChangeEvent } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  Checkbox,
+  Radio,
+  RadioChangeEvent,
+  Button,
+} from "antd";
 import React from "react";
 import { useState } from "react";
 
@@ -73,7 +81,17 @@ const UserForm = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item name="password" label="Password" rules={[{ required: true }]}>
+      <Form.Item
+        name="password"
+        label="Password"
+        rules={[
+          { required: true, message: "Введите пароль" },
+          {
+            min: 6,
+            message: "Пароль должен содержать не менее 6 символов",
+          },
+        ]}
+      >
         <Input.Password />
       </Form.Item>
 
@@ -151,7 +169,9 @@ const UserForm = () => {
       )}
 
       <Form.Item>
-        <button type="submit">Submit</button>
+        <Button type="primary" htmlType="submit">
+          Добавить
+        </Button>
       </Form.Item>
     </Form>
   );

@@ -62,7 +62,8 @@ export type OrderStatus = "New" | "Preparing" | "Completed" | "Cancelled";
 
 export interface ITable {
   id: string;
-  num: number;
+  tableNumber: number;
+  // seats:string
 }
 
 export interface WebSocketMessage {
@@ -74,3 +75,8 @@ export interface WebSocketNotification {
   message: string;
   type: "success" | "error";
 }
+
+export type ErrorResponse = {
+  message: string;
+  code: number;
+};

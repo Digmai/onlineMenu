@@ -1,55 +1,68 @@
-import React, { useEffect, useState } from "react";
-import { Button, InputNumber, notification } from "antd";
-import { useSelector } from "react-redux";
-import { getTable } from "../../slices/table";
-import { RootState, useAppDispatch } from "../../store";
 import { ITable } from "../../types";
+import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { RootState, useAppDispatch } from "../../store";
+import { createTable, getTables } from "../../slices/table";
+import { Button, InputNumber, List, notification } from "antd";
 
-interface User {
-  role: string;
-  table: number;
-}
-
-export interface TableType {
-  users: User[];
-  onAdd: (newTables: number[]) => void;
-}
-
-const AddTables: React.FC<TableType> = ({ users, onAdd }) => {
-  const [number, setNumber] = useState<number | undefined>();
-  const [tables, setTables] = useState<ITable[] | null>(null);
+const AddTables: React.FC = () => {
+  const [number, setNumber] = useState<number | null>();
+  const [tables, setTables] = useState<ITable[] | undefined>();
 
   const tablesSelect = useSelector((state: RootState) => state.tables.table);
+  const token = useSelector((state: RootState) => state.user.token);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      dispatch(getTable(token));
-    }
-  }, [dispatch]);
+    token && dispatch(getTables(token));
+  }, []);
 
   useEffect(() => {
+    console.log(tablesSelect);
+
     if (tablesSelect) {
-      setTables(tablesSelect);
+      const sortedTables = [...tablesSelect].sort((a, b) =>
+        a.tableNumber > b.tableNumber ? -1 : 1
+      );
+      setTables(sortedTables);
     }
   }, [tablesSelect]);
+
   const handleNumberChange = (value: number | null) => {
-    if (value !== null) {
-      setNumber(value);
-    }
+    setNumber(value);
+  };
+  const handleCreateTable = (tableNumber: number) => {
+    token && dispatch(createTable({ token, tableNumber }));
+  };
+
+  const handleTableDelete = (tableNumber: number) => {
+    const updatedTables = tables?.filter(
+      (table) => table.tableNumber !== tableNumber
+    );
+    setTables(updatedTables);
+    notification.success({
+      message: "Table deleted",
+      description: `Table ${tableNumber} has been removed.`,
+    });
   };
 
   const handleAddTable = () => {
-    if (!number || users.some((user) => user.table === number)) {
+    if (!number) {
       notification.error({
         message: "Error",
         description: "Please select a valid table",
       });
       return;
     }
-    const newTables = [number];
-    onAdd(newTables);
+    if (tables && tables.some((table) => table.tableNumber === number)) {
+      notification.error({
+        message: "Error",
+        description: "Table already exists",
+      });
+      return;
+    }
+
+    handleCreateTable(number);
     setNumber(undefined);
     notification.success({
       message: "Table added",
@@ -57,7 +70,6 @@ const AddTables: React.FC<TableType> = ({ users, onAdd }) => {
     });
   };
 
-  if (!tables) return <p>Loading...</p>;
   return (
     <>
       <InputNumber
@@ -69,7 +81,43 @@ const AddTables: React.FC<TableType> = ({ users, onAdd }) => {
       <Button type="primary" onClick={handleAddTable}>
         Add Table
       </Button>
-      {tables && tables.map((e) => <div key={e.id}>{e.id + " " + e.num}</div>)}
+      {tables && (
+        <List
+          style={{
+            backgroundColor: "#f0f0f0",
+            padding: "16px",
+            borderRadius: "8px",
+          }}
+          dataSource={tables}
+          bordered
+          itemLayout="horizontal"
+          renderItem={(item, index) => (
+            <List.Item
+              style={{
+                border: "1px solid #d9d9d9",
+                margin: "8px 0",
+                padding: "12px",
+                height: "60px",
+                borderTop: index === 0 ? "none" : undefined,
+                borderBottom: index === tables.length - 1 ? "none" : undefined,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+              key={item.tableNumber}
+            >
+              <div>Table {item.tableNumber}</div>
+
+              <Button
+                type="dashed"
+                onClick={() => handleTableDelete(item.tableNumber)}
+              >
+                Delete
+              </Button>
+            </List.Item>
+          )}
+        />
+      )}
     </>
   );
 };

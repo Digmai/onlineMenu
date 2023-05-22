@@ -4,13 +4,13 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu } from "antd";
 import type { MenuProps } from "antd";
 import { ConfigProvider } from "antd";
 import UserForm from "../User/UserForm";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { logout } from "../../slices/user";
+import { Button, Layout, Menu } from "antd";
 import { useAppDispatch } from "../../store";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 type UserType = {
   id: string;
@@ -45,7 +45,6 @@ export const AdminPanel: React.FC = () => {
   const dispatch = useAppDispatch();
   const { Header, Content, Footer, Sider } = Layout;
   const [currentMenuItem, setCurrentMenuItem] = useState("1");
-  const [tableList, setTableList] = useState<UserType[]>([]);
 
   const handleMenuItemClick = (key: string) => {
     setCurrentMenuItem(key);
@@ -75,7 +74,7 @@ export const AdminPanel: React.FC = () => {
           }}
         ></div>
         <Suspense fallback={<LoadingSpinner />}>
-          <AddTables onAdd={() => []} users={tableList} />
+          <AddTables />
         </Suspense>
       </div>
     );
@@ -90,7 +89,7 @@ export const AdminPanel: React.FC = () => {
           }}
         ></div>
         <Suspense fallback={<LoadingSpinner />}>
-          <AddProductForm onAdd={() => []} />
+          <AddProductForm />
           <ProductsTree />
         </Suspense>
       </div>
@@ -148,7 +147,13 @@ export const AdminPanel: React.FC = () => {
               </Button>
             </div>
           </Header>
-          <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+          <Content
+            style={{
+              margin: "24px 16px 0",
+              overflow: "initial",
+              minHeight: "100vh",
+            }}
+          >
             <div style={{ padding: 24, textAlign: "center" }}>
               {selectedComponent}
             </div>

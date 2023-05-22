@@ -1,7 +1,7 @@
-import { ITable } from "../types";
-import { AppDispatch, RootState } from "../store";
+import { ErrorResponse, ITable } from "../types";
+import { RootState } from "../store";
 import { TableService } from "../services/TableService";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TableState {
   table: ITable[] | null;
@@ -10,11 +10,7 @@ interface TableState {
 }
 
 const initialState: TableState = {
-  table: [
-    { id: "1", num: 1 },
-    { id: "2", num: 2 },
-    { id: "3", num: 3 },
-  ],
+  table: null,
   loading: false,
   error: null,
 };
@@ -36,30 +32,72 @@ const tablesSlice = createSlice({
       state.error = action.payload;
     },
 
-    setTables: (state, action) => {
+    setTablesState: (state, action: { payload: ITable[] }) => {
       state.table = action.payload;
     },
   },
 });
 
-export const { getTablesFailure, getTablesStart, getTablesSuccess, setTables } =
-  tablesSlice.actions;
+export const {
+  getTablesFailure,
+  getTablesStart,
+  getTablesSuccess,
+  setTablesState,
+} = tablesSlice.actions;
 
-export const getTable = (token: string) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(getTablesStart());
-
-    const response = await TableService.getTables(token);
-    const tables = response;
-    tables && dispatch(getTablesSuccess(tables));
-  } catch (error: any) {
-    console.log(error);
-
-    throw new Error(error.data);
+export const getTables = createAsyncThunk(
+  "table/getTables",
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const response = await TableService.getTables(token);
+      return response;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.data);
+    }
   }
-};
+);
 
-export const selectUser = (state: RootState): TableState | null => {
+export const createTable = createAsyncThunk(
+  "table/createTable",
+  async (
+    params: { token: string; tableNumber: number },
+    { dispatch, rejectWithValue }
+  ) => {
+    try {
+      const table = await TableService.createTable(
+        params.token,
+        params.tableNumber
+      );
+      console.log("    params.token params.tableNumber");
+
+      dispatch(getTables(params.token));
+      return table;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.data);
+    }
+  }
+);
+
+export const deleteTable = createAsyncThunk<
+  ITable[],
+  { token: string; tableNumber: number },
+  { rejectValue: ErrorResponse }
+>(
+  "table/deleteTable",
+  async ({ token, tableNumber }, { dispatch, rejectWithValue }) => {
+    try {
+      const tables = await TableService.deleteTable(token, tableNumber);
+      tables && dispatch(setTablesState(tables));
+      return []; // если удаление прошло успешно, мы можем вернуть пустой массив
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const selectTables = (state: RootState): TableState | null => {
   return state.tables;
 };
 export default tablesSlice.reducer;
