@@ -1,30 +1,25 @@
-import axios from "axios";
 import { ITable } from "../types";
-
-const BASE_URL = "http://localhost:5000/api";
+import ApiService from "./ApiService";
 
 export const TableService = {
-  createTable: async (
-    token: string,
-    tableNumber: number
-  ): Promise<ITable | undefined> => {
+  createTable: async (tableNumber: number) => {
     try {
-      const response = await axios.post(`${BASE_URL}/table`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const response = await ApiService.post(`/table`, {
         tableNumber,
       });
-      return response.data.data;
+
+      return response;
     } catch (error) {
       console.log(error);
     }
   },
 
-  getTables: async (token: string): Promise<ITable[] | undefined | []> => {
+  getTables: async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/table`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return response.data.data.tables;
+      const response = await ApiService.get(`/table`);
+      console.log(response);
+
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -32,35 +27,22 @@ export const TableService = {
 
   updateTableStatus: async (
     id: string,
-    token: string,
     status: string
   ): Promise<ITable[] | undefined> => {
     try {
-      const response = await axios.patch(
-        `${BASE_URL}/table/${id}/update-status`,
-        {
-          status,
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      return response.data.data.tables;
+      const response = await ApiService.patch(`/table/${id}/update-status`, {
+        status,
+      });
+      return response.data;
     } catch (error) {
       console.log(error);
     }
   },
 
-  deleteTable: async (
-    token: string,
-    tableNumber: number
-  ): Promise<ITable[] | undefined> => {
+  deleteTable: async (tableNumber: number): Promise<ITable[] | undefined> => {
     try {
-      const response = await axios.get<{ data: { tables: ITable[] } }>(
-        `${BASE_URL}/table/${tableNumber}/delete`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      return response.data.data.tables;
+      const response = await ApiService.get(`/table/${tableNumber}/delete`);
+      return response.data;
     } catch (error) {
       console.log(error);
     }

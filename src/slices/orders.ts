@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { IProduct, Order, OrderStatus } from "../types";
 import { AppThunk, AppDispatch, RootState } from "../store";
-import { ApiService } from "../services/ApiService";
+import ApiService from "../services/ApiService";
 import { WebSocketNotification } from "../types";
 import { OrderService } from "../services/OrderService";
 import axios from "axios";
@@ -166,17 +166,17 @@ export const updateOrderStatus2 = createAsyncThunk(
 );
 
 export const connectToWebSocket = () => async (dispatch: AppDispatch) => {
-  const socket =
-    (await ApiService.getWebSocketConnection()) as unknown as WebSocket;
-  socket.onmessage = (event) => {
-    const message = JSON.parse(event.data);
-    if (message.type === "newOrder" && message.payload._id) {
-      dispatch(
-        addNotification({ type: "success", message: "New order received!" })
-      );
-      dispatch(fetchOrders());
-    }
-  };
+  // const socket =
+  //   (await ApiService.getWebSocketConnection()) as unknown as WebSocket;
+  // socket.onmessage = (event) => {
+  //   const message = JSON.parse(event.data);
+  //   if (message.type === "newOrder" && message.payload._id) {
+  //     dispatch(
+  //       addNotification({ type: "success", message: "New order received!" })
+  //     );
+  //     dispatch(fetchOrders());
+  //   }
+  // };
 };
 
 export const addOrder = createAsyncThunk(

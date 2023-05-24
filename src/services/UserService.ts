@@ -1,5 +1,6 @@
-import axios from "axios";
-import { IUser } from "../types";
+import axios, { AxiosResponse } from "axios";
+import { AuthResponse, IUser } from "../types";
+import ApiService from "./ApiService";
 
 /**
  * Interface for response data
@@ -21,11 +22,7 @@ export default class UserService {
    */
   static async getCurrentUser(): Promise<UserData> {
     try {
-      const token = localStorage.getItem("authToken"); // получение токена из локального хранилища
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-      const response = await axios.get("/api/users/current", config); // передача заголовка с токеном
+      const response = await ApiService.get("/api/users/current"); // передача заголовка с токеном
       return response.data;
     } catch (error: any) {
       throw error.response.data;
@@ -37,39 +34,17 @@ export default class UserService {
    * @param {IUser} userData User data to register
    * @returns {Promise<UserData>} Response data
    */
-  static async registerUser(userData: IUser): Promise<UserData> {
+  static async registration(
+    email: string,
+    password: string
+  ): Promise<AxiosResponse<AuthResponse, any> | undefined> {
     try {
-      const response = await axios.post("/api/users/register", userData);
-      return response.data;
+      return ApiService.post<AuthResponse>("/registration", {
+        email,
+        password,
+      });
     } catch (error: any) {
-      throw error.response.data;
-    }
-  }
-
-  /**
-   * Method for logging in a user
-   * @param {IUser} userData User data to log in
-   * @returns {Promise<UserData>} Response data
-   */
-  static async loginUser(userData: IUser): Promise<UserData> {
-    try {
-      const response = await axios.post("/api/users/login", userData);
-      return response.data;
-    } catch (error: any) {
-      throw error.response.data;
-    }
-  }
-
-  /**
-   * Method for logging out the current user
-   * @returns {Promise<UserData>} Response data
-   */
-  static async logoutUser(): Promise<UserData> {
-    try {
-      const response = await axios.post("/api/users/logout");
-      return response.data;
-    } catch (error: any) {
-      throw error.response.data;
+      console.log(error.message);
     }
   }
 }

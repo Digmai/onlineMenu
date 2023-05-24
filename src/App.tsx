@@ -43,11 +43,10 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     dispatch(fetchProduct());
-    token && dispatch(verifyToken(token));
+    dispatch(verifyToken());
     // dispatch(fetchDishes());
     // dispatch(fetchOrders());
     // dispatch(fetchUsers());

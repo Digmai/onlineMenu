@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProduct, IProducts } from "../types";
 import { AppDispatch, RootState } from "../store";
-import { ApiService } from "../services/ApiService";
 import { sortDataSlaceProduct } from "../utils/sortDataSlaceProduct";
 
 interface IProductState {
@@ -64,7 +63,7 @@ export const fetchProduct = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(getDishesStart());
     try {
-      // const dishes = await ApiService.get<IProduct[]>("dishes");
+      // hare a fetching porduct list 
       const data = sortDataSlaceProduct([...Product]);
       dispatch(getDishesSuccess(data));
     } catch (error: any) {

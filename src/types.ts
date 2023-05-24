@@ -32,9 +32,7 @@ export interface IUser {
   role: TRole; //customer - дял скидки 10% | 25% | 50%
 }
 export interface VerifyTokenResponse {
-  data: {
-    user: IUser;
-  };
+  user: IUser;
 }
 
 export interface ILogin {
@@ -80,3 +78,9 @@ export type ErrorResponse = {
   message: string;
   code: number;
 };
+
+export interface AuthResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: IUser;
+}

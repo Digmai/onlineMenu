@@ -1,4 +1,4 @@
-import { ApiService } from "./ApiService";
+import ApiService from "./ApiService";
 import { Order, OrderItem } from "../types";
 
 class OrderService {

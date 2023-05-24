@@ -36,6 +36,22 @@ const tablesSlice = createSlice({
       state.table = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getTables.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getTables.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.table = action.payload;
+    });
+    builder.addCase(getTables.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+      state.table = null;
+    });
+  },
 });
 
 export const {
@@ -47,10 +63,10 @@ export const {
 
 export const getTables = createAsyncThunk(
   "table/getTables",
-  async (token: string, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await TableService.getTables(token);
-      return response;
+      const response = await TableService.getTables();
+      return response.tables;
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.data);
@@ -60,18 +76,10 @@ export const getTables = createAsyncThunk(
 
 export const createTable = createAsyncThunk(
   "table/createTable",
-  async (
-    params: { token: string; tableNumber: number },
-    { dispatch, rejectWithValue }
-  ) => {
+  async (tableNumber: number, { dispatch, rejectWithValue }) => {
     try {
-      const table = await TableService.createTable(
-        params.token,
-        params.tableNumber
-      );
-      console.log("    params.token params.tableNumber");
-
-      dispatch(getTables(params.token));
+      const table = await TableService.createTable(tableNumber);
+      dispatch(getTables());
       return table;
     } catch (error: any) {
       console.log(error);
@@ -80,15 +88,11 @@ export const createTable = createAsyncThunk(
   }
 );
 
-export const deleteTable = createAsyncThunk<
-  ITable[],
-  { token: string; tableNumber: number },
-  { rejectValue: ErrorResponse }
->(
+export const deleteTable = createAsyncThunk(
   "table/deleteTable",
-  async ({ token, tableNumber }, { dispatch, rejectWithValue }) => {
+  async (tableNumber: number, { dispatch, rejectWithValue }) => {
     try {
-      const tables = await TableService.deleteTable(token, tableNumber);
+      const tables = await TableService.deleteTable(tableNumber);
       tables && dispatch(setTablesState(tables));
       return []; // если удаление прошло успешно, мы можем вернуть пустой массив
     } catch (error: any) {

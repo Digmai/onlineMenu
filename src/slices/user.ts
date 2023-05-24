@@ -66,10 +66,10 @@ export const login =
     try {
       const response = await AuthService.login(email, password);
 
-      localStorage.setItem("token", response.token);
+      localStorage.setItem("token", response.data.accessToken);
 
-      dispatch(setToken(response.token));
-      dispatch(setUser(response.user));
+      dispatch(setToken(response.data.accessToken));
+      dispatch(setUser(response.data.user));
     } catch (error) {
       console.log(error);
 
@@ -79,8 +79,8 @@ export const login =
 
 export const addUser = (user: IUser) => async (dispatch: AppDispatch) => {
   try {
-    const response = await UserService.registerUser(user);
-    const token = response;
+    const response = await UserService.registration(user.email, user.password);
+    return response?.data.user;
   } catch (error) {
     console.log(error);
 
@@ -88,15 +88,14 @@ export const addUser = (user: IUser) => async (dispatch: AppDispatch) => {
   }
 };
 
-export const verifyToken = (token: string) => async (dispatch: AppDispatch) => {
+export const verifyToken = () => async (dispatch: AppDispatch) => {
   try {
-    const response = await AuthService.verifyToken(token);
+    const response = await AuthService.verifyToken();
     console.log("response", response);
 
     const { user } = response.data;
 
     dispatch(setUser(user));
-    dispatch(setToken(token));
   } catch (error) {
     console.log(error);
     dispatch(logout());

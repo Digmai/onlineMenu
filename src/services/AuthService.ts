@@ -1,38 +1,32 @@
-import axios from "axios";
-import { IUser, TRole, VerifyTokenResponse } from "../types";
-const BASE_URL = "http://localhost:5000/api";
-interface IRes {
-  token: string;
-  user: {
-    _id: string;
-    email: string;
-    role: TRole;
-  };
-}
+import { AxiosResponse } from "axios";
+import { AuthResponse, IUser, VerifyTokenResponse } from "../types";
+import ApiService from "./ApiService";
+
 export const AuthService = {
   // Функция для проверки токена и получения информации о пользователе
-  async verifyToken(token: string): Promise<VerifyTokenResponse> {
-    const response = await axios.get(`${BASE_URL}/auth/verify-token`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+  async verifyToken(): Promise<AxiosResponse<VerifyTokenResponse>> {
+    const response = await ApiService.get(`/auth/verify-token`);
 
-    return response as VerifyTokenResponse;
+    return response;
   },
-  login: async (email: string, password: string): Promise<IRes> => {
-    const response = await axios.post(`${BASE_URL}/auth/login`, {
+  login: async (
+    email: string,
+    password: string
+  ): Promise<AxiosResponse<AuthResponse>> => {
+    const response = await ApiService.post<AuthResponse>(`/auth/login`, {
       email,
       password,
     });
-    return response.data;
+    return response;
   },
-  register: async (user: IUser, password: string): Promise<void> => {
-    await axios.post("/api/auth/register", { user, password });
-  },
+  // register: async (user: IUser, password: string): Promise<void> => {
+  //   await axios.post("/api/auth/register", { user, password });
+  // },
   getUserInfo: async (): Promise<IUser> => {
-    const response = await axios.get("/api/auth/user");
+    const response = await ApiService.get("/api/auth/user");
     return response.data.user;
   },
   logout: async (): Promise<void> => {
-    await axios.post("/api/auth/logout");
+    await ApiService.post("/api/auth/logout");
   },
 };

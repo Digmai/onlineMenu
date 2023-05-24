@@ -10,11 +10,10 @@ const AddTables: React.FC = () => {
   const [tables, setTables] = useState<ITable[] | undefined>();
 
   const tablesSelect = useSelector((state: RootState) => state.tables.table);
-  const token = useSelector((state: RootState) => state.user.token);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    token && dispatch(getTables(token));
+    dispatch(getTables());
   }, []);
 
   useEffect(() => {
@@ -22,9 +21,10 @@ const AddTables: React.FC = () => {
 
     if (tablesSelect) {
       const sortedTables = [...tablesSelect].sort((a, b) =>
-        a.tableNumber > b.tableNumber ? -1 : 1
+        Number(a.tableNumber) > Number(b.tableNumber) ? -1 : 1
       );
       setTables(sortedTables);
+      console.log(sortedTables);
     }
   }, [tablesSelect]);
 
@@ -32,7 +32,7 @@ const AddTables: React.FC = () => {
     setNumber(value);
   };
   const handleCreateTable = (tableNumber: number) => {
-    token && dispatch(createTable({ token, tableNumber }));
+    dispatch(createTable(tableNumber));
   };
 
   const handleTableDelete = (tableNumber: number) => {
@@ -40,6 +40,7 @@ const AddTables: React.FC = () => {
       (table) => table.tableNumber !== tableNumber
     );
     setTables(updatedTables);
+
     notification.success({
       message: "Table deleted",
       description: `Table ${tableNumber} has been removed.`,
@@ -52,9 +53,11 @@ const AddTables: React.FC = () => {
         message: "Error",
         description: "Please select a valid table",
       });
+      setNumber(0);
       return;
     }
     if (tables && tables.some((table) => table.tableNumber === number)) {
+      setNumber(0);
       notification.error({
         message: "Error",
         description: "Table already exists",
@@ -63,7 +66,7 @@ const AddTables: React.FC = () => {
     }
 
     handleCreateTable(number);
-    setNumber(undefined);
+    setNumber(0);
     notification.success({
       message: "Table added",
       description: `Table ${number} has been added.`,

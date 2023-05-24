@@ -1,41 +1,42 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
-import io from "socket.io-client";
-import { Socket } from "socket.io-client";
+import axios from "axios";
+import { AuthResponse } from "../types";
 
-const BASE_URL = "http://localhost:5000";
+export const API_URL = `http://localhost:5000/api`;
 
-class ApiService {
-  private static axiosInstance: AxiosInstance;
+const ApiService = axios.create({
+  withCredentials: true,
+  baseURL: API_URL,
+});
 
-  static init() {
-    ApiService.axiosInstance = axios.create({
-      baseURL: BASE_URL,
-    });
+ApiService.interceptors.request.use((config) => {
+  config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  return config;
+});
+
+ApiService.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status == 401 &&
+      error.config &&
+      !error.config._isRetry
+    ) {
+      originalRequest._isRetry = true;
+      try {
+        const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
+          withCredentials: true,
+        });
+        localStorage.setItem("token", response.data.accessToken);
+        return ApiService.request(originalRequest);
+      } catch (e) {
+        console.log("НЕ АВТОРИЗОВАН");
+      }
+    }
+    throw error;
   }
+);
 
-  static async get<T>(url: string): Promise<AxiosResponse<T>> {
-    const response = await ApiService.axiosInstance.get<T>(url);
-    return response;
-  }
-
-  static async put<T>(url: string, data: T): Promise<AxiosResponse<T>> {
-    const response = await ApiService.axiosInstance.put<T>(url, data);
-    return response;
-  }
-
-  static async delete(url: string): Promise<AxiosResponse> {
-    const response = await ApiService.axiosInstance.delete(url);
-    return response;
-  }
-
-  static async post<T>(url: string, data: T): Promise<AxiosResponse<T>> {
-    const response = await ApiService.axiosInstance.post<T>(url, data);
-    return response;
-  }
-
-  static async getWebSocketConnection() {
-    return io(BASE_URL);
-  }
-}
-
-export { ApiService };
+export default ApiService;
