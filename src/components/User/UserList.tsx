@@ -9,16 +9,17 @@ const { Column } = Table;
 const UserList = () => {
   const dispatch = useAppDispatch();
   const users = useSelector((state: RootState) => state.usersList.currentUser);
+  console.log(users);
 
   useEffect(() => {
     dispatch(getCurrentUser());
-  }, [dispatch]);
+  }, []);
 
   if (!users) return <div>no users!</div>;
   return (
     <Table dataSource={users}>
       <Column title="Имя" dataIndex="name" key="name" />
-      <Column title="Email" dataIndex="email" key="email" />
+      <Column title="Login" dataIndex="username" key="username" />
       <Column
         title="Роль"
         dataIndex="role"
