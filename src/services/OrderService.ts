@@ -27,7 +27,7 @@ class OrderService {
   static async updateOrder(order: Order) {
     try {
       const response = await ApiService.put(
-        `/orders/${order._id}/update`,
+        `/orders/${order.id}/update`,
         order
       );
       return response.data;

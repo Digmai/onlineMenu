@@ -58,7 +58,7 @@ const ordersSlice = createSlice({
       action: PayloadAction<{ orderId: string; status: OrderStatus }>
     ) {
       const orderIndex = state.orders.findIndex(
-        (order) => order._id === action.payload.orderId
+        (order) => order.id === action.payload.orderId
       );
       if (orderIndex !== -1) {
         state.orders[orderIndex].status = action.payload.status;

@@ -7,8 +7,11 @@ import {
   RadioChangeEvent,
   Button,
 } from "antd";
+import { v4 } from "uuid";
 import React from "react";
 import { useState } from "react";
+import { useAppDispatch } from "../../store";
+import { addUser } from "../../slices/usersList";
 
 const { Option } = Select;
 
@@ -65,19 +68,33 @@ const UserForm = () => {
   const [selectedRole, setSelectedRole] = useState<string>();
   const [form] = Form.useForm<FormValues>();
 
+  const dispatch = useAppDispatch();
+
   const onFinish = (values: any) => {
-    console.log(values);
+    dispatch(addUser({ ...values, id: v4() }));
+    form.resetFields();
   };
 
   const selRole = (str: string): boolean =>
     ["cook", "bartender", "waiter", "admin"].includes(str);
+
   return (
     <Form form={form} layout="vertical" onFinish={onFinish}>
       <Form.Item name="name" label="Name" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
 
-      <Form.Item name="username" label="Login" rules={[{ required: true }]}>
+      <Form.Item
+        name="username"
+        label="Login"
+        rules={[
+          { required: true, message: "Введите Login" },
+          {
+            min: 4,
+            message: " не менее 4 символов",
+          },
+        ]}
+      >
         <Input />
       </Form.Item>
 
@@ -88,7 +105,7 @@ const UserForm = () => {
           { required: true, message: "Введите пароль" },
           {
             min: 6,
-            message: "Пароль должен содержать не менее 6 символов",
+            message: "не менее 6 символов",
           },
         ]}
       >

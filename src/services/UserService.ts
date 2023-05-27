@@ -20,9 +20,9 @@ export default class UserService {
    * Method for getting the current user's data
    * @returns {Promise<UserData>} Response data
    */
-  static async getCurrentUser(): Promise<UserData> {
+  static async getCurrentUser() {
     try {
-      const response = await ApiService.get("/api/users/current"); // передача заголовка с токеном
+      const response = await ApiService.get("/users");
       return response.data;
     } catch (error: any) {
       throw error.response.data;
@@ -35,13 +35,11 @@ export default class UserService {
    * @returns {Promise<UserData>} Response data
    */
   static async registration(
-    email: string,
-    password: string
+    values: IUser
   ): Promise<AxiosResponse<AuthResponse, any> | undefined> {
     try {
-      return ApiService.post<AuthResponse>("/registration", {
-        email,
-        password,
+      return ApiService.post<AuthResponse>("/users/registration", {
+        ...values,
       });
     } catch (error: any) {
       console.log(error.message);

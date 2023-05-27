@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
-import Notification from "../components/Notification/Notification";
 import { IProduct } from "../types";
-import AddDishOrDrinkForm from "../components/AddDishForm/AddDishForm";
-import { OrderList } from "../components/Order/OrderList";
-import UserList from "../components/User/UserList";
-import AddUserForm from "../components/User/AddUserForm";
-import { filterProductsOnCategory } from "../utils/filterProducts";
-import ProductList from "../components/Product/ProductList";
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
 import { AdminPanel } from "../components/AdminPanel/AdminPanel";
-import AddTables from "../components/Tables/AddTables";
+import { filterProductsOnCategory } from "../utils/filterProducts";
 
 const AdminPage: React.FC = () => {
   const auth = useSelector((state: RootState) => state.user.user?.role);

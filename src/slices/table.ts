@@ -42,15 +42,39 @@ const tablesSlice = createSlice({
       state.error = null;
     });
     builder.addCase(getTables.fulfilled, (state, action) => {
+      state.table = action.payload;
       state.loading = false;
       state.error = null;
-      state.table = action.payload;
     });
     builder.addCase(getTables.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
       state.table = null;
     });
+    builder.addCase(createTable.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(createTable.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+    });
+    builder.addCase(createTable.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+    // builder.addCase(deleteTable.pending, (state) => {
+    //   state.loading = true;
+    //   state.error = null;
+    // });
+    // builder.addCase(deleteTable.fulfilled, (state, action) => {
+    //   state.loading = false;
+    //   state.error = null;
+    // });
+    // builder.addCase(deleteTable.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.payload as string;
+    // });
   },
 });
 
@@ -65,8 +89,10 @@ export const getTables = createAsyncThunk(
   "table/getTables",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await TableService.getTables();
-      return response.tables;
+      const tables = await TableService.getTables();
+      console.log(tables);
+
+      return tables;
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.data);
@@ -90,9 +116,9 @@ export const createTable = createAsyncThunk(
 
 export const deleteTable = createAsyncThunk(
   "table/deleteTable",
-  async (tableNumber: number, { dispatch, rejectWithValue }) => {
+  async (_id: string, { dispatch, rejectWithValue }) => {
     try {
-      const tables = await TableService.deleteTable(tableNumber);
+      const tables = await TableService.deleteTable(_id);
       tables && dispatch(setTablesState(tables));
       return []; // если удаление прошло успешно, мы можем вернуть пустой массив
     } catch (error: any) {

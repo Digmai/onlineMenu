@@ -26,7 +26,7 @@ const BartenderPage = () => {
         dispatch(fetchOrders()); // Update orders list with new order
         Notification.showNotification(
           "Новый заказ",
-          `Заказ #${newOrder._id} отправлен на кухню`
+          `Заказ #${newOrder.id} отправлен на кухню`
         );
       }
     });

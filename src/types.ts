@@ -25,9 +25,9 @@ export interface Drink {
 }
 export type TRole = "customer" | "cook" | "bartender" | "waiter" | "admin";
 export interface IUser {
-  _id: string;
+  id: string;
   name: string;
-  email: string;
+  username: string;
   password: string;
   role: TRole; //customer - дял скидки 10% | 25% | 50%
 }
@@ -46,7 +46,7 @@ export interface OrderItem {
 }
 
 export interface Order {
-  _id: string;
+  id: string;
   items: OrderItem[];
   total: number;
   status: string;
@@ -59,7 +59,7 @@ export interface Order {
 export type OrderStatus = "New" | "Preparing" | "Completed" | "Cancelled";
 
 export interface ITable {
-  id: string;
+  _id: string;
   tableNumber: number;
   // seats:string
 }

@@ -69,13 +69,17 @@ export const selectError = (state: RootState): string | null =>
 export const getCurrentUser = () => async (dispatch: AppDispatch) => {
   try {
     const response = await UserService.getCurrentUser();
-    if (response.success) {
-      dispatch(setCurrentUser(response.data));
-    } else {
-      dispatch(setError(response.message));
-    }
+    console.log("response---getCurrentUser-->", response);
+    dispatch(setCurrentUser(response));
   } catch (error: any) {
     dispatch(setError(error.message));
+  }
+};
+export const addUser = (values: IUser) => async (dispatch: AppDispatch) => {
+  try {
+    await UserService.registration(values);
+  } catch (error) {
+    console.log(error);
   }
 };
 

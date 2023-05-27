@@ -17,8 +17,6 @@ export const TableService = {
   getTables: async () => {
     try {
       const response = await ApiService.get(`/table`);
-      console.log(response);
-
       return response.data;
     } catch (error) {
       console.log(error);
@@ -39,9 +37,9 @@ export const TableService = {
     }
   },
 
-  deleteTable: async (tableNumber: number): Promise<ITable[] | undefined> => {
+  deleteTable: async (_id: string): Promise<ITable[] | undefined> => {
     try {
-      const response = await ApiService.get(`/table/${tableNumber}/delete`);
+      const response = await ApiService.get(`/table/${_id}/delete`);
       return response.data;
     } catch (error) {
       console.log(error);

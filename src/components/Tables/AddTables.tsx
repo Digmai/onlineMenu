@@ -2,7 +2,7 @@ import { ITable } from "../../types";
 import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { RootState, useAppDispatch } from "../../store";
-import { createTable, getTables } from "../../slices/table";
+import { createTable, deleteTable, getTables } from "../../slices/table";
 import { Button, InputNumber, List, notification } from "antd";
 
 const AddTables: React.FC = () => {
@@ -17,14 +17,11 @@ const AddTables: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log(tablesSelect);
-
-    if (tablesSelect) {
+    if (Array.isArray(tablesSelect)) {
       const sortedTables = [...tablesSelect].sort((a, b) =>
         Number(a.tableNumber) > Number(b.tableNumber) ? -1 : 1
       );
       setTables(sortedTables);
-      console.log(sortedTables);
     }
   }, [tablesSelect]);
 
@@ -35,12 +32,12 @@ const AddTables: React.FC = () => {
     dispatch(createTable(tableNumber));
   };
 
-  const handleTableDelete = (tableNumber: number) => {
+  const handleTableDelete = (tableNumber: number, _id: string) => {
     const updatedTables = tables?.filter(
       (table) => table.tableNumber !== tableNumber
     );
     setTables(updatedTables);
-
+    dispatch(deleteTable(_id));
     notification.success({
       message: "Table deleted",
       description: `Table ${tableNumber} has been removed.`,
@@ -66,7 +63,7 @@ const AddTables: React.FC = () => {
     }
 
     handleCreateTable(number);
-    setNumber(0);
+    // setNumber(0);
     notification.success({
       message: "Table added",
       description: `Table ${number} has been added.`,
@@ -77,12 +74,12 @@ const AddTables: React.FC = () => {
     <>
       <InputNumber
         min={1}
-        placeholder="Enter table number"
+        placeholder="Укажите количество"
         onChange={handleNumberChange}
-        style={{ marginRight: 16, minWidth: "100px" }}
+        style={{ marginRight: 16, minWidth: "14vw", marginBottom: "50px" }}
       />
       <Button type="primary" onClick={handleAddTable}>
-        Add Table
+        Добавить столы
       </Button>
       {tables && (
         <List
@@ -110,13 +107,14 @@ const AddTables: React.FC = () => {
               key={item.tableNumber}
             >
               <div>Table {item.tableNumber}</div>
-
-              <Button
-                type="dashed"
-                onClick={() => handleTableDelete(item.tableNumber)}
-              >
-                Delete
-              </Button>
+              {tables[0].tableNumber === item.tableNumber && (
+                <Button
+                  type="dashed"
+                  onClick={() => handleTableDelete(item.tableNumber, item._id)}
+                >
+                  Delete
+                </Button>
+              )}
             </List.Item>
           )}
         />

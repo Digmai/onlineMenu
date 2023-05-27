@@ -6,6 +6,8 @@ import { RootState, useAppDispatch } from "../store";
 import WebSocketService from "../services/WebSocketService";
 import { Order } from "../types";
 import { OrderList } from "../components/Order/OrderList";
+import { Button } from "antd";
+import { logout } from "../slices/user";
 
 const ChefPage = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +28,7 @@ const ChefPage = () => {
         dispatch(fetchOrders()); // Update orders list with new order
         Notification.showNotification(
           "Новый заказ",
-          `Заказ #${newOrder._id} готовиться`
+          `Заказ #${newOrder.id} готовиться`
         );
       }
     });
@@ -37,6 +39,10 @@ const ChefPage = () => {
     };
   }, [dispatch]);
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <div className="page-container">
       <div className="content-container">
@@ -44,6 +50,9 @@ const ChefPage = () => {
         <h1>Панель повара</h1>
         <OrderList />
       </div>
+      <Button type="dashed" onClick={handleLogout}>
+        Выйти
+      </Button>
     </div>
   );
 };

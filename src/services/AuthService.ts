@@ -10,11 +10,11 @@ export const AuthService = {
     return response;
   },
   login: async (
-    email: string,
+    username: string,
     password: string
   ): Promise<AxiosResponse<AuthResponse>> => {
     const response = await ApiService.post<AuthResponse>(`/auth/login`, {
-      email,
+      username,
       password,
     });
     return response;
@@ -27,6 +27,6 @@ export const AuthService = {
     return response.data.user;
   },
   logout: async (): Promise<void> => {
-    await ApiService.post("/api/auth/logout");
+    await ApiService.post("/auth/logout");
   },
 };

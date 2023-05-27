@@ -11,6 +11,7 @@ import { logout } from "../../slices/user";
 import { Button, Layout, Menu } from "antd";
 import { useAppDispatch } from "../../store";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import UserList from "../User/UserList";
 
 type UserType = {
   id: string;
@@ -60,6 +61,7 @@ export const AdminPanel: React.FC = () => {
       <>
         <Suspense fallback={<LoadingSpinner />}>
           <UserForm />
+          <UserList />
         </Suspense>
       </>
     );

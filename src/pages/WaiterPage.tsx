@@ -28,7 +28,7 @@ const WaiterPage = () => {
         dispatch(fetchOrders()); // Update orders list with new order
         Notification.showNotification(
           "Новый заказ",
-          `Заказ #${newOrder._id} готовится`
+          `Заказ #${newOrder.id} готовится`
         );
       }
     });

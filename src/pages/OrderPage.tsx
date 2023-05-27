@@ -13,24 +13,24 @@ const OrderPage = () => {
   const dispatch = useAppDispatch();
   const user = useSelector(selectUser);
   const totalPrice = useSelector(selectTotalPrice);
-  const [order, setOrder] = useState({
-    _id: "",
-    name: "",
-    product: [] as IProduct[],
-    total: 0,
-    type: "",
-  });
+  // const [order, setOrder] = useState({
+  //   _id: "",
+  //   name: "",
+  //   product: [] as IProduct[],
+  //   total: 0,
+  //   type: "",
+  // });
 
-  useEffect(() => {
-    if (!!user) {
-      setOrder((prevOrder) => ({
-        ...prevOrder,
-        ...user.user,
-        customer_id: user.user?._id,
-        customer_name: `${user?.user?.name} ${user?.user?.role}`,
-      }));
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!!user) {
+  //     setOrder((prevOrder) => ({
+  //       ...prevOrder,
+  //       ...user.user,
+  //       customer_id: user.user?._id,
+  //       customer_name: `${user?.user?.name} ${user?.user?.role}`,
+  //     }));
+  //   }
+  // }, [user]);
 
   // const handleCheckboxChange = (
   //   event: React.SyntheticEvent<HTMLInputElement>,

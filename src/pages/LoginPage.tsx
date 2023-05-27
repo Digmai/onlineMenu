@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
   const handleSubmit = useCallback(
     async (values: any) => {
       setLoading(true);
-      await dispatch(login(values.email, values.password));
+      await dispatch(login(values.username, values.password));
       setLoading(false);
     },
     [dispatch]
@@ -37,13 +37,13 @@ const LoginPage: React.FC = () => {
       {error && <div className="login-page__error">{error}</div>}
       <Form layout="vertical" onFinish={handleSubmit}>
         <Form.Item
-          label="Email"
-          name="email"
+          label="username"
+          name="username"
           rules={[
             {
               required: true,
-              type: "email",
-              message: "Введите корректный email",
+              type: "string",
+              message: "Введите корректный username",
             },
           ]}
         >
@@ -53,6 +53,7 @@ const LoginPage: React.FC = () => {
         <Form.Item
           label="Пароль"
           name="password"
+          className="login__password"
           rules={[{ required: true, message: "Введите пароль" }]}
         >
           <Input.Password disabled={loading} />

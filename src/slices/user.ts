@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import jwtDecode from "jwt-decode";
 import { AuthService } from "../services/AuthService";
-import UserService from "../services/UserService";
 import { AppDispatch, RootState } from "../store";
 import { IUser } from "../types";
 
@@ -43,7 +41,7 @@ const usersSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
-    logout: (state) => {
+    logoutReducers: (state) => {
       state.user = null;
       state.token = null;
       localStorage.removeItem("token");
@@ -53,7 +51,7 @@ const usersSlice = createSlice({
 });
 
 export const {
-  logout,
+  logoutReducers,
   setUser,
   setToken,
   getUsersStart,
@@ -62,9 +60,9 @@ export const {
 } = usersSlice.actions;
 
 export const login =
-  (email: string, password: string) => async (dispatch: AppDispatch) => {
+  (username: string, password: string) => async (dispatch: AppDispatch) => {
     try {
-      const response = await AuthService.login(email, password);
+      const response = await AuthService.login(username, password);
 
       localStorage.setItem("token", response.data.accessToken);
 
@@ -77,10 +75,10 @@ export const login =
     }
   };
 
-export const addUser = (user: IUser) => async (dispatch: AppDispatch) => {
+export const logout = () => async (dispatch: AppDispatch) => {
   try {
-    const response = await UserService.registration(user.email, user.password);
-    return response?.data.user;
+    const response = await AuthService.logout();
+    dispatch(logoutReducers());
   } catch (error) {
     console.log(error);
 
