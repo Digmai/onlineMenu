@@ -95,12 +95,7 @@ const UserForm = () => {
         <Radio.Group
           options={roleOptions}
           onChange={(e: RadioChangeEvent) => {
-            form.setFieldsValue({
-              //   discount: null,
-              //   tables: null,
-              //   workingDays: null,
-              //   workingHours: null,
-            });
+            form.setFieldsValue({});
             setSelectedRole(e.target.value);
           }}
         />

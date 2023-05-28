@@ -18,7 +18,7 @@ export interface IProducts {
 
 export type TRole = "customer" | "cook" | "bartender" | "waiter" | "admin";
 export interface IUser {
-  id: string;
+  _id: string;
   name: string;
   username: string;
   password: string;
@@ -83,3 +83,14 @@ export interface IOptions {
   label: string;
 }
 [];
+
+export interface FormUserValues {
+  name: string;
+  username: string;
+  password?: string;
+  role: string;
+  discount?: string;
+  tables?: string[];
+  workingDays?: string[];
+  workingHours?: string;
+}

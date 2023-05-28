@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import UserService from "../services/UserService";
 import { AppDispatch, RootState } from "../store";
-import { IUser } from "../types";
+import { FormUserValues, IUser } from "../types";
 import { getTables } from "./table";
 
 /**
@@ -36,11 +36,6 @@ export const usersListSlice = createSlice({
 
 export const { setCurrentUser, setError } = usersListSlice.actions;
 
-export const selectCurrentUser = (state: RootState): IUser[] | null =>
-  state.usersList.currentUser;
-export const selectError = (state: RootState): string | null =>
-  state.usersList.error;
-
 export const getCurrentUser = () => async (dispatch: AppDispatch) => {
   try {
     const response = await UserService.getCurrentUser();
@@ -59,5 +54,23 @@ export const addUser = (values: IUser) => async (dispatch: AppDispatch) => {
     console.log(error);
   }
 };
+
+export const updateUser =
+  (paramsUpdateUser: { id: string; user: FormUserValues }) =>
+  async (dispatch: AppDispatch) => {
+    try {
+      console.log({ paramsUpdateUser });
+
+      const response = await UserService.getCurrentUser();
+      dispatch(setCurrentUser(response));
+    } catch (error: any) {
+      dispatch(setError(error.message));
+    }
+  };
+
+export const selectCurrentUser = (state: RootState): IUser[] | null =>
+  state.usersList.currentUser;
+export const selectError = (state: RootState): string | null =>
+  state.usersList.error;
 
 export default usersListSlice.reducer;

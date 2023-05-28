@@ -30,6 +30,13 @@ ul {
   margin-right: 2px;
 }
 
+#workingDays {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 // .menu-item {
 //   display: inline-block;
 //   margin-right: 10px;
