@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import UserService from "../services/UserService";
 import { AppDispatch, RootState } from "../store";
 import { IUser } from "../types";
+import { getTables } from "./table";
 
 /**
  * Interface for slice state
@@ -50,7 +51,10 @@ export const getCurrentUser = () => async (dispatch: AppDispatch) => {
 };
 export const addUser = (values: IUser) => async (dispatch: AppDispatch) => {
   try {
-    await UserService.registration(values);
+    const response = await UserService.registration(values);
+    console.log(response);
+
+    dispatch(getTables());
   } catch (error) {
     console.log(error);
   }

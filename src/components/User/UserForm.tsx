@@ -7,14 +7,12 @@ import {
   RadioChangeEvent,
   Button,
 } from "antd";
-import { v4 } from "uuid";
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
-import { RootState, useAppDispatch } from "../../store";
+import { useAppDispatch } from "../../store";
 import { addUser } from "../../slices/usersList";
 import { useSelector } from "react-redux";
-import { IOptions } from "../../types";
-import { selectTablesByStatus } from "../../slices/table";
+import { getTables, selectTablesByStatus } from "../../slices/table";
 
 const { Option } = Select;
 
@@ -38,12 +36,18 @@ const roleOptions = [
 ];
 
 const UserForm = () => {
+  const dispatch = useAppDispatch();
+
+  const filteredOptions = useSelector(selectTablesByStatus("unavailable"));
   const [selectedRole, setSelectedRole] = useState<string>();
   const [form] = Form.useForm<FormValues>();
 
-  const filteredOptions = useSelector(selectTablesByStatus("unavailable"));
-
-  const dispatch = useAppDispatch();
+  useLayoutEffect(() => {
+    dispatch(getTables());
+  }, []);
+  useEffect(() => {
+    dispatch(getTables());
+  }, [dispatch]);
 
   const onFinish = (values: any) => {
     dispatch(addUser(values));

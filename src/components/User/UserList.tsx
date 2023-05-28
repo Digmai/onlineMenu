@@ -13,7 +13,7 @@ const UserList = () => {
 
   useEffect(() => {
     dispatch(getCurrentUser());
-  }, []);
+  }, [dispatch]);
 
   if (!users) return <div>no users!</div>;
   return (
