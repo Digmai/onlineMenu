@@ -104,7 +104,7 @@ const AddTables: React.FC = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
-              key={item.tableNumber}
+              key={item._id}
             >
               <div>Table {item.tableNumber}</div>
               {tables[0].tableNumber === item.tableNumber && (

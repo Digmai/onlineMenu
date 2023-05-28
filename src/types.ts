@@ -15,14 +15,7 @@ export interface IProducts {
     [subcategory: string]: IProduct[];
   };
 }
-export interface Drink {
-  _id: string;
-  name: string;
-  ingredients: { name: string; weight: number }[];
-  price: number;
-  image: string;
-  CookingTime: number;
-}
+
 export type TRole = "customer" | "cook" | "bartender" | "waiter" | "admin";
 export interface IUser {
   id: string;
@@ -60,8 +53,9 @@ export type OrderStatus = "New" | "Preparing" | "Completed" | "Cancelled";
 
 export interface ITable {
   _id: string;
+  owner: string;
   tableNumber: number;
-  // seats:string
+  status: "available" | "unavailable";
 }
 
 export interface WebSocketMessage {
@@ -84,3 +78,8 @@ export interface AuthResponse {
   refreshToken: string;
   user: IUser;
 }
+export interface IOptions {
+  value: number;
+  label: string;
+}
+[];

@@ -1,4 +1,4 @@
-import { ErrorResponse, ITable } from "../types";
+import { ErrorResponse, IOptions, ITable } from "../types";
 import { RootState } from "../store";
 import { TableService } from "../services/TableService";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -127,7 +127,29 @@ export const deleteTable = createAsyncThunk(
     }
   }
 );
-export const selectTables = (state: RootState): TableState | null => {
-  return state.tables;
+
+export const selectTables = (state: RootState): ITable[] | null => {
+  return state.tables.table;
 };
+
+export const selectTablesByStatus =
+  (status: "available" | "unavailable") =>
+  (state: RootState): IOptions[] => {
+    if (!!state.tables.table) {
+      const filteredTables = state.tables.table.filter(
+        (t) => t.status === status
+      );
+      return filteredTables.map((t: ITable) => ({
+        value: t.tableNumber,
+        label: `Table ${t.tableNumber}`,
+      }));
+    }
+    return [];
+  };
+export const selectTablesByIdOnUser = (id: string) => (state: RootState) => {
+  if (!!state.tables.table) {
+    return state.tables.table.filter((t) => t.owner === id);
+  }
+};
+
 export default tablesSlice.reducer;

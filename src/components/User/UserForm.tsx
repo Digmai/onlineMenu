@@ -8,10 +8,13 @@ import {
   Button,
 } from "antd";
 import { v4 } from "uuid";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { useAppDispatch } from "../../store";
+import { RootState, useAppDispatch } from "../../store";
 import { addUser } from "../../slices/usersList";
+import { useSelector } from "react-redux";
+import { IOptions } from "../../types";
+import { selectTablesByStatus } from "../../slices/table";
 
 const { Option } = Select;
 
@@ -34,44 +37,16 @@ const roleOptions = [
   { label: "Сook", value: "cook" },
 ];
 
-interface User {
-  role: string;
-  table: number;
-}
-
-const tableOptions = [
-  { value: 1, label: "Table 1" },
-  { value: 2, label: "Table 2" },
-  { value: 3, label: "Table 3" },
-  { value: 4, label: "Table 4" },
-  { value: 5, label: "Table 5" },
-  { value: 6, label: "Table 6" },
-  { value: 7, label: "Table 7" },
-];
-
-const users: User[] = [
-  { role: "waiter", table: 1 },
-  { role: "waiter", table: 3 },
-  { role: "waiter", table: 5 },
-];
-
-const filteredOptions = tableOptions.filter((option) => {
-  // Проверяем, выбрана ли опция каким-либо пользователем-официантом
-  const isSelected = users.some(
-    (user) => user.role === "waiter" && user.table === option.value
-  );
-  // возвращаем опцию только, если она не выбрана
-  return !isSelected;
-});
-
 const UserForm = () => {
   const [selectedRole, setSelectedRole] = useState<string>();
   const [form] = Form.useForm<FormValues>();
 
+  const filteredOptions = useSelector(selectTablesByStatus("unavailable"));
+
   const dispatch = useAppDispatch();
 
   const onFinish = (values: any) => {
-    dispatch(addUser({ ...values, id: v4() }));
+    dispatch(addUser(values));
     form.resetFields();
   };
 

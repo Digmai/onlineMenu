@@ -24,15 +24,15 @@ const UserList = () => {
         title="Роль"
         dataIndex="role"
         key="role"
-        render={(role: string) => <span>{role.toUpperCase()}</span>}
+        render={(role: string) => <span key={role}>{role.toUpperCase()}</span>}
       />
       <Column
         title="Действия"
         key="actions"
         render={(text: string, record: any) => (
           <Space size="middle">
-            <Button>Изменить</Button>
-            <Button type="primary" danger>
+            <Button key={`edit-${record.id}`}>Изменить</Button>
+            <Button key={`delete-${record.id}`} type="primary" danger>
               Удалить
             </Button>
           </Space>
