@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Form, Input, Button, Typography, Space } from "antd";
+import { Form, Input, Button, Typography, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../slices/user";
 import { RootState, useAppDispatch } from "../store";
@@ -13,6 +13,8 @@ const LoginPage: React.FC = () => {
   const history = useNavigate();
   const dispatch = useAppDispatch();
   const error = useSelector((state: RootState) => state.user.error);
+  if (error) {
+  }
 
   const handleSubmit = useCallback(
     async (values: any) => {
@@ -24,10 +26,14 @@ const LoginPage: React.FC = () => {
   );
 
   useEffect(() => {
+    notification.error({
+      message: "Error",
+      description: "Please select a valid values",
+    });
     if (!error) {
       history("/");
     }
-  }, [error, history]);
+  }, [error]);
 
   return (
     <div className="login-page">

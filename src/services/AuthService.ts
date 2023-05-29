@@ -17,6 +17,10 @@ export const AuthService = {
       username,
       password,
     });
+    if (!response.data) {
+      throw new Error("is Error!");
+    }
+
     return response;
   },
   // register: async (user: IUser, password: string): Promise<void> => {

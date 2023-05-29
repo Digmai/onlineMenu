@@ -4,7 +4,10 @@ import { useAppDispatch } from "../../store";
 import { updateUser } from "../../slices/users";
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { selectTablesByIdOnUser } from "../../slices/table";
+import {
+  selectTablesWhereBartenderIsNull,
+  selectTablesWhereWaiterIsNull,
+} from "../../slices/table";
 
 const { Option } = Select;
 
@@ -19,9 +22,8 @@ const ModalEditUser = React.memo(
     const dispatch = useAppDispatch();
     const [form] = Form.useForm<FormUserValues>();
 
-    console.log("LOG");
-
-    const filteredOptions = useSelector(selectTablesByIdOnUser(user._id));
+    const waiterOptions = useSelector(selectTablesWhereWaiterIsNull());
+    const bartenderOptions = useSelector(selectTablesWhereBartenderIsNull());
 
     const selRole = useMemo(() => {
       return (str: string): boolean =>
@@ -95,16 +97,6 @@ const ModalEditUser = React.memo(
               </Form.Item>
             )}
 
-            <Form.Item name="role" label="Role" rules={[]}>
-              <Radio.Group>
-                <Radio value="customer">Customer</Radio>
-                <Radio value="waiter">Waiter</Radio>
-                <Radio value="cook">Сook</Radio>
-                <Radio value="bartender">Bartender</Radio>
-                <Radio value="admin">Admin</Radio>
-              </Radio.Group>
-            </Form.Item>
-
             {user.role === "customer" && (
               <Form.Item name="discount" label="Discount" rules={[]}>
                 <Select>
@@ -124,14 +116,17 @@ const ModalEditUser = React.memo(
                     rules={[]}
                     style={{ minWidth: "200px" }}
                   >
-                    <Select mode="multiple">
-                      {filteredOptions &&
-                        filteredOptions.map((option) => (
-                          <Option key={option._id} value={option.tableNumber}>
-                            {option.tableNumber}
-                          </Option>
-                        ))}
-                    </Select>
+                    <Select mode="multiple" options={waiterOptions} />
+                  </Form.Item>
+                )}
+                {user.role === "bartender" && (
+                  <Form.Item
+                    name="tables"
+                    label="Tables"
+                    rules={[]}
+                    style={{ minWidth: "200px" }}
+                  >
+                    <Select mode="multiple" options={bartenderOptions} />
                   </Form.Item>
                 )}
 

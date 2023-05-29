@@ -53,8 +53,9 @@ export type OrderStatus = "New" | "Preparing" | "Completed" | "Cancelled";
 
 export interface ITable {
   _id: string;
-  owner: string;
-  tableNumber: number;
+  tableNumber: string;
+  waiter: IUser["_id"];
+  bartender: IUser["_id"];
   status: "available" | "unavailable";
 }
 
@@ -92,4 +93,5 @@ export interface FormUserValues {
   discount?: string;
   tables?: string[];
   workingDays?: string[];
+  category?: string;
 }

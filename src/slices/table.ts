@@ -128,27 +128,53 @@ export const deleteTable = createAsyncThunk(
   }
 );
 
-export const selectTables = (state: RootState): ITable[] | null => {
-  return state.tables.table;
+export const selectTables = (state: RootState) => {
+  if (state.tables.table) {
+    return state.tables.table;
+  }
+  return [];
 };
 
 export const selectTablesByStatus =
-  (status: "available" | "unavailable") =>
-  (state: RootState): IOptions[] => {
+  (status: "available" | "unavailable") => (state: RootState) => {
     if (!!state.tables.table) {
       const filteredTables = state.tables.table.filter(
         (t) => t.status === status
       );
       return filteredTables.map((t: ITable) => ({
-        value: t.tableNumber,
+        value: Number(t.tableNumber),
         label: `Table ${t.tableNumber}`,
       }));
     }
-    return [];
   };
+
 export const selectTablesByIdOnUser = (id: string) => (state: RootState) => {
-  if (!!state.tables.table) {
-    return state.tables.table.filter((t) => t.owner === id);
+  if (state.tables.table) {
+    return state.tables.table.filter(
+      (t: ITable) => t.waiter === id || t.bartender === id
+    );
+  }
+};
+
+export const selectTablesWhereWaiterIsNull = () => (state: RootState) => {
+  if (state.tables.table) {
+    const filteredTables = state.tables.table.filter((table) => !table.waiter);
+    return filteredTables.map((t: ITable) => ({
+      value: Number(t.tableNumber),
+      label: `Table ${t.tableNumber}`,
+    }));
+  }
+};
+
+export const selectTablesWhereBartenderIsNull = () => (state: RootState) => {
+  if (state.tables.table) {
+    const filteredTables = state.tables.table.filter(
+      (table) => !table.bartender
+    );
+    return filteredTables.map((t: ITable) => ({
+      value: Number(t.tableNumber),
+      label: `Table ${t.tableNumber}`,
+    }));
   }
 };
 

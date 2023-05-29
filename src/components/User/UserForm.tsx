@@ -6,13 +6,20 @@ import {
   Radio,
   RadioChangeEvent,
   Button,
+  Switch,
 } from "antd";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../store";
+import { RootState, useAppDispatch } from "../../store";
 import { addUser } from "../../slices/users";
 import { useSelector } from "react-redux";
-import { getTables, selectTablesByStatus } from "../../slices/table";
-import { FormUserValues } from "../../types";
+import {
+  getTables,
+  selectTablesByStatus,
+  selectTablesWhereBartenderIsNull,
+  selectTablesWhereWaiterIsNull,
+} from "../../slices/table";
+import { FormUserValues, IProduct } from "../../types";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const { Option } = Select;
 
@@ -28,19 +35,32 @@ const UserForm = () => {
   const dispatch = useAppDispatch();
 
   const [selectedRole, setSelectedRole] = useState<string>();
+  const [subcategories, setSubcategories] = useState<
+    IProduct[] | { [subcategory: string]: IProduct[] }
+  >([]);
 
   const [form] = Form.useForm<FormUserValues>();
+
+  const waiterOptions = useSelector(selectTablesWhereWaiterIsNull());
+  const bartenderOptions = useSelector(selectTablesWhereBartenderIsNull());
+
+  console.log(waiterOptions, bartenderOptions);
+
+  const products = useSelector((state: RootState) => state.product.product);
 
   useEffect(() => {
     dispatch(getTables());
   }, [dispatch]);
 
-  const filteredOptions = useSelector(selectTablesByStatus("unavailable"));
-
   const onFinish = (values: any) => {
-    dispatch(addUser(values)); // !!! после отправки формы внутри среза даынные столов -
-    form.resetFields(); // !!! НЕ РАБОТАЕТ ОН И ДАЖЕ ТАК !!! обновляють из сервера внутри среза!
+    dispatch(addUser(values));
+    // !!! после отправки формы внутри среза даынные столов -
+    // !!! НЕ РАБОТАЕТ ОН И ДАЖЕ ТАК !!! обновляють из сервера внутри среза!
+    setSelectedRole("");
+    form.resetFields();
   };
+
+  if (!products) return <LoadingSpinner />;
 
   const selRole = (str: string): boolean =>
     ["cook", "bartender", "waiter", "admin"].includes(str);
@@ -89,6 +109,41 @@ const UserForm = () => {
         />
       </Form.Item>
 
+      {selectedRole === "cook" && (
+        <>
+          <Form.Item
+            name="category"
+            label="Category"
+            rules={[
+              { required: true, message: "Please select a category" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (getFieldValue("responsibilityAll")) {
+                    return Promise.resolve();
+                  }
+                  if (value !== undefined) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error("Please select a category"));
+                },
+              }),
+            ]}
+            style={{ minWidth: "200px" }}
+          >
+            <Select
+              onChange={(value: string) => setSubcategories(products[value])}
+            >
+              <Option value="ALL">ALL</Option>
+              {Object.keys(products).map((category) => (
+                <Option value={category} key={category}>
+                  {category}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </>
+      )}
+
       {selectedRole === "customer" && (
         <Form.Item
           name="discount"
@@ -113,9 +168,20 @@ const UserForm = () => {
               rules={[{ required: true }]}
               style={{ minWidth: "200px" }}
             >
-              <Select mode="multiple" options={filteredOptions} />
+              <Select mode="multiple" options={waiterOptions} />
             </Form.Item>
           )}
+          {selectedRole === "bartender" && (
+            <Form.Item
+              name="tables"
+              label="Tables"
+              rules={[{ required: true }]}
+              style={{ minWidth: "200px" }}
+            >
+              <Select mode="multiple" options={bartenderOptions} />
+            </Form.Item>
+          )}
+
           <Form.Item
             rules={[{ required: true }]}
             name="workingDays"

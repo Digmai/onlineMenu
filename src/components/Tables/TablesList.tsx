@@ -26,7 +26,7 @@ export const TablesList: React.FC = () => {
     }
   }, [tablesSelect]);
 
-  const handleTableDelete = (tableNumber: number, _id: string) => {
+  const handleTableDelete = (tableNumber: string, _id: string) => {
     const updatedTables = tables?.filter(
       (table) => table.tableNumber !== tableNumber
     );

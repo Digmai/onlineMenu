@@ -6,14 +6,14 @@ import { IUser } from "../types";
 interface UsersState {
   user: IUser | null;
   isLoading: boolean;
-  error: string | null;
+  error: boolean;
   token: string | null;
 }
 
 const initialState: UsersState = {
   user: null,
   isLoading: false,
-  error: null,
+  error: false,
   token: localStorage.getItem("token") || null,
 };
 
@@ -26,14 +26,13 @@ const usersSlice = createSlice({
     },
     getUsersSuccess(state, action: PayloadAction<IUser>) {
       state.isLoading = false;
-      state.error = null;
+      state.error = false;
       state.user = action.payload;
     },
     getUsersFailure(state, action: PayloadAction<string>) {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = true;
     },
-
     setUser: (state, action) => {
       console.log(action.payload);
       state.user = action.payload;
@@ -47,6 +46,9 @@ const usersSlice = createSlice({
       localStorage.removeItem("token");
       console.log("logout");
     },
+    setError: (state: UsersState, { payload }: PayloadAction<string>) => {
+      state.error = true;
+    },
   },
 });
 
@@ -57,6 +59,7 @@ export const {
   getUsersStart,
   getUsersSuccess,
   getUsersFailure,
+  setError,
 } = usersSlice.actions;
 
 export const login =
@@ -69,7 +72,8 @@ export const login =
       dispatch(setToken(response.data.accessToken));
       dispatch(setUser(response.data.user));
     } catch (error) {
-      console.log(error);
+      dispatch(setError(error as string));
+      console.log("error ====>", error);
 
       // return Promise.reject(error.response.data);
     }
@@ -77,7 +81,7 @@ export const login =
 
 export const logout = () => async (dispatch: AppDispatch) => {
   try {
-    const response = await AuthService.logout();
+    await AuthService.logout();
     dispatch(logoutReducers());
   } catch (error) {
     console.log(error);
