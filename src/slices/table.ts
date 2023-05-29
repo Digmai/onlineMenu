@@ -1,4 +1,4 @@
-import { ErrorResponse, IOptions, ITable } from "../types";
+import { IOptions, ITable } from "../types";
 import { RootState } from "../store";
 import { TableService } from "../services/TableService";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";

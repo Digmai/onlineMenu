@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Space, Button } from "antd";
 import { useSelector } from "react-redux";
-import { getCurrentUser } from "../../slices/usersList";
+import { deleteUser, getCurrentUser } from "../../slices/users";
 import { RootState, useAppDispatch } from "../../store";
 import ModalEditUser from "./ModalEditUser";
 import { IUser } from "../../types";
@@ -21,6 +21,10 @@ const UserList = () => {
   const handleCancel = () => {
     setSelectedUser(null);
     setPreviewVisible(false);
+  };
+
+  const handleCancelDelete = (_id: string) => {
+    dispatch(deleteUser(_id));
   };
 
   if (!users) return <div>no users!</div>;
@@ -58,7 +62,12 @@ const UserList = () => {
               >
                 Изменить
               </Button>
-              <Button key={`delete-${record._id}`} type="primary" danger>
+              <Button
+                onClick={() => handleCancelDelete(record._id)}
+                key={`delete-${record._id}`}
+                type="primary"
+                danger
+              >
                 Удалить
               </Button>
             </Space>

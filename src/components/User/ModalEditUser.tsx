@@ -1,7 +1,7 @@
 import { Modal, Form, Input, Radio, Checkbox, Select } from "antd";
 import { FormUserValues, IUser } from "../../types";
 import { useAppDispatch } from "../../store";
-import { updateUser } from "../../slices/usersList";
+import { updateUser } from "../../slices/users";
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { selectTablesByIdOnUser } from "../../slices/table";

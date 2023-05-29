@@ -92,5 +92,4 @@ export interface FormUserValues {
   discount?: string;
   tables?: string[];
   workingDays?: string[];
-  workingHours?: string;
 }

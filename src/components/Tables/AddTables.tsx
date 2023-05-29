@@ -1,47 +1,18 @@
-import { ITable } from "../../types";
-import { useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
-import { RootState, useAppDispatch } from "../../store";
-import { createTable, deleteTable, getTables } from "../../slices/table";
-import { Button, InputNumber, List, notification } from "antd";
+import React, { useState } from "react";
+import { useAppDispatch } from "../../store";
+import { createTable } from "../../slices/table";
+import { Button, InputNumber, notification } from "antd";
 
 const AddTables: React.FC = () => {
-  const [number, setNumber] = useState<number | null>();
-  const [tables, setTables] = useState<ITable[] | undefined>();
-
-  const tablesSelect = useSelector((state: RootState) => state.tables.table);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(getTables());
-  }, []);
-
-  useEffect(() => {
-    if (Array.isArray(tablesSelect)) {
-      const sortedTables = [...tablesSelect].sort((a, b) =>
-        Number(a.tableNumber) > Number(b.tableNumber) ? -1 : 1
-      );
-      setTables(sortedTables);
-    }
-  }, [tablesSelect]);
+  const [number, setNumber] = useState<number | null>();
 
   const handleNumberChange = (value: number | null) => {
     setNumber(value);
   };
   const handleCreateTable = (tableNumber: number) => {
     dispatch(createTable(tableNumber));
-  };
-
-  const handleTableDelete = (tableNumber: number, _id: string) => {
-    const updatedTables = tables?.filter(
-      (table) => table.tableNumber !== tableNumber
-    );
-    setTables(updatedTables);
-    dispatch(deleteTable(_id));
-    notification.success({
-      message: "Table deleted",
-      description: `Table ${tableNumber} has been removed.`,
-    });
   };
 
   const handleAddTable = () => {
@@ -53,14 +24,14 @@ const AddTables: React.FC = () => {
       setNumber(0);
       return;
     }
-    if (tables && tables.some((table) => table.tableNumber === number)) {
-      setNumber(0);
-      notification.error({
-        message: "Error",
-        description: "Table already exists",
-      });
-      return;
-    }
+    // if (tables && tables.some((table) => table.tableNumber === number)) {
+    //   setNumber(0);
+    //   notification.error({
+    //     message: "Error",
+    //     description: "Table already exists",
+    //   });
+    //   return;
+    // }
 
     handleCreateTable(number);
     // setNumber(0);
@@ -81,7 +52,7 @@ const AddTables: React.FC = () => {
       <Button type="primary" onClick={handleAddTable}>
         Добавить столы
       </Button>
-      {tables && (
+      {/* {tables && (
         <List
           style={{
             backgroundColor: "#f0f0f0",
@@ -118,7 +89,7 @@ const AddTables: React.FC = () => {
             </List.Item>
           )}
         />
-      )}
+      )} */}
     </>
   );
 };

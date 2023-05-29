@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import UserService from "../services/UserService";
+import UserService from "../services/UsersService";
 import { AppDispatch, RootState } from "../store";
 import { FormUserValues, IUser } from "../types";
 import { getTables } from "./table";
@@ -38,18 +38,20 @@ export const { setCurrentUser, setError } = usersListSlice.actions;
 
 export const getCurrentUser = () => async (dispatch: AppDispatch) => {
   try {
-    const response = await UserService.getCurrentUser();
-    dispatch(setCurrentUser(response));
+    const response = await UserService.getCurrentUsers();
+    response && dispatch(setCurrentUser(response));
   } catch (error: any) {
     dispatch(setError(error.message));
   }
 };
+
 export const addUser = (values: IUser) => async (dispatch: AppDispatch) => {
   try {
-    const response = await UserService.registration(values);
+    const response = await UserService.registrationUser(values);
     console.log(response);
 
-    dispatch(getTables());
+    dispatch(getCurrentUser());
+    // dispatch(getTables());
   } catch (error) {
     console.log(error);
   }
@@ -60,13 +62,22 @@ export const updateUser =
   async (dispatch: AppDispatch) => {
     try {
       console.log({ paramsUpdateUser });
-
-      const response = await UserService.getCurrentUser();
-      dispatch(setCurrentUser(response));
+      const response = await UserService.getCurrentUsers();
+      response && dispatch(setCurrentUser(response));
     } catch (error: any) {
       dispatch(setError(error.message));
     }
   };
+
+export const deleteUser = (_id: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await UserService.deleteUser(_id);
+    dispatch(getCurrentUser());
+    console.log(response);
+  } catch (error: any) {
+    dispatch(setError(error.message));
+  }
+};
 
 export const selectCurrentUser = (state: RootState): IUser[] | null =>
   state.usersList.currentUser;

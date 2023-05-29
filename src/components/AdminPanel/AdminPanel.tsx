@@ -6,19 +6,10 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { ConfigProvider } from "antd";
-import UserForm from "../User/UserForm";
 import { logout } from "../../slices/user";
 import { Button, Layout, Menu } from "antd";
 import { useAppDispatch } from "../../store";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import UserList from "../User/UserList";
-
-type UserType = {
-  id: string;
-  name: string;
-  role: string;
-  table: number;
-};
 
 const items: MenuProps["items"] = [
   {
@@ -38,7 +29,9 @@ const items: MenuProps["items"] = [
   },
 ];
 
-const AddTables = lazy(() => import("../Tables/AddTables"));
+const UserPanel = lazy(() => import("../User/UserPanel"));
+const TablePanel = lazy(() => import("../Tables/TablePanel"));
+
 const ProductsTree = lazy(() => import("../Product/ProductsTree"));
 const AddProductForm = lazy(() => import("../Product/AddProductForm"));
 
@@ -60,8 +53,7 @@ export const AdminPanel: React.FC = () => {
     selectedComponent = (
       <>
         <Suspense fallback={<LoadingSpinner />}>
-          <UserForm />
-          <UserList />
+          <UserPanel />
         </Suspense>
       </>
     );
@@ -76,7 +68,7 @@ export const AdminPanel: React.FC = () => {
           }}
         ></div>
         <Suspense fallback={<LoadingSpinner />}>
-          <AddTables />
+          <TablePanel />
         </Suspense>
       </div>
     );
@@ -92,6 +84,8 @@ export const AdminPanel: React.FC = () => {
         ></div>
         <Suspense fallback={<LoadingSpinner />}>
           <AddProductForm />
+        </Suspense>
+        <Suspense fallback={<LoadingSpinner />}>
           <ProductsTree />
         </Suspense>
       </div>

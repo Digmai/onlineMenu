@@ -7,25 +7,14 @@ import {
   RadioChangeEvent,
   Button,
 } from "antd";
-import React, { useEffect, useLayoutEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../store";
-import { addUser } from "../../slices/usersList";
+import { addUser } from "../../slices/users";
 import { useSelector } from "react-redux";
 import { getTables, selectTablesByStatus } from "../../slices/table";
+import { FormUserValues } from "../../types";
 
 const { Option } = Select;
-
-interface FormValues {
-  name: string;
-  role: string[];
-  username: string;
-  password: string;
-  discount?: string;
-  tables?: number[];
-  workingHours?: string;
-  workingDays?: string[];
-}
 
 const roleOptions = [
   { label: "Bartender", value: "bartender" },
@@ -38,20 +27,19 @@ const roleOptions = [
 const UserForm = () => {
   const dispatch = useAppDispatch();
 
-  const filteredOptions = useSelector(selectTablesByStatus("unavailable"));
   const [selectedRole, setSelectedRole] = useState<string>();
-  const [form] = Form.useForm<FormValues>();
 
-  useLayoutEffect(() => {
-    dispatch(getTables());
-  }, []);
+  const [form] = Form.useForm<FormUserValues>();
+
   useEffect(() => {
     dispatch(getTables());
   }, [dispatch]);
 
+  const filteredOptions = useSelector(selectTablesByStatus("unavailable"));
+
   const onFinish = (values: any) => {
-    dispatch(addUser(values));
-    form.resetFields();
+    dispatch(addUser(values)); // !!! после отправки формы внутри среза даынные столов -
+    form.resetFields(); // !!! НЕ РАБОТАЕТ ОН И ДАЖЕ ТАК !!! обновляють из сервера внутри среза!
   };
 
   const selRole = (str: string): boolean =>
@@ -142,19 +130,6 @@ const UserForm = () => {
               <Checkbox value={"saturday"}>Saturday</Checkbox>
               <Checkbox value={"sunday"}>Sunday</Checkbox>
             </Checkbox.Group>
-          </Form.Item>
-
-          <Form.Item
-            rules={[{ required: true }]}
-            style={{ minWidth: "200px" }}
-            name="workingHours"
-            label="Working Hours"
-          >
-            <Select>
-              <Option value="morning">Morning (9am - 12pm)</Option>
-              <Option value="afternoon">Afternoon (12pm - 3pm)</Option>
-              <Option value="evening">Evening (3pm - 6pm)</Option>
-            </Select>
           </Form.Item>
         </>
       )}

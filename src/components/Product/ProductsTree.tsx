@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import { Button, Modal, Tree } from "antd";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
+import { Button, Modal, Tree } from "antd";
+import { useState, useEffect } from "react";
 import { DownOutlined } from "@ant-design/icons";
 import { IProduct, IProducts } from "../../types";
 import type { DataNode, TreeProps } from "antd/es/tree";
-import { extractLastNumber } from "../../utils/extractLastNumber";
 import { ModalEditProduct } from "../Modal/ModalEditProduct";
-import React from "react";
+import { extractLastNumber } from "../../utils/extractLastNumber";
+
 const ProductsTree: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
@@ -18,9 +18,11 @@ const ProductsTree: React.FC = () => {
   const productSelect = useSelector(
     (state: RootState) => state.product.product
   );
+
   useEffect(() => {
     productSelect && setEditedProducts(productSelect);
   }, [productSelect]);
+
   useEffect(() => {
     editedProducts &&
       setTreeData(
@@ -48,6 +50,7 @@ const ProductsTree: React.FC = () => {
         })
       );
   }, [editedProducts]);
+
   if (!editedProducts) return <p>Loading...</p>;
 
   const handleCancel = () => {
@@ -55,11 +58,13 @@ const ProductsTree: React.FC = () => {
     setProductId(null);
     // form.resetFields();
   };
+
   const handleDeleteProduct = () => {
     if (!productId) return;
     productDelete(getProductById(productId));
     setVisible(false);
   };
+
   const handleCancelEdit = () => {
     setVisibleEdit(false);
     setProductId(null);
@@ -108,10 +113,12 @@ const ProductsTree: React.FC = () => {
     setProductId(extractLastNumber(String(selectedKeys[0])));
     setVisibleEdit(true);
   };
+
   const handleProductDelete = () => {
     setVisible(true);
     setVisibleEdit(false);
   };
+
   const handleSaveChanges = () => {
     // отправка измененных данных на сервер
     // ...
@@ -126,7 +133,7 @@ const ProductsTree: React.FC = () => {
     setOpenSaveChanges(false);
   };
 
-  // повесть вда выпадающих списка одно для категории второе для суб-категории и две кнопки
+  // (под вопросом!)повесить два выпадающих списка одно для категории второе для суб-категории и две кнопки
   // для выбора действия удалить/изменить при изменение всплывает модальное окно с инпутом
   //
   const handleDeleteCategory = (category: string, subcategory?: string) => {
@@ -166,7 +173,7 @@ const ProductsTree: React.FC = () => {
   };
 
   return (
-    // повесть вда выпадающих списка одно для категории второе для суб-категории и две кнопки
+    // (под вопросом!)повесть вда выпадающих списка одно для категории второе для суб-категории и две кнопки
     // для выбора действия удалить/изменить при изменение всплывает модальное окно с инпутом
     //
     <>
