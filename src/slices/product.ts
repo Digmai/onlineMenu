@@ -5,7 +5,7 @@ import { sortDataSlaceProduct } from "../utils/sortDataSlaceProduct";
 
 interface IProductState {
   loading: boolean;
-  product: IProducts | null;
+  product: IProduct[] | null;
   error: string | null;
 }
 
@@ -44,7 +44,7 @@ const productSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    getDishesSuccess(state, action: PayloadAction<IProducts>) {
+    getDishesSuccess(state, action: PayloadAction<IProduct[]>) {
       state.loading = false;
       state.error = null;
       state.product = action.payload;
@@ -63,9 +63,9 @@ export const fetchProduct = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(getDishesStart());
     try {
-      // hare a fetching porduct list 
+      // hare a fetching porduct list
       const data = sortDataSlaceProduct([...Product]);
-      dispatch(getDishesSuccess(data));
+      dispatch(getDishesSuccess(Product));
     } catch (error: any) {
       dispatch(getDishesFailure(error.message));
     }
@@ -74,6 +74,12 @@ export const fetchProduct = () => {
 
 export const selectDishesLoading = (state: RootState) => state.product.loading;
 export const selectDishesError = (state: RootState) => state.product.error;
-export const selectAllProduct = (state: RootState) => state.product.product;
+export const selectAllProduct = (state: RootState) =>
+  state.product.product && sortDataSlaceProduct([...state.product.product]);
+export const selectGetProductById = (id?: string) => (state: RootState) => {
+  if (state.product.product && id) {
+    return state.product.product.filter((p: IProduct) => p._id === id)[0];
+  }
+};
 
 export default productSlice.reducer;

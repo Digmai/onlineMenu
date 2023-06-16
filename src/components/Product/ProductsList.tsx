@@ -1,28 +1,26 @@
 import React from "react";
 import { IProduct } from "../../types";
-import { RootState } from "../../store";
-import ProductList from "./ProductList";
 import { useSelector } from "react-redux";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { getProductsByCategory } from "../../utils/getProductsByCategory";
+import { selectAllProduct } from "../../slices/product";
+import Products from "./Products";
 
 interface Props {
   category: string | null;
   subcategory: string | null;
 }
 
-export const ProductsListMenu: React.FC<Props> = ({
-  category,
-  subcategory,
-}) => {
-  const productSelect = useSelector((state: RootState) => state.product);
+export const ProductsList: React.FC<Props> = ({ category, subcategory }) => {
+  const productSelect = useSelector(selectAllProduct);
 
   const Renders = () => {
-    if (!productSelect.product) return <LoadingSpinner />;
+    if (!productSelect) return <LoadingSpinner />;
+
     if (!category && subcategory) {
       const prodcts = getProductsByCategory<{
         [subcategory: string]: IProduct[];
-      }>(productSelect.product, subcategory);
+      }>(productSelect, subcategory);
       return (
         <>
           {prodcts &&
@@ -50,7 +48,7 @@ export const ProductsListMenu: React.FC<Props> = ({
                         }));
 
                         return (
-                          <ProductList
+                          <Products
                             key={`${i}-${j}-${subcategory}`}
                             products={products}
                           />
@@ -64,7 +62,7 @@ export const ProductsListMenu: React.FC<Props> = ({
       );
     }
     if (category && !subcategory) {
-      const prodcts = getProductsByCategory(productSelect.product, category);
+      const prodcts = getProductsByCategory(productSelect, category);
       return (
         <>
           {prodcts &&
@@ -93,7 +91,7 @@ export const ProductsListMenu: React.FC<Props> = ({
                           }));
 
                           return (
-                            <ProductList
+                            <Products
                               key={`${i}-${j}-${subcategory}`}
                               products={products}
                             />
@@ -110,10 +108,10 @@ export const ProductsListMenu: React.FC<Props> = ({
 
     return (
       <>
-        {productSelect.product &&
-          Object.keys(productSelect.product).map((category, i) => {
+        {productSelect &&
+          Object.keys(productSelect).map((category, i) => {
             // Добавляем проверку на наличие подкатегорий в категории
-            if (productSelect.product && !productSelect.product[category]) {
+            if (productSelect && !productSelect[category]) {
               return null;
             }
 
@@ -124,8 +122,8 @@ export const ProductsListMenu: React.FC<Props> = ({
                 </div>
 
                 <div className="menu-page__section row">
-                  {productSelect.product &&
-                    Object.entries(productSelect.product[category]).map(
+                  {productSelect &&
+                    Object.entries(productSelect[category]).map(
                       ([subcategory, arr], j) => {
                         // Трансформируем массивы продуктов в объекты, чтобы передать их в компонент
                         const products = arr.map((product) => ({
@@ -133,7 +131,7 @@ export const ProductsListMenu: React.FC<Props> = ({
                         }));
 
                         return (
-                          <ProductList
+                          <Products
                             key={`${i}-${j}-${subcategory}`}
                             products={products}
                           />

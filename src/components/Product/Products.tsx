@@ -13,7 +13,7 @@ interface ProductListProps {
   ) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
+const Products: React.FC<ProductListProps> = ({ products }) => {
   return (
     <>
       {products.map((dish) => (
@@ -23,4 +23,4 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
   );
 };
 
-export default ProductList;
+export default Products;

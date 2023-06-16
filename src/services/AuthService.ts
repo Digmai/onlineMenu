@@ -7,6 +7,8 @@ export const AuthService = {
   async verifyToken(): Promise<AxiosResponse<VerifyTokenResponse>> {
     const response = await ApiService.get(`/auth/verify-token`);
 
+    console.log("response ", response);
+
     return response;
   },
   login: async (

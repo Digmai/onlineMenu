@@ -6,7 +6,7 @@ import { RootState, useAppDispatch } from "../store";
 import WebSocketService from "../services/WebSocketService";
 import { Order } from "../types";
 import { OrderList } from "../components/Order/OrderList";
-import ProductList from "../components/Product/ProductList";
+import ProductList from "../components/Product/Products";
 
 const WaiterPage = () => {
   const dispatch = useAppDispatch();

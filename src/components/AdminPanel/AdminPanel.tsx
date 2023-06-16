@@ -32,7 +32,7 @@ const items: MenuProps["items"] = [
 const UserPanel = lazy(() => import("../User/UserPanel"));
 const TablePanel = lazy(() => import("../Tables/TablePanel"));
 
-const ProductsTree = lazy(() => import("../Product/ProductsTree"));
+const Tree = lazy(() => import("../Tree/DadTree"));
 const AddProductForm = lazy(() => import("../Product/AddProductForm"));
 
 export const AdminPanel: React.FC = () => {
@@ -84,9 +84,7 @@ export const AdminPanel: React.FC = () => {
         ></div>
         <Suspense fallback={<LoadingSpinner />}>
           <AddProductForm />
-        </Suspense>
-        <Suspense fallback={<LoadingSpinner />}>
-          <ProductsTree />
+          <Tree />
         </Suspense>
       </div>
     );

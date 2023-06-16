@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store";
 import { setCategoryState, setSubcategoryState } from "../../slices/sortData";
+import { selectAllProduct } from "../../slices/product";
 
 export const Footer = () => {
   const dispatch = useAppDispatch();
@@ -10,7 +11,7 @@ export const Footer = () => {
   const [category, setCategory] = useState<string>();
   const [subcategory, setSubcategory] = useState<string>();
 
-  const sortedData = useSelector((state: RootState) => state.product.product);
+  const sortedData = useSelector(selectAllProduct);
 
   useEffect(() => {
     category && dispatch(setCategoryState(category));

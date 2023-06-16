@@ -11,7 +11,13 @@ interface UsersState {
 }
 
 const initialState: UsersState = {
-  user: null,
+  user: {
+    _id: "sdfsd",
+    name: "sfsfdsfsd",
+    password: "sdfsdfsd",
+    role: "admin",
+    username: "fdsdsf",
+  },
   isLoading: false,
   error: false,
   token: localStorage.getItem("token") || null,
@@ -82,7 +88,7 @@ export const login =
 export const logout = () => async (dispatch: AppDispatch) => {
   try {
     await AuthService.logout();
-    dispatch(logoutReducers());
+    // dispatch(logoutReducers());
   } catch (error) {
     console.log(error);
 
@@ -100,7 +106,7 @@ export const verifyToken = () => async (dispatch: AppDispatch) => {
     dispatch(setUser(user));
   } catch (error) {
     console.log(error);
-    dispatch(logout());
+    // dispatch(logout());
   }
 };
 export const selectUser = (state: RootState) => {

@@ -16,9 +16,7 @@ import { IProduct } from "../../types";
 const { Option } = Select;
 interface TableType {
   onAdd?: () => void;
-  product?: IProduct & {
-    handleProductDelete?: () => void;
-  };
+  product?: IProduct;
 }
 
 const AddProductForm: React.FC<TableType> = ({ product }) => {
@@ -285,10 +283,10 @@ const AddProductForm: React.FC<TableType> = ({ product }) => {
                 type="primary"
                 htmlType="button"
                 loading={loading}
-                onClick={() =>
-                  // add modal for confirmation
-                  product.handleProductDelete && product.handleProductDelete()
-                }
+                // onClick={() =>
+                //   // add modal for confirmation
+                //   // product.handleProductDelete && product.handleProductDelete()
+                // }
                 className="add-product__form-item-submit-btn-delete-in-list-product"
               >
                 Удалить из списка

@@ -20,6 +20,7 @@ import {
 } from "../../slices/table";
 import { FormUserValues, IProduct } from "../../types";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { selectAllProduct } from "../../slices/product";
 
 const { Option } = Select;
 
@@ -46,7 +47,7 @@ const UserForm = () => {
 
   console.log(waiterOptions, bartenderOptions);
 
-  const products = useSelector((state: RootState) => state.product.product);
+  const products = useSelector(selectAllProduct);
 
   useEffect(() => {
     dispatch(getTables());

@@ -5,8 +5,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Footer } from "./../components/Footer/Footer";
 import { Header } from "../components/Header/Header";
-import { ProductsListMenu } from "../components/Product/ProductsListMenuPage";
-import React from "react";
+import { ProductsList } from "../components/Product/ProductsList";
 
 const MenuPage = () => {
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ const MenuPage = () => {
     <>
       <Header />
       <div className="menu-page containerr">
-        <ProductsListMenu category={category} subcategory={subcategory} />
+        <ProductsList category={category} subcategory={subcategory} />
         <Footer />
       </div>
     </>

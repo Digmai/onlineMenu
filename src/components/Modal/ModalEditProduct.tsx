@@ -4,35 +4,25 @@ import { IProduct } from "../../types";
 import AddProductForm from "../Product/AddProductForm";
 
 interface IModel {
+  title: string;
   visible: boolean;
   handleCancel: () => void;
   product?: IProduct | null;
-  handleProductDelete: () => void;
 }
 
 export const ModalEditProduct: React.FC<IModel> = ({
+  title,
   visible,
   product,
   handleCancel,
-  handleProductDelete,
 }) => {
-  if (!product) return <p></p>;
-
   return (
-    <Modal
-      title={product.DishOrDrink}
-      onCancel={handleCancel}
-      footer={null}
-      open={visible}
-    >
-      <div className="modal">
-        <AddProductForm
-          product={{
-            ...product,
-            handleProductDelete: handleProductDelete,
-          }}
-        />
-      </div>
+    <Modal title={title} onCancel={handleCancel} footer={null} open={visible}>
+      {product && (
+        <div className="modal">
+          <AddProductForm product={product} />
+        </div>
+      )}
     </Modal>
   );
 };

@@ -25,24 +25,24 @@ function App() {
   const { isLoading, user, error } = useSelector(
     (state: RootState) => state.user
   );
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 569) {
-        setIsMobile(false);
-      } else {
-        setIsMobile(true);
-      }
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     if (window.innerWidth > 680) {
+  //       setIsMobile(false);
+  //     } else {
+  //       setIsMobile(true);
+  //     }
+  //   };
 
-    // window.addEventListener("resize", handleResize);
-    console.log("render");
+  //   // window.addEventListener("resize", handleResize);
+  //   console.log("render");
 
-    handleResize();
+  //   handleResize();
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
   useEffect(() => {
     dispatch(fetchProduct());
@@ -59,23 +59,25 @@ function App() {
       path: "/",
       element: (
         <Suspense fallback={<LoadingSpinner />}>
-          {isMobile ? (
-            <MenuPage />
+          {/* <MenuPage /> */}
+          <AdminPage />
+          {/* {isMobile ? (
+           
           ) : (
             (user?.role === "cook" && <ChefPage />) ||
             (user?.role === "admin" && <AdminPage />) ||
             (user?.role === "waiter" && <WaiterPage />) ||
             (user?.role === "bartender" && <BartenderPage />) || <LoginPage />
-          )}
+          )} */}
         </Suspense>
       ),
       errorElement: <Notification message={"error"} type="error" />,
     },
     {
-      path: ":our",
+      path: "/order",
       element: (
         <Suspense fallback={<LoadingSpinner />}>
-          <MenuPage />
+          <OrderPage />
         </Suspense>
       ),
     },
