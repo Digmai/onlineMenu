@@ -1,18 +1,16 @@
 import React from "react";
-import "./Notification.css";
+import {
+  CloseButton,
+  NotificationMessage,
+  NotificationWrapper,
+} from "../../styled/Notification";
 
 interface NotificationProps {
   message: string;
   type: "success" | "error";
-
 }
 
-const Notification: React.FC<NotificationProps> = ({
-  message,
-  type,
-
-}) => {
-
+const Notification: React.FC<NotificationProps> = ({ message, type }) => {
   let notificationClassName = "notification";
   if (type === "success") {
     notificationClassName += " success";
@@ -21,15 +19,11 @@ const Notification: React.FC<NotificationProps> = ({
   }
 
   return (
-    <div className={notificationClassName}>
-      <p className="notification-message">{message}</p>
-      <button  className="close-button">
-        &#x2715;
-      </button>
-    </div>
+    <NotificationWrapper type={type}>
+      <NotificationMessage>{message}</NotificationMessage>
+      <CloseButton>&#x2715;</CloseButton>
+    </NotificationWrapper>
   );
 };
 
 export default Notification;
-
-

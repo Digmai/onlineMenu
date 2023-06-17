@@ -3,8 +3,8 @@ import { RootState } from "../store";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Footer } from "./../components/Footer/Footer";
 import { Header } from "../components/Header/Header";
+import { Footer } from "./../components/Footer/Footer";
 import { ProductsList } from "../components/Product/ProductsList";
 
 const MenuPage = () => {

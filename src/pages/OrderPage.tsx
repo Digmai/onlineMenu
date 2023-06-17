@@ -8,11 +8,20 @@ import { Header } from "../components/Header/Header";
 import { OrderCart } from "../components/Order/OrderCart";
 import { addOrder, selectTotalPrice } from "../slices/orders";
 import { OrderFooter } from "../components/Order/OrderFooter";
+import { useNavigate } from "react-router-dom";
 
 const OrderPage = () => {
   const dispatch = useAppDispatch();
   const user = useSelector(selectUser);
   const totalPrice = useSelector(selectTotalPrice);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.user?.role !== "customer") {
+      navigate("/");
+    }
+  }, [navigate]);
   // const [order, setOrder] = useState({
   //   _id: "",
   //   name: "",

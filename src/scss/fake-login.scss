@@ -1,0 +1,42 @@
+.wrapper {
+    max-width: min(300px, 100vw);
+    width: 100%;
+
+    margin: 0 auto;
+
+    margin-top: min(100px, 30vh);
+
+    background: #eaeaea;
+
+    border-radius: 5px;
+    border: #929292a2 1px solid;
+
+    display: grid;
+    grid-template-columns: 1fr;
+
+    &__items {
+        min-height: 50px;
+        max-height: max-content;
+
+        border-radius: 10px;
+        border: #929292a2 1px solid;
+
+        background-color: #f4f4f4;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin: 5px;
+
+        transition: background-color 0.3s ease-in-out, filter 0.1s ease-in-out;
+    }
+
+    &__items:hover {
+        background: #e2e1e1;
+    }
+
+    &__items:active {
+        filter: brightness(75%);
+    }
+}

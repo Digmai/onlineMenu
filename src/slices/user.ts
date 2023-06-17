@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthService } from "../services/AuthService";
 import { AppDispatch, RootState } from "../store";
-import { IUser } from "../types";
+import { IUser, Role } from "../types";
 
 interface UsersState {
   user: IUser | null;
@@ -11,13 +11,7 @@ interface UsersState {
 }
 
 const initialState: UsersState = {
-  user: {
-    _id: "sdfsd",
-    name: "sfsfdsfsd",
-    password: "sdfsdfsd",
-    role: "admin",
-    username: "fdsdsf",
-  },
+  user: null,
   isLoading: false,
   error: false,
   token: localStorage.getItem("token") || null,
@@ -27,6 +21,19 @@ const usersSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    //
+    //
+    setFakeRoel: (state, { payload }: PayloadAction<Role>) => {
+      state.user = {
+        _id: "1",
+        name: "#1677ff",
+        password: "#4caf50",
+        role: payload,
+        username: "#fff",
+      };
+    },
+    //
+    //
     getUsersStart(state) {
       state.isLoading = true;
     },
@@ -40,7 +47,6 @@ const usersSlice = createSlice({
       state.error = true;
     },
     setUser: (state, action) => {
-      console.log(action.payload);
       state.user = action.payload;
     },
     setToken: (state, action) => {
@@ -66,8 +72,12 @@ export const {
   getUsersSuccess,
   getUsersFailure,
   setError,
+  setFakeRoel,
 } = usersSlice.actions;
 
+//
+// this async fethe :
+//
 export const login =
   (username: string, password: string) => async (dispatch: AppDispatch) => {
     try {
@@ -109,6 +119,10 @@ export const verifyToken = () => async (dispatch: AppDispatch) => {
     // dispatch(logout());
   }
 };
+
+//
+// this selectors :
+//
 export const selectUser = (state: RootState) => {
   return state.user;
 };

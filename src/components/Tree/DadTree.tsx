@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { selectAllProduct } from "../../slices/product";
 import NewTree from "./Tree";
-import { TreeDed } from "../../styled/Tree/tree";
+import { TreeDed } from "../../styled/tree";
 import { Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";

@@ -9,10 +9,11 @@
 @import url("./menu-item.scss");
 @import url("./menu-page.scss");
 @import url("./order-page.scss");
+@import url("./fake-login.scss");
 @import url("./add-product.scss");
 
 .containerr {
-  width: 100vw;
+  width: min(100vw, 100%);
   min-height: 100vh;
   background-color: #fefefe;
 }

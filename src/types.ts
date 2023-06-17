@@ -16,13 +16,13 @@ export interface IProducts {
   };
 }
 
-export type TRole = "customer" | "cook" | "bartender" | "waiter" | "admin";
+export type Role = "customer" | "cook" | "bartender" | "waiter" | "admin";
 export interface IUser {
   _id: string;
   name: string;
   username: string;
   password: string;
-  role: TRole; //customer - дял скидки 10% | 25% | 50%
+  role: Role; //customer - дял скидки 10% | 25% | 50%
 }
 export interface VerifyTokenResponse {
   user: IUser;

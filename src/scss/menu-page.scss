@@ -1,24 +1,26 @@
-.cart-total {
-}
+.cart-total {}
+
 .menu-page {
-  width: 100vw;
+  width: min(100vw, 100%);
   padding-bottom: 12.1212vh;
+
   &__header {
     z-index: 1;
-    margin-left: 8.3vw;
+    margin-left: min(8.3vw, 8.3%);
     margin-top: 3.0363vh;
-    font-size: 2.631578vw;
+    font-size: min(14px, 2.631578vw);
     margin-bottom: 2.1818vh;
   }
+
   &__section {
     // width: 100vw;
     display: grid;
     justify-content: space-evenly;
     grid-auto-rows: minmax(auto, auto);
-    grid-template-columns: 37.7272vw 37.7272vw;
+    grid-template-columns: repeat(2, min(37.7272vw, 37.7272%));
   }
 }
-.menu-section {
-}
-.menu-section-title {
-}
+
+.menu-section {}
+
+.menu-section-title {}

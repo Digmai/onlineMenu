@@ -1,6 +1,7 @@
 .modal {
   width: 100%;
   min-height: 100vh;
+
   & img {
     width: 100%;
     height: 100%;
@@ -17,9 +18,10 @@
     position: relative;
     border-radius: 100%;
     background: #ffffff;
-    @media screen and (max-width: 540px) {
-    }
+
+    @media screen and (max-width: 540px) {}
   }
+
   &__detail {
     z-index: 3;
     top: -130px;
@@ -29,6 +31,7 @@
     position: relative;
     border-radius: 95px 95px 0 0;
     background-color: #a8a3a300;
+
     &-name {
       width: 100%;
       padding: 10px;
@@ -40,6 +43,7 @@
       margin-bottom: 6.060606vh;
       box-sizing: border-box;
     }
+
     &-ingredients {
       width: 100%;
       height: 6.5vh;
@@ -48,6 +52,7 @@
       justify-content: space-between;
       border-bottom: #60606071 0.2px solid;
     }
+
     &-time {
       font-size: 120%;
       margin-top: 20px;
@@ -56,12 +61,14 @@
     }
   }
 }
+
 .modal__buttom {
   left: 0;
   z-index: 20;
-  width: 100vw;
+  width: min(100vw, 100%);
   bottom: 45px;
   position: fixed;
+
   &-page {
     width: 75vw;
     height: 7vh;
@@ -76,6 +83,7 @@
     border-radius: 30px;
     justify-content: center;
     background-color: #e23c2c;
+
     &:active {
       color: rgba(240, 248, 255, 0.687);
       font-size: 119.45%;
@@ -84,6 +92,6 @@
       background-color: #c9392b;
     }
   }
-  &-text {
-  }
+
+  &-text {}
 }

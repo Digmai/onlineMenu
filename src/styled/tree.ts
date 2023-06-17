@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ContainerTreeChildren } from "../styledType";
+import { TreeChildrenProps } from "./types/styledType";
 
 export const TreeDed = styled.div`
   min-width: 300px;
@@ -31,7 +31,7 @@ export const TreeTitle = styled.div`
   }
 `;
 
-export const TreeChildrenContainer = styled.section<ContainerTreeChildren>`
+export const TreeChildrenContainer = styled.section<TreeChildrenProps>`
   width: 100%;
   height: ${({ isVisit }) => (isVisit ? "auto" : "0")};
 

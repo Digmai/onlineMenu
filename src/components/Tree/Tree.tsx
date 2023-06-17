@@ -6,7 +6,7 @@ import {
   TreeChildrenName,
   TreeDedContainer,
   TreeTitle,
-} from "../../styled/Tree/tree";
+} from "../../styled/tree";
 interface Props {
   title: string;
   list: {

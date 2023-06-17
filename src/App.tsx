@@ -4,8 +4,9 @@ import { RootState, useAppDispatch } from "./store";
 import { fetchProduct } from "./slices/product";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
-import React from "react";
-import { verifyToken } from "./slices/user";
+
+import { FakeLogin } from "./pages/FakeLogin";
+import { MenuWrapper } from "./styled/menu";
 const MenuPage = lazy(() => import("./pages/MenuPage"));
 const ChefPage = lazy(() => import("./pages/ChefPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -46,29 +47,26 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchProduct());
-    dispatch(verifyToken());
+    // dispatch(verifyToken());
     // dispatch(fetchDishes());
     // dispatch(fetchOrders());
     // dispatch(fetchUsers());
   }, [dispatch]);
-  // if (!error) {
-  //   return <Notification message={"error"} type="error" />;
-  // }
+
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
         <Suspense fallback={<LoadingSpinner />}>
-          {/* <MenuPage /> */}
-          <AdminPage />
-          {/* {isMobile ? (
-           
-          ) : (
-            (user?.role === "cook" && <ChefPage />) ||
+          {(user?.role === "cook" && <ChefPage />) ||
             (user?.role === "admin" && <AdminPage />) ||
             (user?.role === "waiter" && <WaiterPage />) ||
-            (user?.role === "bartender" && <BartenderPage />) || <LoginPage />
-          )} */}
+            (user?.role === "bartender" && <BartenderPage />) ||
+            (user?.role === "customer" && (
+              <MenuWrapper>
+                <MenuPage />
+              </MenuWrapper>
+            )) || <FakeLogin />}
         </Suspense>
       ),
       errorElement: <Notification message={"error"} type="error" />,
@@ -77,7 +75,9 @@ function App() {
       path: "/order",
       element: (
         <Suspense fallback={<LoadingSpinner />}>
-          <OrderPage />
+          <MenuWrapper>
+            {(user?.role === "customer" && <OrderPage />) || <FakeLogin />}
+          </MenuWrapper>
         </Suspense>
       ),
     },
