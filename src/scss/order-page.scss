@@ -19,7 +19,7 @@
     height: 15vh;
     display: flex;
     padding: 5vh 0;
-    font-size: 7vw;
+    font-size: min(7vw, 25px);
     align-items: center;
     color: rgb(144, 9, 7);
     justify-content: center;
@@ -42,7 +42,9 @@
 
       &-src {
         left: 0;
-        width: 15vw;
+        height: auto;
+
+        width: 100%;
         border-radius: 50%;
         position: relative;
       }
@@ -50,9 +52,10 @@
 
     &-nema-and-total-weight {
       width: 100%;
-      padding-left: 10px;
       position: relative;
-      padding-right: 15vw;
+      text-align: center;
+      padding-left: 10px;
+      margin-right: auto;
     }
 
     &-nema {
@@ -66,16 +69,18 @@
 
     &-price {
       width: 100%;
-      font-size: 6.5vw;
       padding-left: 5vw;
+      text-align: center;
       color: rgb(144, 9, 7);
+      font-size: min(6vw, 20px);
     }
   }
 
   &__footer-button {
-    width: 45vw;
+    width: min(max-width, 50%);
+    height: 100%;
     display: flex;
-    font-size: 4vw;
+    font-size: min(6vw, 20px);
     padding-left: 3vw;
     margin-right: auto;
     align-items: center;
@@ -84,7 +89,13 @@
   }
 
   &__button {
-    bottom: 20vh;
+    position: absolute;
+    margin-bottom: min(20vh, 100px);
+    left: 0;
+    // z-index: 20;
+    max-width: min(100vw, 100%);
+    width: 100%;
+    bottom: 45px;
 
     &:active {
       bottom: 20.4vh;
@@ -98,6 +109,16 @@
           rgba(192, 14, 12, 1) 30%,
           rgba(203, 18, 16, 1) 50%,
           rgba(192, 14, 12, 1) 70%);
+
+
+      width: 70%;
+      border: none;
+      display: flex;
+      margin: 0 auto;
+      font-size: 120%;
+      color: aliceblue;
+      align-items: center;
+      justify-content: center;
 
       &:active {
         height: 9.5vh;
